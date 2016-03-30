@@ -11,6 +11,7 @@ import Controladores.IControlador;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -21,6 +22,8 @@ import javax.swing.tree.DefaultTreeModel;
  */
 public class SelCat extends javax.swing.JInternalFrame {
     private IControlador IC;
+    private Categoria cat;
+    boolean valido=true;
 
     /**
      * Creates new form SelCat
@@ -29,13 +32,15 @@ public class SelCat extends javax.swing.JInternalFrame {
         initComponents();
         Fabrica fabrica = Fabrica.getInstance();
         IC = fabrica.getICtrl();
-        this.buttonGroup1.add(jRbCrear);
-        this.buttonGroup1.add(jRbSeleccionar);
         modelCat= new DefaultListModel();
         Raiz = new DefaultMutableTreeNode("Categorias");
         modelo = new DefaultTreeModel(Raiz);
-        JTree tree = new JTree(modelo);
+        JTree tree = new JTree(modelo);       
         cargarArbol();
+        this.jTNCategoria.disable();
+        this.jLSelCat.setVisible(false);
+        this.jLnCat.setVisible(false);
+        
     }
     DefaultListModel modelCat;
     DefaultMutableTreeNode Raiz;// = new DefaultMutableTreeNode("Restaurantes");
@@ -49,12 +54,12 @@ public class SelCat extends javax.swing.JInternalFrame {
             while(it.hasNext()){
                 Iterator it1 = cats.iterator();
                 Categoria cat = (Categoria)it.next();
-                if (cat.getNombrePadre()==null){ 
+                if (cat.getNombrePadre().equals("Categorias")){ 
                     DefaultMutableTreeNode nodo = new DefaultMutableTreeNode(cat.getNombre());
                     modelo.insertNodeInto(nodo, Raiz, 0);
                     while(it1.hasNext()){
                         Categoria cat1 = (Categoria)it1.next();
-                        if((!(cat1.getNombrePadre()==null)) && (cat1.getNombrePadre().equals(cat.getNombre()))){
+                        if((!(cat1.getNombrePadre().equals("Categorias"))) && (cat1.getNombrePadre().equals(cat.getNombre()))){
                             DefaultMutableTreeNode nodo1 = new DefaultMutableTreeNode(cat1.getNombre());
                             modelo.insertNodeInto(nodo1, nodo, 0);
                         }
@@ -77,11 +82,13 @@ public class SelCat extends javax.swing.JInternalFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTCategoria = new javax.swing.JTree();
-        jbAceptar = new javax.swing.JButton();
+        jbSiguiente = new javax.swing.JButton();
         jbCancelar = new javax.swing.JButton();
-        jRbSeleccionar = new javax.swing.JRadioButton();
         jRbCrear = new javax.swing.JRadioButton();
         jTNCategoria = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLSelCat = new javax.swing.JLabel();
+        jLnCat = new javax.swing.JLabel();
 
         setClosable(true);
         setTitle("Seleccionar Categoria");
@@ -89,10 +96,19 @@ public class SelCat extends javax.swing.JInternalFrame {
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
         jTCategoria.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
         jTCategoria.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTCategoria.setRootVisible(false);
+        jTCategoria.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+            public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
+                jTCategoriaValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTCategoria);
 
-        jbAceptar.setText("Aceptar");
+        jbSiguiente.setText("Siguiente ->");
+        jbSiguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSiguienteActionPerformed(evt);
+            }
+        });
 
         jbCancelar.setText("Cancelar");
         jbCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -101,14 +117,17 @@ public class SelCat extends javax.swing.JInternalFrame {
             }
         });
 
-        jRbSeleccionar.setText("Seleccionar una categoria:");
-        jRbSeleccionar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRbSeleccionarActionPerformed(evt);
+        jRbCrear.setText("Crear nueva categoria");
+        jRbCrear.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jRbCrearMouseClicked(evt);
             }
         });
-
-        jRbCrear.setText("Crear una categoria nueva:");
+        jRbCrear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRbCrearActionPerformed(evt);
+            }
+        });
 
         jTNCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -116,47 +135,65 @@ public class SelCat extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel1.setText("Seleccione una categoría:");
+
+        jLSelCat.setForeground(new java.awt.Color(255, 0, 0));
+        jLSelCat.setText("Debe seleccionar una categoría padre");
+
+        jLnCat.setForeground(new java.awt.Color(255, 0, 0));
+        jLnCat.setText("Ingrese el nombre de la nueva categoria ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jbCancelar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jbAceptar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTNCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
+                        .addGap(19, 19, 19)
+                        .addComponent(jbCancelar)
+                        .addGap(40, 40, 40)
+                        .addComponent(jbSiguiente))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jRbCrear)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(17, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jRbCrear)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jRbSeleccionar))))
-                .addContainerGap(21, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTNCategoria, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLSelCat, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(22, 22, 22))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLnCat)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 5, Short.MAX_VALUE)
-                .addComponent(jRbSeleccionar)
+                .addContainerGap()
+                .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLSelCat)
                 .addGap(18, 18, 18)
                 .addComponent(jRbCrear)
                 .addGap(18, 18, 18)
                 .addComponent(jTNCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLnCat)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbCancelar)
-                    .addComponent(jbAceptar))
-                .addContainerGap())
+                    .addComponent(jbSiguiente)
+                    .addComponent(jbCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -167,24 +204,104 @@ public class SelCat extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jbCancelarActionPerformed
 
-    private void jRbSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRbSeleccionarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRbSeleccionarActionPerformed
-
     private void jTNCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTNCategoriaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTNCategoriaActionPerformed
 
+    private void jRbCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRbCrearActionPerformed
+        // TODO add your handling code here:
+        
+        if (this.jRbCrear.isSelected())
+            this.jTNCategoria.enable();
+        else
+            this.jTNCategoria.disable();
+    }//GEN-LAST:event_jRbCrearActionPerformed
+
+    private void jRbCrearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRbCrearMouseClicked
+        // TODO add your handling code here:
+        
+//        if (this.jRbCrear.isSelected())
+//            this.jTNCategoria.setVisible(true);
+//        else
+//            this.jTNCategoria.setVisible(false);
+    }//GEN-LAST:event_jRbCrearMouseClicked
+
+    private void jbSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSiguienteActionPerformed
+        // TODO add your handling code here:
+        if(this.jRbCrear.isSelected()){
+            if(this.jTNCategoria.getText().isEmpty())
+                JOptionPane.showMessageDialog(rootPane, "Debe ingresar el nombre de una categoría", "ERROR", JOptionPane.ERROR_MESSAGE);
+            else
+                if(this.cat == null){
+                    this.jLSelCat.setText("Debe seleccionar una categoría padre");
+                    this.jLSelCat.setVisible(true);
+                }
+                else{
+                    if(IC.existeCat(jTNCategoria.getText(),cat.getNombre()))
+                        JOptionPane.showMessageDialog(rootPane, "La categoria ya existe", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    else{
+                        if(valido){ 
+                            Categoria ret = new Categoria(1000,this.jTNCategoria.getText(),cat.getNombre());
+                            IC.addCategoria(ret);
+                            JOptionPane.showMessageDialog(rootPane, "Categoría creada", "EXITO", JOptionPane.INFORMATION_MESSAGE);
+                            AltaEquipo ae = new AltaEquipo(ret);
+                            Console.EscritorioMenu.add(ae);
+                            ae.show();
+                            this.dispose();   
+                        }  
+                    }    
+                }
+        }
+        else{
+            if(this.cat == null || this.cat.getNombre()==null){
+                this.jLSelCat.setText("Debe seleccionar una categoría");
+                    this.jLSelCat.setVisible(true);
+            }
+            else{
+                AltaEquipo ae = new AltaEquipo(this.cat);
+                Console.EscritorioMenu.add(ae);
+                ae.show();
+                this.dispose();
+            }
+        
+        }
+        
+        
+    }//GEN-LAST:event_jbSiguienteActionPerformed
+
+    private void jTCategoriaValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_jTCategoriaValueChanged
+        // TODO add your handling code here:
+        DefaultMutableTreeNode sel = (DefaultMutableTreeNode)this.jTCategoria.getLastSelectedPathComponent();
+        this.cat = new Categoria(1000,(String)sel.getUserObject(),null);
+        if(!sel.isRoot()){
+            DefaultMutableTreeNode padre = (DefaultMutableTreeNode) sel.getParent(); 
+            this.cat.setNombrePadre((String)padre.getUserObject());
+            if(this.jRbCrear.isSelected() && !cat.getNombrePadre().equals("Categorias")){
+                this.jLSelCat.setText("Debe seleccionar una categoría padre");
+                this.valido=false;
+                this.jLSelCat.setVisible(true);
+            }
+            else {
+                this.jLSelCat.setVisible(false);
+                this.valido=true;
+            }
+        }
+        
+        //this.jLabel2.setVisible(false);
+    }//GEN-LAST:event_jTCategoriaValueChanged
+
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JLabel jLSelCat;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLnCat;
     private javax.swing.JRadioButton jRbCrear;
-    private javax.swing.JRadioButton jRbSeleccionar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTree jTCategoria;
     private javax.swing.JTextField jTNCategoria;
-    private javax.swing.JButton jbAceptar;
     private javax.swing.JButton jbCancelar;
+    private javax.swing.JButton jbSiguiente;
     // End of variables declaration//GEN-END:variables
     
 }

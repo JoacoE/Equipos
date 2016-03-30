@@ -176,7 +176,35 @@ public class Persistencia {
         }catch(Exception ex){}   
         return Acat;
     }
+    public boolean ExisteCategoria(String nombre, String padre){
+        try{
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");          
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Categoria where Categoria='"+nombre+"' and Categoria_Padre='"+padre+"'");
+            if(rs.next()){
+                return true;
+            }
+        }catch(Exception ex){}  
+        return false;
+    }
     
+    public void persistirCategoria(Categoria cat){              
+        try{
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT max(id_Categoria) FROM Categoria");
+            rs.next();
+            int id= (int)rs.getInt(1)+1;
+            PreparedStatement preparedStmt = con.prepareStatement("INSERT INTO Categoria(id_Categoria, Categoria, Categoria_Padre)" + " VALUES (?,?,?)");
+            preparedStmt.setInt (1, id);
+            preparedStmt.setString (2, cat.getNombre());
+            preparedStmt.setString (3, cat.getNombrePadre());
+            preparedStmt.execute();
+            con.close();
+        }catch(Exception ex){}
+    }
     
 }
 

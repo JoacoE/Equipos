@@ -5,6 +5,7 @@
  */
 package Controladores;
 
+import Clases.Categoria;
 import Clases.Lugar;
 import Clases.Software;
 import Clases.Usuario;
@@ -153,7 +154,20 @@ public class Controlador implements IControlador {
 //        
 //        }
 
-   
+public boolean existeCat(String nombre, String padre){
+    Fabrica fabrica = Fabrica.getInstance();
+    Persistencia p = fabrica.getPers();
+    if(p.ExisteCategoria(nombre, padre))
+        return true;
+    else
+        return false;
+}   
+
+public void addCategoria(Categoria cat){
+    Fabrica fabrica = Fabrica.getInstance();
+    Persistencia p = fabrica.getPers();
+    p.persistirCategoria(cat);
+}
     
     
     

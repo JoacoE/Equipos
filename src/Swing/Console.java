@@ -136,9 +136,9 @@ public class Console extends javax.swing.JFrame {
     private void jmEquipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmEquipoActionPerformed
 
         // TODO add your handling code here:
-        AltaEquipo eq = new AltaEquipo();
-        EscritorioMenu.add(eq);
-        eq.show();
+        SelCat sc = new SelCat();
+        EscritorioMenu.add(sc);
+        sc.show();
     }//GEN-LAST:event_jmEquipoActionPerformed
 
     /**

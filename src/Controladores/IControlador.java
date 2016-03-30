@@ -5,6 +5,7 @@
  */
 package Controladores;
 
+import Clases.Categoria;
 import Clases.Software;
 import java.util.ArrayList;
 
@@ -23,5 +24,6 @@ public interface IControlador {
     public abstract Software addSw(int id, String tipo, String descripcion, String key, int idDisp, int licencias);
     public abstract ArrayList listarEquipos();
     public abstract ArrayList ListarCat();
-    
+    public abstract boolean existeCat(String nom, String padre);
+    public abstract void addCategoria(Categoria cat);    
 }
