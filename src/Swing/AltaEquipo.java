@@ -6,7 +6,9 @@
 package Swing;
 
 import Clases.Categoria;
+import Clases.Dispositivo;
 import static Swing.Console.EscritorioMenu;
+import java.awt.Dimension;
 
 /**
  *
@@ -20,7 +22,9 @@ public class AltaEquipo extends javax.swing.JInternalFrame {
     public AltaEquipo(Categoria cat) {
         initComponents();
         this.cate=cat;
+        this.jTCategoria.setText(cate.getNombrePadre()+"-->"+cate.getNombre());
         controlOcultos();
+        
 
         
     }
@@ -35,25 +39,20 @@ public class AltaEquipo extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jFileChooser1 = new javax.swing.JFileChooser();
+        jLabel15 = new javax.swing.JLabel();
+        jTFactura3 = new javax.swing.JTextField();
         jBCancelar = new javax.swing.JButton();
         jBAtras = new javax.swing.JButton();
-        jBFinalizar = new javax.swing.JButton();
+        jBSiguiente = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jLXML = new javax.swing.JLabel();
-        jLIP = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jBExaminar = new javax.swing.JButton();
         jTId = new javax.swing.JTextField();
         jTCategoria = new javax.swing.JTextField();
         jTMarca = new javax.swing.JTextField();
@@ -61,16 +60,19 @@ public class AltaEquipo extends javax.swing.JInternalFrame {
         jTProveedor = new javax.swing.JTextField();
         JTGarantia = new javax.swing.JTextField();
         jTFactura = new javax.swing.JTextField();
-        jCBUsuario = new javax.swing.JComboBox();
-        jCBLocal = new javax.swing.JComboBox();
-        jCBSeccion = new javax.swing.JComboBox();
         jFTFecha = new javax.swing.JFormattedTextField();
         jCBEstado = new javax.swing.JComboBox();
-        jTIP = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jLproc = new javax.swing.JLabel();
+        jTProc = new javax.swing.JTextField();
+        jLMem = new javax.swing.JLabel();
+        jTMem = new javax.swing.JTextField();
+        jLHDD = new javax.swing.JLabel();
+        jTHDD = new javax.swing.JTextField();
+
+        jLabel15.setText("Factura:");
 
         setClosable(true);
+        setMaximizable(true);
         setResizable(true);
         setTitle("Nuevo Equipo");
         setAutoscrolls(true);
@@ -79,7 +81,12 @@ public class AltaEquipo extends javax.swing.JInternalFrame {
 
         jBAtras.setText("<- Atras");
 
-        jBFinalizar.setText("Finalizar");
+        jBSiguiente.setText("Siguiente->");
+        jBSiguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBSiguienteActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Id de Equipo:");
 
@@ -88,12 +95,6 @@ public class AltaEquipo extends javax.swing.JInternalFrame {
         jLabel3.setText("Marca:");
 
         jLabel4.setText("Modelo:");
-
-        jLabel5.setText("Usuario:");
-
-        jLabel6.setText("Local:");
-
-        jLabel7.setText("Sección:");
 
         jLabel8.setText("Fecha de compra:");
 
@@ -104,14 +105,6 @@ public class AltaEquipo extends javax.swing.JInternalFrame {
         jLabel11.setText("Garantía:");
 
         jLabel12.setText("Factura:");
-
-        jLXML.setText("Adjuntar XML");
-
-        jLIP.setText("IP:");
-
-        jLabel15.setText("Anotaciones:");
-
-        jBExaminar.setText("Examinar");
 
         jTId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -124,9 +117,11 @@ public class AltaEquipo extends javax.swing.JInternalFrame {
 
         jFTFecha.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        jLproc.setText("Procesador:");
+
+        jLMem.setText("Memoria:");
+
+        jLHDD.setText("HDD:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -134,61 +129,48 @@ public class AltaEquipo extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(28, 28, 28)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel2)
-                                            .addComponent(jLabel1)
-                                            .addComponent(jLabel3)
-                                            .addComponent(jLabel4)
-                                            .addComponent(jLabel5)
-                                            .addComponent(jLabel6)))
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTId)
-                                    .addComponent(jTCategoria)
-                                    .addComponent(jTMarca)
-                                    .addComponent(jTModelo)
-                                    .addComponent(jCBUsuario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jCBLocal, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jCBSeccion, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLXML)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel8)
-                                        .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLIP, javax.swing.GroupLayout.Alignment.TRAILING))
-                                    .addComponent(jLabel15))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTProveedor)
-                                    .addComponent(JTGarantia)
-                                    .addComponent(jTFactura)
-                                    .addComponent(jFTFecha)
-                                    .addComponent(jCBEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTIP)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jBExaminar)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 4, Short.MAX_VALUE))
+                        .addGap(28, 28, 28)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTCategoria)
+                            .addComponent(jTModelo)
+                            .addComponent(jTMarca)
+                            .addComponent(jTId)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jBAtras)
-                        .addGap(61, 61, 61)
-                        .addComponent(jBCancelar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jBFinalizar)))
-                .addGap(47, 47, 47))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel8)
+                                .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addComponent(jBAtras)
+                            .addComponent(jLproc, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLMem, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLHDD, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTProc)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addComponent(jBCancelar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jBSiguiente))
+                            .addComponent(jTProveedor)
+                            .addComponent(JTGarantia)
+                            .addComponent(jTFactura)
+                            .addComponent(jFTFecha)
+                            .addComponent(jCBEstado, 0, 230, Short.MAX_VALUE)
+                            .addComponent(jTMem, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTHDD, javax.swing.GroupLayout.Alignment.TRAILING))))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -209,18 +191,6 @@ public class AltaEquipo extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jTModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jCBUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jCBLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jCBSeccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
@@ -243,24 +213,21 @@ public class AltaEquipo extends javax.swing.JInternalFrame {
                     .addComponent(jTFactura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLIP)
-                    .addComponent(jTIP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLproc)
+                    .addComponent(jTProc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLXML)
-                    .addComponent(jBExaminar))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addComponent(jLabel15))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                    .addComponent(jLMem)
+                    .addComponent(jTMem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBAtras)
+                    .addComponent(jTHDD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLHDD))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBCancelar)
-                    .addComponent(jBFinalizar))
+                    .addComponent(jBAtras)
+                    .addComponent(jBSiguiente))
                 .addContainerGap())
         );
 
@@ -270,22 +237,41 @@ public class AltaEquipo extends javax.swing.JInternalFrame {
     private void jTIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTIdActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTIdActionPerformed
+
+    private void jBSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSiguienteActionPerformed
+        // TODO add your handling code here:
+        
+        Dispositivo disp = new Dispositivo();
+        disp.setIdDisp(Integer.parseInt(this.jTId.getText()));
+        disp.setTipo(cate);
+        disp.setMarca(this.jTMarca.getText());
+        disp.setModelo(this.jTModelo.getText());
+        disp.setProveedor(this.jTProveedor.getText());
+        disp.setFactura(Integer.parseInt(this.jTFactura.getText()));
+        disp.setGarantia(Integer.parseInt(this.JTGarantia.getText()));
+        if(cate.getNombrePadre().equals("Computadora")){
+            disp.setProcesador(this.jTProc.getText());
+            disp.setMemoria(this.jTMem.getText());
+            disp.setHDD(this.jTHDD.getText());
+        }
+         
+        AltaEquipo2 ae = new AltaEquipo2(disp);
+        EscritorioMenu.add(ae);
+        ae.show();
+        this.dispose();
+    }//GEN-LAST:event_jBSiguienteActionPerformed
  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField JTGarantia;
     private javax.swing.JButton jBAtras;
     private javax.swing.JButton jBCancelar;
-    private javax.swing.JButton jBExaminar;
-    private javax.swing.JButton jBFinalizar;
+    private javax.swing.JButton jBSiguiente;
     private javax.swing.JComboBox jCBEstado;
-    private javax.swing.JComboBox jCBLocal;
-    private javax.swing.JComboBox jCBSeccion;
-    private javax.swing.JComboBox jCBUsuario;
     private javax.swing.JFormattedTextField jFTFecha;
     private javax.swing.JFileChooser jFileChooser1;
-    private javax.swing.JLabel jLIP;
-    private javax.swing.JLabel jLXML;
+    private javax.swing.JLabel jLHDD;
+    private javax.swing.JLabel jLMem;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -294,31 +280,34 @@ public class AltaEquipo extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jLproc;
     private javax.swing.JTextField jTCategoria;
     private javax.swing.JTextField jTFactura;
-    private javax.swing.JTextField jTIP;
+    private javax.swing.JTextField jTFactura3;
+    private javax.swing.JTextField jTHDD;
     private javax.swing.JTextField jTId;
     private javax.swing.JTextField jTMarca;
+    private javax.swing.JTextField jTMem;
     private javax.swing.JTextField jTModelo;
+    private javax.swing.JTextField jTProc;
     private javax.swing.JTextField jTProveedor;
-    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 
 public void controlOcultos(){
     if(!cate.getNombrePadre().equals("Computadora")){
-        this.jBExaminar.setVisible(false);
-        this.jTIP.setVisible(false);
-        this.jLIP.setVisible(false);
-        this.jLXML.setVisible(false);
+        this.jTHDD.setEnabled(false);
+        this.jLHDD.setEnabled(false);
+        this.jLMem.setEnabled(false);
+        this.jTMem.setEnabled(false);
+        this.jLproc.setEnabled(false);
+        this.jTProc.setEnabled(false);
     }
-
 }
 
 }
+
+
+
 

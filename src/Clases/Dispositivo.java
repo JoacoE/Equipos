@@ -60,6 +60,18 @@ public class Dispositivo {
         this.archivo = archivo;
     }
 
+    public String getProcesador() {
+        return procesador;
+    }
+
+    public String getMemoria() {
+        return memoria;
+    }
+
+    public String getHDD() {
+        return HDD;
+    }
+
     public int getIdDisp() {
         return idDisp;
     }
@@ -130,6 +142,18 @@ public class Dispositivo {
 
     public void setTipo(Categoria cat) {
         this.cat = cat;
+    }
+
+    public void setProcesador(String procesador) {
+        this.procesador = procesador;
+    }
+
+    public void setMemoria(String memoria) {
+        this.memoria = memoria;
+    }
+
+    public void setHDD(String HDD) {
+        this.HDD = HDD;
     }
 
     public void setMarca(String marca) {
