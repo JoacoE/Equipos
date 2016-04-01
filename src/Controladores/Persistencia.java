@@ -201,10 +201,38 @@ public class Persistencia {
     }
     
     public void persistirEquipo(Dispositivo disp){
+               // StringTokenizer tokens = new StringTokenizer(nombre);
+//        String nom = tokens.nextToken();
+//        String ape = tokens.nextToken();
+        try{
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");
+            Statement stmt = con.createStatement();
+            SQLXML info = con.createSQLXML();
+            OutputStream os = info.setBinaryStream ();
+            FileInputStream fis = new FileInputStream(disp.getArchivo().getAbsolutePath());
+            int read;
+            while ((read = fis.read ()) != -1) {
+                os.write (read);
+            }
+            //termina prueba
+            //int id= (int)rs.getInt(1)+1;
+            PreparedStatement preparedStmt = con.prepareStatement("INSERT INTO Dispositivo(id_Dispositivo, Marca,Modelo, id_Lugar, Archivo_XML)" + "VALUES (?,?,?,?,?)");
+            preparedStmt.setInt (1, disp.getIdDisp());
+            preparedStmt.setString (2,disp.getMarca());
+            preparedStmt.setString (3, disp.getModelo());
+            preparedStmt.setInt (4, 2);
+            preparedStmt.setSQLXML(5, info);
+            
+        
+            preparedStmt.execute();
+            con.close();
+        }catch(Exception ex){}
+        
+        }
         
         
-        
-    }
+    
     
     //CATEGORIAS---------------------------------------------------------------
     

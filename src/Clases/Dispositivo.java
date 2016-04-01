@@ -5,6 +5,7 @@
  */
 package Clases;
 import Enumerados.Estado;
+import java.io.File;
 import java.io.FileInputStream;
 import java.util.Date;
 import java.util.Calendar;
@@ -34,12 +35,12 @@ public class Dispositivo {
     private int factura;
     private String ip;
     private String nota;
-    private FileInputStream archivo;
+    private File archivo;
     
     public Dispositivo() {
     }
 
-    public Dispositivo(int idDisp, int idSw, Categoria cat, String marca, String modelo, String procesador, String memoria, String HDD, Usuario usuario, Lugar lugar, Date fecha_compra, String proveedor, Estado estado, int garantia, int factura, String ip, String nota, FileInputStream archivo) {
+    public Dispositivo(int idDisp, int idSw, Categoria cat, String marca, String modelo, String procesador, String memoria, String HDD, Usuario usuario, Lugar lugar, Date fecha_compra, String proveedor, Estado estado, int garantia, int factura, String ip, String nota, File archivo) {
         this.idDisp = idDisp;
         this.idSw = idSw;
         this.cat = cat;
@@ -128,7 +129,7 @@ public class Dispositivo {
         return nota;
     }
 
-    public FileInputStream getArchivo() {
+    public File getArchivo() {
         return archivo;
     }
 
@@ -200,7 +201,7 @@ public class Dispositivo {
         this.nota = nota;
     }
 
-    public void setArchivo(FileInputStream archivo) {
+    public void setArchivo(File archivo) {
         this.archivo = archivo;
     }
     

@@ -6,6 +6,7 @@
 package Controladores;
 
 import Clases.Categoria;
+import Clases.Dispositivo;
 import Clases.Software;
 import java.util.ArrayList;
 
@@ -28,5 +29,6 @@ public interface IControlador {
     public abstract void addCategoria(Categoria cat);
     public abstract ArrayList listarUsuarios();
     public abstract ArrayList listarLugares();
+    public abstract void addDispositivo(Dispositivo disp);
 
 }

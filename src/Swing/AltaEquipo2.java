@@ -12,8 +12,10 @@ import Clases.Usuario;
 import Controladores.Fabrica;
 import Controladores.IControlador;
 import static Swing.Console.EscritorioMenu;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -22,6 +24,9 @@ import java.util.Iterator;
 public class AltaEquipo2 extends javax.swing.JInternalFrame {
     private Categoria cate;
     private IControlador IC; 
+    private File f;
+    private Dispositivo dis;
+    
     /**
      * Creates new form AltaEquipo2
      */
@@ -31,6 +36,7 @@ public class AltaEquipo2 extends javax.swing.JInternalFrame {
         Fabrica fabrica = Fabrica.getInstance();
         IC = fabrica.getICtrl();
         this.cate=disp.getTipo();
+        this.dis=disp;
         controlOcultos();
         CargarComboLugar();
         CargarComboUsuarios();
@@ -235,6 +241,9 @@ public class AltaEquipo2 extends javax.swing.JInternalFrame {
 
     private void jBFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBFinalizarActionPerformed
         // TODO add your handling code here:
+        this.dis.setArchivo(f);
+        IC.addDispositivo(dis);
+        
     }//GEN-LAST:event_jBFinalizarActionPerformed
 
     private void jBCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCancelarActionPerformed
@@ -255,7 +264,9 @@ public class AltaEquipo2 extends javax.swing.JInternalFrame {
 
     private void jBExaminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExaminarActionPerformed
         // TODO add your handling code here:
-        
+        JFileChooser fc = new JFileChooser();
+        fc.showOpenDialog(null);
+        this.f = fc.getSelectedFile();
         //Examinar ex= new Examinar();
     }//GEN-LAST:event_jBExaminarActionPerformed
 

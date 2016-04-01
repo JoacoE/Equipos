@@ -6,6 +6,7 @@
 package Controladores;
 
 import Clases.Categoria;
+import Clases.Dispositivo;
 import Clases.Lugar;
 import Clases.Software;
 import Clases.Usuario;
@@ -180,6 +181,11 @@ public void addCategoria(Categoria cat){
     p.persistirCategoria(cat);
 }
     
-    
+public void addDispositivo(Dispositivo disp){
+    Fabrica fabrica = Fabrica.getInstance();
+    Persistencia p = fabrica.getPers();
+    p.persistirEquipo(disp);
+
+}
     
 }
