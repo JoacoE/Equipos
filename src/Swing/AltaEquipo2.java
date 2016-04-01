@@ -7,7 +7,13 @@ package Swing;
 
 import Clases.Categoria;
 import Clases.Dispositivo;
+import Clases.Lugar;
+import Clases.Usuario;
+import Controladores.Fabrica;
+import Controladores.IControlador;
 import static Swing.Console.EscritorioMenu;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -15,13 +21,19 @@ import static Swing.Console.EscritorioMenu;
  */
 public class AltaEquipo2 extends javax.swing.JInternalFrame {
     private Categoria cate;
+    private IControlador IC; 
     /**
      * Creates new form AltaEquipo2
      */
     public AltaEquipo2(Dispositivo disp) {
         initComponents();
+        initComponents();
+        Fabrica fabrica = Fabrica.getInstance();
+        IC = fabrica.getICtrl();
         this.cate=disp.getTipo();
         controlOcultos();
+        CargarComboLugar();
+        CargarComboUsuarios();
         
     }
 
@@ -35,13 +47,10 @@ public class AltaEquipo2 extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         jBnuevoUsu = new javax.swing.JButton();
-        jBnuevoLocal = new javax.swing.JButton();
-        jBnuevaSecc = new javax.swing.JButton();
+        jBnuevaUbic = new javax.swing.JButton();
         jCBUsuario = new javax.swing.JComboBox();
-        jCBLocal = new javax.swing.JComboBox();
-        jCBSeccion = new javax.swing.JComboBox();
+        jCBUbicacion = new javax.swing.JComboBox();
         jLUsuario = new javax.swing.JLabel();
         jTIP = new javax.swing.JTextField();
         jLIP = new javax.swing.JLabel();
@@ -52,37 +61,24 @@ public class AltaEquipo2 extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jBFinalizar = new javax.swing.JButton();
         jBCancelar = new javax.swing.JButton();
+        jBActualizarUsu = new javax.swing.JButton();
+        jBActualizarUbi = new javax.swing.JButton();
 
         setClosable(true);
 
-        jLabel6.setText("Local:");
+        jLabel6.setText("Ubicación:");
 
-        jLabel7.setText("Sección:");
-
-        jBnuevoUsu.setText("Nuevo");
+        jBnuevoUsu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/nuevoU.png"))); // NOI18N
         jBnuevoUsu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBnuevoUsuActionPerformed(evt);
             }
         });
 
-        jBnuevoLocal.setText("Nuevo");
-        jBnuevoLocal.addActionListener(new java.awt.event.ActionListener() {
+        jBnuevaUbic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ubicacion.png"))); // NOI18N
+        jBnuevaUbic.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBnuevoLocalActionPerformed(evt);
-            }
-        });
-
-        jBnuevaSecc.setText("Nuevo");
-        jBnuevaSecc.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBnuevaSeccActionPerformed(evt);
-            }
-        });
-
-        jCBSeccion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBSeccionActionPerformed(evt);
+                jBnuevaUbicActionPerformed(evt);
             }
         });
 
@@ -92,12 +88,19 @@ public class AltaEquipo2 extends javax.swing.JInternalFrame {
 
         jLXML.setText("Adjuntar XML");
 
+        jBExaminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar .png"))); // NOI18N
         jBExaminar.setText("Examinar");
+        jBExaminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBExaminarActionPerformed(evt);
+            }
+        });
 
         jScrollPane1.setViewportView(jTObserva);
 
         jLabel1.setText(" Observación:");
 
+        jBFinalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/finalizar.png"))); // NOI18N
         jBFinalizar.setText("Finalizar");
         jBFinalizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -105,10 +108,25 @@ public class AltaEquipo2 extends javax.swing.JInternalFrame {
             }
         });
 
+        jBCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancelar.png"))); // NOI18N
         jBCancelar.setText("Cancelar");
         jBCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBCancelarActionPerformed(evt);
+            }
+        });
+
+        jBActualizarUsu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/actualizar.png"))); // NOI18N
+        jBActualizarUsu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBActualizarUsuActionPerformed(evt);
+            }
+        });
+
+        jBActualizarUbi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/actualizar.png"))); // NOI18N
+        jBActualizarUbi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBActualizarUbiActionPerformed(evt);
             }
         });
 
@@ -117,89 +135,78 @@ public class AltaEquipo2 extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLUsuario)
-                            .addComponent(jLabel6))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jCBUsuario, 0, 249, Short.MAX_VALUE)
-                            .addComponent(jCBLocal, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jBnuevoLocal))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jBnuevoUsu))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(61, 61, 61)
-                                        .addComponent(jLIP))
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTIP)
-                                    .addComponent(jCBSeccion, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addComponent(jBnuevaSecc)))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(jLXML)
-                .addGap(18, 18, 18)
-                .addComponent(jBExaminar)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addComponent(jBCancelar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jBFinalizar)
                 .addGap(21, 21, 21))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLUsuario)
+                            .addComponent(jLabel6)
+                            .addComponent(jLIP))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jTIP)
+                                .addGap(33, 33, 33))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(jCBUbicacion, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jBActualizarUbi, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(jCBUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jBActualizarUsu, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jBnuevoUsu)
+                            .addComponent(jBnuevaUbic)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLXML)
+                        .addGap(18, 18, 18)
+                        .addComponent(jBExaminar)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLUsuario)
                     .addComponent(jCBUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBnuevoUsu))
+                    .addComponent(jBnuevoUsu)
+                    .addComponent(jBActualizarUsu))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jCBLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBnuevoLocal))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jCBSeccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBnuevaSecc))
+                    .addComponent(jCBUbicacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBnuevaUbic)
+                    .addComponent(jBActualizarUbi))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLIP)
                     .addComponent(jTIP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLXML)
                     .addComponent(jBExaminar))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
+                        .addGap(39, 39, 39)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                        .addGap(26, 26, 26)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jBFinalizar)
                     .addComponent(jBCancelar))
@@ -214,19 +221,17 @@ public class AltaEquipo2 extends javax.swing.JInternalFrame {
         AltaUsuario au = new AltaUsuario();
         EscritorioMenu.add(au);
         au.show();
+        this.jCBUsuario.removeAllItems();
+        CargarComboUsuarios();
     }//GEN-LAST:event_jBnuevoUsuActionPerformed
 
-    private void jBnuevoLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBnuevoLocalActionPerformed
+    private void jBnuevaUbicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBnuevaUbicActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jBnuevoLocalActionPerformed
+        AltaLugar al = new AltaLugar();
+        EscritorioMenu.add(al);
+        al.show();
 
-    private void jBnuevaSeccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBnuevaSeccActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jBnuevaSeccActionPerformed
-
-    private void jCBSeccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBSeccionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCBSeccionActionPerformed
+    }//GEN-LAST:event_jBnuevaUbicActionPerformed
 
     private void jBFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBFinalizarActionPerformed
         // TODO add your handling code here:
@@ -236,23 +241,40 @@ public class AltaEquipo2 extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jBCancelarActionPerformed
 
+    private void jBActualizarUbiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBActualizarUbiActionPerformed
+        // TODO add your handling code here:
+        this.jCBUbicacion.removeAllItems();
+        CargarComboLugar();
+    }//GEN-LAST:event_jBActualizarUbiActionPerformed
+
+    private void jBActualizarUsuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBActualizarUsuActionPerformed
+        // TODO add your handling code here:
+        this.jCBUsuario.removeAllItems();
+        CargarComboUsuarios();
+    }//GEN-LAST:event_jBActualizarUsuActionPerformed
+
+    private void jBExaminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExaminarActionPerformed
+        // TODO add your handling code here:
+        
+        //Examinar ex= new Examinar();
+    }//GEN-LAST:event_jBExaminarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBActualizarUbi;
+    private javax.swing.JButton jBActualizarUsu;
     private javax.swing.JButton jBCancelar;
     private javax.swing.JButton jBExaminar;
     private javax.swing.JButton jBFinalizar;
-    private javax.swing.JButton jBnuevaSecc;
-    private javax.swing.JButton jBnuevoLocal;
+    private javax.swing.JButton jBnuevaUbic;
     private javax.swing.JButton jBnuevoUsu;
-    private javax.swing.JComboBox jCBLocal;
-    private javax.swing.JComboBox jCBSeccion;
+    private javax.swing.JComboBox jCBUbicacion;
     private javax.swing.JComboBox jCBUsuario;
     private javax.swing.JLabel jLIP;
     private javax.swing.JLabel jLUsuario;
     private javax.swing.JLabel jLXML;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTIP;
     private javax.swing.JTextPane jTObserva;
@@ -269,10 +291,28 @@ public void controlOcultos(){
         this.jCBUsuario.setEnabled(false);
         this.jBnuevoUsu.setEnabled(false);
         this.jLUsuario.setEnabled(false);
-    
+    }
+}
+public void CargarComboUsuarios(){
+    ArrayList usuarios; 
+    usuarios=IC.listarUsuarios();
+    Iterator it = usuarios.iterator();
+    while(it.hasNext()){
+        Usuario u = (Usuario) it.next();
+        this.jCBUsuario.addItem(u.getNombre()+" "+u.getApellido());
+    }
+}
+public void CargarComboLugar(){
+    ArrayList lugares; 
+    lugares=IC.listarLugares();
+    Iterator it = lugares.iterator();
+    while(it.hasNext()){
+        Lugar l = (Lugar) it.next();
+        this.jCBUbicacion.addItem(l.getLocal()+"->"+l.getSeccion());
     }
 
 
-
 }
+
+
 }

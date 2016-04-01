@@ -70,6 +70,17 @@ public class Controlador implements IControlador {
        return p.listarEquipos();
     }
     
+    public ArrayList listarUsuarios(){
+       Fabrica fabrica = Fabrica.getInstance();
+       Persistencia p = fabrica.getPers();
+       return p.listarUsuarios();
+    }
+    public ArrayList listarLugares(){
+       Fabrica fabrica = Fabrica.getInstance();
+       Persistencia p = fabrica.getPers();
+       return p.listarLugar();
+    }
+
 //    public ArrayList listarTecnicos(){
 //        ArrayList tecs = new ArrayList();
 //        try{

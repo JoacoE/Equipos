@@ -140,7 +140,7 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
                 else
                     JOptionPane.showMessageDialog(null, "El Usuario ya Existe","ERROR",JOptionPane.ERROR_MESSAGE);
         }      
-
+        
     }//GEN-LAST:event_jbAceptarActionPerformed
 
     private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed

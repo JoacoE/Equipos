@@ -7,6 +7,7 @@ package Swing;
 
 import Clases.Categoria;
 import Clases.Dispositivo;
+import Enumerados.Estado;
 import static Swing.Console.EscritorioMenu;
 import java.awt.Dimension;
 
@@ -24,6 +25,7 @@ public class AltaEquipo extends javax.swing.JInternalFrame {
         this.cate=cat;
         this.jTCategoria.setText(cate.getNombrePadre()+"-->"+cate.getNombre());
         controlOcultos();
+        cargarCombo();
         
 
         
@@ -303,7 +305,12 @@ public void controlOcultos(){
         this.jTMem.setEnabled(false);
         this.jLproc.setEnabled(false);
         this.jTProc.setEnabled(false);
-    }
+    }    
+}
+public void cargarCombo(){
+    this.jCBEstado.addItem("ACTIVO");
+    this.jCBEstado.addItem("INACTIVO");
+    this.jCBEstado.addItem("DESUSO");
 }
 
 }

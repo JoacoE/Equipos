@@ -6,6 +6,7 @@
 package Controladores;
 
 import Clases.Categoria;
+import Clases.Dispositivo;
 import Clases.Lugar;
 import Clases.Software;
 import Clases.Usuario;
@@ -28,6 +29,7 @@ public class Persistencia {
     public Persistencia() {
     }
     
+    //USUARIOS------------------------------------------------------------------
     public void PersistirUsuario(Usuario usr){
               
         try{
@@ -57,6 +59,23 @@ public class Persistencia {
         }catch(Exception ex){}
         return false;
     }
+    public ArrayList listarUsuarios(){
+    ArrayList Ausu = new ArrayList();
+    try{
+        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");          
+        Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM Usuario");
+        while(rs.next()){
+            Usuario u = new Usuario(rs.getString(2),rs.getString(3));
+            Ausu.add(u);
+            //rs.next();
+        }
+    }catch(Exception ex){}   
+    return Ausu;
+    }
+    
+    //LUGARES-------------------------------------------------------------------
     
     public boolean existeLugar(String local, String seccion){
     try{
@@ -86,6 +105,24 @@ public class Persistencia {
             con.close();
         }catch(Exception ex){}
     }
+    
+        public ArrayList listarLugar(){
+        ArrayList ALug = new ArrayList();
+        try{
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");          
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Lugar");
+            while(rs.next()){
+                Lugar l = new Lugar(rs.getString(2),rs.getString(3));
+                ALug.add(l);
+                //rs.next();
+            }
+        }catch(Exception ex){}   
+        return ALug;
+    }
+        
+    //SOFTWARE------------------------------------------------------------------
     
     public Software existeSW(int id){
         try{
@@ -135,6 +172,8 @@ public class Persistencia {
     
     }
     
+    //DISPOSITIVOS--------------------------------------------------------------
+    
     public ArrayList listarEquipos(){
         ArrayList equipos = new ArrayList();
         try{
@@ -160,6 +199,14 @@ public class Persistencia {
         }catch(Exception ex){}
         return equipos;
     }
+    
+    public void persistirEquipo(Dispositivo disp){
+        
+        
+        
+    }
+    
+    //CATEGORIAS---------------------------------------------------------------
     
     public ArrayList ListarCategorias(){
         ArrayList Acat = new ArrayList();
@@ -205,6 +252,8 @@ public class Persistencia {
             con.close();
         }catch(Exception ex){}
     }
+    
+
     
 }
 
