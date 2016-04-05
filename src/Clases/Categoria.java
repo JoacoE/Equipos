@@ -23,6 +23,11 @@ public class Categoria {
         this.nombrePadre = nombrePadre;
     }
 
+    public Categoria(String nombre, String nombrePadre) {
+        this.nombre = nombre;
+        this.nombrePadre = nombrePadre;
+    }
+    
     public int getId() {
         return id;
     }

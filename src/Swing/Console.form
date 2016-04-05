@@ -26,6 +26,9 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jmAltaUsuario">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Imagenes/nuevoU.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Usuario"/>
               </Properties>
               <Events>
@@ -34,6 +37,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmAltaLugar">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Imagenes/ubicacion.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Lugar"/>
               </Properties>
               <Events>
@@ -42,6 +48,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmAltaSoftware">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Imagenes/software.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Software"/>
               </Properties>
               <Events>
@@ -50,10 +59,24 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmEquipo">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Imagenes/pc.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Equipo"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmEquipoActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMSalir">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Imagenes/cancelar.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Salir"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMSalirActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -91,7 +114,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="EscritorioMenu" pref="642" max="32767" attributes="0"/>
+              <Component id="EscritorioMenu" pref="590" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -100,7 +123,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="EscritorioMenu" pref="641" max="32767" attributes="0"/>
+              <Component id="EscritorioMenu" pref="485" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>

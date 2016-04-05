@@ -51,13 +51,16 @@ public class AltaLugar extends javax.swing.JInternalFrame {
             }
         });
 
+        jbAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/finalizar.png"))); // NOI18N
         jbAceptar.setText("Aceptar");
+        jbAceptar.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         jbAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbAceptarActionPerformed(evt);
             }
         });
 
+        jbCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancelar.png"))); // NOI18N
         jbCancelar.setText("Cancelar");
 
         jLabel2.setText("Nombre de la seccion:");
@@ -82,7 +85,7 @@ public class AltaLugar extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextLocal)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 230, Short.MAX_VALUE)
+                                .addGap(0, 210, Short.MAX_VALUE)
                                 .addComponent(jbAceptar))
                             .addComponent(jLabel2)
                             .addComponent(jLabel1)
@@ -100,7 +103,7 @@ public class AltaLugar extends javax.swing.JInternalFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextSeccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbAceptar)
                     .addComponent(jbCancelar))

@@ -83,13 +83,16 @@ public class AltaSoftware extends javax.swing.JInternalFrame {
             }
         });
 
+        jbAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/finalizar.png"))); // NOI18N
         jbAceptar.setText("Aceptar");
+        jbAceptar.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         jbAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbAceptarActionPerformed(evt);
             }
         });
 
+        jbCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancelar.png"))); // NOI18N
         jbCancelar.setText("Cancelar");
 
         jLabel4.setText("Descripcion");

@@ -12,9 +12,11 @@ import Clases.Usuario;
 import Controladores.Fabrica;
 import Controladores.IControlador;
 import static Swing.Console.EscritorioMenu;
+import java.awt.event.ItemEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.StringTokenizer;
 import javax.swing.JFileChooser;
 
 /**
@@ -26,6 +28,8 @@ public class AltaEquipo2 extends javax.swing.JInternalFrame {
     private IControlador IC; 
     private File f;
     private Dispositivo dis;
+    private String us;
+    private String lug;
     
     /**
      * Creates new form AltaEquipo2
@@ -88,6 +92,18 @@ public class AltaEquipo2 extends javax.swing.JInternalFrame {
             }
         });
 
+        jCBUsuario.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCBUsuarioItemStateChanged(evt);
+            }
+        });
+
+        jCBUbicacion.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCBUbicacionItemStateChanged(evt);
+            }
+        });
+
         jLUsuario.setText("Usuario:");
 
         jLIP.setText("IP:");
@@ -96,6 +112,7 @@ public class AltaEquipo2 extends javax.swing.JInternalFrame {
 
         jBExaminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar .png"))); // NOI18N
         jBExaminar.setText("Examinar");
+        jBExaminar.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         jBExaminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBExaminarActionPerformed(evt);
@@ -108,6 +125,7 @@ public class AltaEquipo2 extends javax.swing.JInternalFrame {
 
         jBFinalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/finalizar.png"))); // NOI18N
         jBFinalizar.setText("Finalizar");
+        jBFinalizar.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         jBFinalizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBFinalizarActionPerformed(evt);
@@ -186,17 +204,19 @@ public class AltaEquipo2 extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLUsuario)
-                    .addComponent(jCBUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jBnuevoUsu)
-                    .addComponent(jBActualizarUsu))
+                    .addComponent(jBActualizarUsu)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLUsuario)
+                        .addComponent(jCBUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jCBUbicacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jBnuevaUbic)
-                    .addComponent(jBActualizarUbi))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel6)
+                        .addComponent(jCBUbicacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jBActualizarUbi)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLIP)
@@ -241,8 +261,19 @@ public class AltaEquipo2 extends javax.swing.JInternalFrame {
 
     private void jBFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBFinalizarActionPerformed
         // TODO add your handling code here:
-        this.dis.setArchivo(f);
+        StringTokenizer tokens = new StringTokenizer(us);
+        Usuario u = new Usuario(Integer.parseInt(tokens.nextToken()),tokens.nextToken(),tokens.nextToken());
+        this.dis.setUsuario(u);
+        StringTokenizer tokens1 = new StringTokenizer(lug);
+        Lugar l = new Lugar(Integer.parseInt(tokens1.nextToken()),tokens1.nextToken(),tokens1.nextToken());
+        this.dis.setLugar(l);
+        if(this.dis.getTipo().getNombrePadre().equals("Computadora")){
+            this.dis.setArchivo(f);
+        }
+        this.dis.setIp(this.jTIP.getText());
+        this.dis.setNota(this.jTObserva.getText());
         IC.addDispositivo(dis);
+        
         
     }//GEN-LAST:event_jBFinalizarActionPerformed
 
@@ -269,6 +300,18 @@ public class AltaEquipo2 extends javax.swing.JInternalFrame {
         this.f = fc.getSelectedFile();
         //Examinar ex= new Examinar();
     }//GEN-LAST:event_jBExaminarActionPerformed
+
+    private void jCBUsuarioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCBUsuarioItemStateChanged
+        // TODO add your handling code here:
+        if(evt.getStateChange()==ItemEvent.SELECTED)
+            this.us=(evt.getItem().toString());
+    }//GEN-LAST:event_jCBUsuarioItemStateChanged
+
+    private void jCBUbicacionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCBUbicacionItemStateChanged
+        // TODO add your handling code here:
+        if(evt.getStateChange()==ItemEvent.SELECTED)
+            this.lug=(evt.getItem().toString());
+    }//GEN-LAST:event_jCBUbicacionItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -310,7 +353,7 @@ public void CargarComboUsuarios(){
     Iterator it = usuarios.iterator();
     while(it.hasNext()){
         Usuario u = (Usuario) it.next();
-        this.jCBUsuario.addItem(u.getNombre()+" "+u.getApellido());
+        this.jCBUsuario.addItem(u.getId()+" "+u.getNombre()+" "+u.getApellido());
     }
 }
 public void CargarComboLugar(){
@@ -319,7 +362,7 @@ public void CargarComboLugar(){
     Iterator it = lugares.iterator();
     while(it.hasNext()){
         Lugar l = (Lugar) it.next();
-        this.jCBUbicacion.addItem(l.getLocal()+"->"+l.getSeccion());
+        this.jCBUbicacion.addItem(l.getId()+" "+l.getLocal()+" "+l.getSeccion());
     }
 
 

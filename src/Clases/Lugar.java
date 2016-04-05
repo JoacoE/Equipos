@@ -11,15 +11,26 @@ package Clases;
  */
 public class Lugar {
     
+    private int id;
     private String local;
     private String seccion;
 
     public Lugar() {
     }
 
+    public Lugar(int id, String local, String seccion) {
+        this.id = id;
+        this.local = local;
+        this.seccion = seccion;
+    }
+
     public Lugar(String local, String seccion) {
         this.local = local;
         this.seccion = seccion;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getLocal() {
@@ -28,6 +39,10 @@ public class Lugar {
 
     public String getSeccion() {
         return seccion;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setLocal(String local) {

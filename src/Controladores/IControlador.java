@@ -26,9 +26,10 @@ public interface IControlador {
     public abstract ArrayList listarEquipos();
     public abstract ArrayList ListarCat();
     public abstract boolean existeCat(String nom, String padre);
-    public abstract void addCategoria(Categoria cat);
+    public abstract int addCategoria(Categoria cat);
     public abstract ArrayList listarUsuarios();
     public abstract ArrayList listarLugares();
     public abstract void addDispositivo(Dispositivo disp);
+    public abstract int retornoIdCategoria(Categoria cat);
 
 }

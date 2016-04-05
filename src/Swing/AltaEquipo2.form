@@ -82,18 +82,22 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jCBUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jBnuevoUsu" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="jBActualizarUsu" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jCBUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jCBUbicacion" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jBnuevaUbic" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jBActualizarUbi" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jCBUbicacion" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jBActualizarUbi" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -157,6 +161,9 @@
           <StringArray count="0"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCBUsuarioItemStateChanged"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JComboBox" name="jCBUbicacion">
       <Properties>
@@ -164,6 +171,9 @@
           <StringArray count="0"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCBUbicacionItemStateChanged"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLUsuario">
       <Properties>
@@ -188,6 +198,7 @@
           <Image iconType="3" name="/Imagenes/buscar .png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Examinar"/>
+        <Property name="horizontalTextPosition" type="int" value="2"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBExaminarActionPerformed"/>
@@ -215,6 +226,7 @@
           <Image iconType="3" name="/Imagenes/finalizar.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Finalizar"/>
+        <Property name="horizontalTextPosition" type="int" value="2"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBFinalizarActionPerformed"/>

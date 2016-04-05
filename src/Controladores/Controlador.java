@@ -175,10 +175,10 @@ public boolean existeCat(String nombre, String padre){
         return false;
 }   
 
-public void addCategoria(Categoria cat){
+public int addCategoria(Categoria cat){
     Fabrica fabrica = Fabrica.getInstance();
     Persistencia p = fabrica.getPers();
-    p.persistirCategoria(cat);
+    return p.persistirCategoria(cat);
 }
     
 public void addDispositivo(Dispositivo disp){
@@ -186,6 +186,12 @@ public void addDispositivo(Dispositivo disp){
     Persistencia p = fabrica.getPers();
     p.persistirEquipo(disp);
 
+}
+
+public int retornoIdCategoria(Categoria cat){
+    Fabrica fabrica = Fabrica.getInstance();
+    Persistencia p = fabrica.getPers();
+    return p.devIdCat(cat);
 }
     
 }

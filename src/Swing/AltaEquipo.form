@@ -11,6 +11,18 @@
     </Component>
     <Component class="javax.swing.JTextField" name="jTFactura3">
     </Component>
+    <Component class="javax.swing.JComboBox" name="jComboBox1">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="4">
+            <StringItem index="0" value="Item 1"/>
+            <StringItem index="1" value="Item 2"/>
+            <StringItem index="2" value="Item 3"/>
+            <StringItem index="3" value="Item 4"/>
+          </StringArray>
+        </Property>
+      </Properties>
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="closable" type="boolean" value="true"/>
@@ -74,22 +86,21 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jTProc" max="32767" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                               <Component id="jBCancelar" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace pref="22" max="32767" attributes="0"/>
                               <Component id="jBSiguiente" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="jTProveedor" alignment="0" max="32767" attributes="0"/>
                           <Component id="JTGarantia" alignment="0" max="32767" attributes="0"/>
                           <Component id="jTFactura" max="32767" attributes="0"/>
-                          <Component id="jFTFecha" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jCBEstado" alignment="0" pref="230" max="32767" attributes="0"/>
+                          <Component id="jCBEstado" alignment="0" max="32767" attributes="0"/>
                           <Component id="jTMem" alignment="1" max="32767" attributes="0"/>
                           <Component id="jTHDD" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jDCFecha" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="16" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -117,9 +128,9 @@
                   <Component id="jTModelo" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jFTFecha" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                  <Component id="jDCFecha" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -156,7 +167,7 @@
                   <Component id="jTHDD" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLHDD" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="22" max="32767" attributes="0"/>
+              <EmptySpace pref="28" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jBCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jBAtras" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -170,17 +181,27 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="jBCancelar">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Imagenes/cancelar.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Cancelar"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jBAtras">
       <Properties>
-        <Property name="text" type="java.lang.String" value="&lt;- Atras"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Imagenes/anterior.png"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Atras"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jBSiguiente">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Siguiente-&gt;"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Imagenes/siguiente.png"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Siguiente"/>
+        <Property name="horizontalTextPosition" type="int" value="2"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBSiguienteActionPerformed"/>
@@ -252,19 +273,15 @@
     </Component>
     <Component class="javax.swing.JTextField" name="jTFactura">
     </Component>
-    <Component class="javax.swing.JFormattedTextField" name="jFTFecha">
-      <Properties>
-        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-          <Format subtype="0" type="1"/>
-        </Property>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JComboBox" name="jCBEstado">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCBEstadoItemStateChanged"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLproc">
       <Properties>
@@ -286,6 +303,8 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTHDD">
+    </Component>
+    <Component class="com.toedter.calendar.JDateChooser" name="jDCFecha">
     </Component>
   </SubComponents>
 </Form>

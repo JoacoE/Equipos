@@ -13,6 +13,7 @@ import Clases.Usuario;
 import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -67,7 +68,7 @@ public class Persistencia {
         Statement stmt = con.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM Usuario");
         while(rs.next()){
-            Usuario u = new Usuario(rs.getString(2),rs.getString(3));
+            Usuario u = new Usuario(rs.getInt(1),rs.getString(2),rs.getString(3));
             Ausu.add(u);
             //rs.next();
         }
@@ -114,7 +115,7 @@ public class Persistencia {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Lugar");
             while(rs.next()){
-                Lugar l = new Lugar(rs.getString(2),rs.getString(3));
+                Lugar l = new Lugar(rs.getInt(1),rs.getString(2),rs.getString(3));
                 ALug.add(l);
                 //rs.next();
             }
@@ -204,6 +205,7 @@ public class Persistencia {
                // StringTokenizer tokens = new StringTokenizer(nombre);
 //        String nom = tokens.nextToken();
 //        String ape = tokens.nextToken();
+        
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");
@@ -217,12 +219,21 @@ public class Persistencia {
             }
             //termina prueba
             //int id= (int)rs.getInt(1)+1;
-            PreparedStatement preparedStmt = con.prepareStatement("INSERT INTO Dispositivo(id_Dispositivo, Marca,Modelo, id_Lugar, Archivo_XML)" + "VALUES (?,?,?,?,?)");
+            PreparedStatement preparedStmt = con.prepareStatement("INSERT INTO Dispositivo(id_Dispositivo, Marca,Modelo, id_Lugar, id_Usuario, id_Categoria, IP, Fecha_Compra, Proveedor, Estado, Garantia, Factura, Archivo_XML, Nota)" + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             preparedStmt.setInt (1, disp.getIdDisp());
             preparedStmt.setString (2,disp.getMarca());
             preparedStmt.setString (3, disp.getModelo());
-            preparedStmt.setInt (4, 2);
-            preparedStmt.setSQLXML(5, info);
+            preparedStmt.setInt (4, disp.getLugar().getId());
+            preparedStmt.setInt (5, disp.getUsuario().getId());
+            preparedStmt.setInt (6, disp.getTipo().getId());
+            preparedStmt.setString (7, disp.getIp());
+            preparedStmt.setDate (8,  new java.sql.Date(disp.getFecha_compra().getYear(),disp.getFecha_compra().getMonth(),disp.getFecha_compra().getDay()));
+            preparedStmt.setString (9, disp.getProveedor());
+            preparedStmt.setString (10, disp.getEstado());
+            preparedStmt.setInt (11, disp.getGarantia());
+            preparedStmt.setInt (12, disp.getFactura());
+            preparedStmt.setSQLXML(13, info);
+            preparedStmt.setString (14, disp.getNota());
             
         
             preparedStmt.execute();
@@ -264,7 +275,7 @@ public class Persistencia {
         return false;
     }
     
-    public void persistirCategoria(Categoria cat){              
+    public int persistirCategoria(Categoria cat){              
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");
@@ -278,9 +289,22 @@ public class Persistencia {
             preparedStmt.setString (3, cat.getNombrePadre());
             preparedStmt.execute();
             con.close();
+            return id;
         }catch(Exception ex){}
+        return 0;
     }
-    
+    public int devIdCat(Categoria cat){
+        try{
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT id_Categoria FROM Categoria WHERE Nombre ='"+cat.getNombre()+"'and Nombre_Padre='"+cat.getNombrePadre()+"'");
+            rs.next();
+            int id= (int)rs.getInt(1);
+            return id;
+        }catch(Exception ex){}
+        return 0;
+    }
 
     
 }

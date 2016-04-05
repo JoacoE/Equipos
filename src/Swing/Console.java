@@ -7,6 +7,9 @@ package Swing;
 
 //import lab01.Interfaces.RegUsuario;
 
+
+
+
 /**
  *
  * @author Joaquin
@@ -18,6 +21,8 @@ public class Console extends javax.swing.JFrame {
      */
     public Console() {
         initComponents();
+
+       
     }
 
     /**
@@ -39,6 +44,7 @@ public class Console extends javax.swing.JFrame {
         jmAltaLugar = new javax.swing.JMenuItem();
         jmAltaSoftware = new javax.swing.JMenuItem();
         jmEquipo = new javax.swing.JMenuItem();
+        jMSalir = new javax.swing.JMenuItem();
         ver = new javax.swing.JMenu();
 
         jMenuItem1.setText("jMenuItem1");
@@ -51,6 +57,7 @@ public class Console extends javax.swing.JFrame {
 
         smnuSalir.setText("Nuevo");
 
+        jmAltaUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/nuevoU.png"))); // NOI18N
         jmAltaUsuario.setText("Usuario");
         jmAltaUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -59,6 +66,7 @@ public class Console extends javax.swing.JFrame {
         });
         smnuSalir.add(jmAltaUsuario);
 
+        jmAltaLugar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ubicacion.png"))); // NOI18N
         jmAltaLugar.setText("Lugar");
         jmAltaLugar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -67,6 +75,7 @@ public class Console extends javax.swing.JFrame {
         });
         smnuSalir.add(jmAltaLugar);
 
+        jmAltaSoftware.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/software.png"))); // NOI18N
         jmAltaSoftware.setText("Software");
         jmAltaSoftware.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -75,6 +84,7 @@ public class Console extends javax.swing.JFrame {
         });
         smnuSalir.add(jmAltaSoftware);
 
+        jmEquipo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/pc.png"))); // NOI18N
         jmEquipo.setText("Equipo");
         jmEquipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -82,6 +92,15 @@ public class Console extends javax.swing.JFrame {
             }
         });
         smnuSalir.add(jmEquipo);
+
+        jMSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancelar.png"))); // NOI18N
+        jMSalir.setText("Salir");
+        jMSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMSalirActionPerformed(evt);
+            }
+        });
+        smnuSalir.add(jMSalir);
 
         menu.add(smnuSalir);
 
@@ -96,14 +115,14 @@ public class Console extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(EscritorioMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 642, Short.MAX_VALUE)
+                .addComponent(EscritorioMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(EscritorioMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 641, Short.MAX_VALUE)
+                .addComponent(EscritorioMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -140,6 +159,11 @@ public class Console extends javax.swing.JFrame {
         EscritorioMenu.add(sc);
         sc.show();
     }//GEN-LAST:event_jmEquipoActionPerformed
+
+    private void jMSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMSalirActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jMSalirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -178,6 +202,7 @@ public class Console extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JDesktopPane EscritorioMenu;
+    private javax.swing.JMenuItem jMSalir;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;

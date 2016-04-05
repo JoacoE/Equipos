@@ -30,7 +30,7 @@ public class Dispositivo {
     private Lugar lugar;
     private Date fecha_compra;
     private String proveedor;
-    private Estado estado;
+    private String estado;
     private int garantia;
     private int factura;
     private String ip;
@@ -40,7 +40,7 @@ public class Dispositivo {
     public Dispositivo() {
     }
 
-    public Dispositivo(int idDisp, int idSw, Categoria cat, String marca, String modelo, String procesador, String memoria, String HDD, Usuario usuario, Lugar lugar, Date fecha_compra, String proveedor, Estado estado, int garantia, int factura, String ip, String nota, File archivo) {
+    public Dispositivo(int idDisp, int idSw, Categoria cat, String marca, String modelo, String procesador, String memoria, String HDD, Usuario usuario, Lugar lugar, Date fecha_compra, String proveedor, String estado, int garantia, int factura, String ip, String nota, File archivo) {
         this.idDisp = idDisp;
         this.idSw = idSw;
         this.cat = cat;
@@ -109,7 +109,7 @@ public class Dispositivo {
         return proveedor;
     }
 
-    public Estado getEstado() {
+    public String getEstado() {
         return estado;
     }
 
@@ -181,7 +181,7 @@ public class Dispositivo {
         this.proveedor = proveedor;
     }
 
-    public void setEstado(Estado estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 

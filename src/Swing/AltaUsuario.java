@@ -60,6 +60,7 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Ingrese Datos del Usuario");
 
+        jbCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancelar.png"))); // NOI18N
         jbCancelar.setText("Cancelar");
         jbCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -67,7 +68,9 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
             }
         });
 
+        jbAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/finalizar.png"))); // NOI18N
         jbAceptar.setText("Aceptar");
+        jbAceptar.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         jbAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbAceptarActionPerformed(evt);

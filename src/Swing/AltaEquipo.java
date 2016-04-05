@@ -10,6 +10,7 @@ import Clases.Dispositivo;
 import Enumerados.Estado;
 import static Swing.Console.EscritorioMenu;
 import java.awt.Dimension;
+import java.awt.event.ItemEvent;
 
 /**
  *
@@ -20,6 +21,7 @@ public class AltaEquipo extends javax.swing.JInternalFrame {
     /**
      * Creates new form AltaEquipo
      */
+    
     public AltaEquipo(Categoria cat) {
         initComponents();
         this.cate=cat;
@@ -31,6 +33,7 @@ public class AltaEquipo extends javax.swing.JInternalFrame {
         
     }
     private Categoria cate;
+    private String estado;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -43,6 +46,7 @@ public class AltaEquipo extends javax.swing.JInternalFrame {
         jFileChooser1 = new javax.swing.JFileChooser();
         jLabel15 = new javax.swing.JLabel();
         jTFactura3 = new javax.swing.JTextField();
+        jComboBox1 = new javax.swing.JComboBox();
         jBCancelar = new javax.swing.JButton();
         jBAtras = new javax.swing.JButton();
         jBSiguiente = new javax.swing.JButton();
@@ -62,7 +66,6 @@ public class AltaEquipo extends javax.swing.JInternalFrame {
         jTProveedor = new javax.swing.JTextField();
         JTGarantia = new javax.swing.JTextField();
         jTFactura = new javax.swing.JTextField();
-        jFTFecha = new javax.swing.JFormattedTextField();
         jCBEstado = new javax.swing.JComboBox();
         jLproc = new javax.swing.JLabel();
         jTProc = new javax.swing.JTextField();
@@ -70,8 +73,11 @@ public class AltaEquipo extends javax.swing.JInternalFrame {
         jTMem = new javax.swing.JTextField();
         jLHDD = new javax.swing.JLabel();
         jTHDD = new javax.swing.JTextField();
+        jDCFecha = new com.toedter.calendar.JDateChooser();
 
         jLabel15.setText("Factura:");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         setClosable(true);
         setMaximizable(true);
@@ -79,11 +85,15 @@ public class AltaEquipo extends javax.swing.JInternalFrame {
         setTitle("Nuevo Equipo");
         setAutoscrolls(true);
 
+        jBCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancelar.png"))); // NOI18N
         jBCancelar.setText("Cancelar");
 
-        jBAtras.setText("<- Atras");
+        jBAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/anterior.png"))); // NOI18N
+        jBAtras.setText("Atras");
 
-        jBSiguiente.setText("Siguiente->");
+        jBSiguiente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/siguiente.png"))); // NOI18N
+        jBSiguiente.setText("Siguiente");
+        jBSiguiente.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         jBSiguiente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBSiguienteActionPerformed(evt);
@@ -117,7 +127,11 @@ public class AltaEquipo extends javax.swing.JInternalFrame {
         jTCategoria.setEditable(false);
         jTCategoria.setEnabled(false);
 
-        jFTFecha.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        jCBEstado.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCBEstadoItemStateChanged(evt);
+            }
+        });
 
         jLproc.setText("Procesador:");
 
@@ -161,18 +175,17 @@ public class AltaEquipo extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTProc)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
                                 .addComponent(jBCancelar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                                 .addComponent(jBSiguiente))
                             .addComponent(jTProveedor)
                             .addComponent(JTGarantia)
                             .addComponent(jTFactura)
-                            .addComponent(jFTFecha)
-                            .addComponent(jCBEstado, 0, 230, Short.MAX_VALUE)
+                            .addComponent(jCBEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jTMem, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTHDD, javax.swing.GroupLayout.Alignment.TRAILING))))
-                .addContainerGap(16, Short.MAX_VALUE))
+                            .addComponent(jTHDD, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jDCFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -194,9 +207,9 @@ public class AltaEquipo extends javax.swing.JInternalFrame {
                     .addComponent(jLabel4)
                     .addComponent(jTModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel8)
-                    .addComponent(jFTFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jDCFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
@@ -225,7 +238,7 @@ public class AltaEquipo extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTHDD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLHDD))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBCancelar)
                     .addComponent(jBAtras)
@@ -249,8 +262,10 @@ public class AltaEquipo extends javax.swing.JInternalFrame {
         disp.setMarca(this.jTMarca.getText());
         disp.setModelo(this.jTModelo.getText());
         disp.setProveedor(this.jTProveedor.getText());
+        disp.setFecha_compra(this.jDCFecha.getDate());
         disp.setFactura(Integer.parseInt(this.jTFactura.getText()));
         disp.setGarantia(Integer.parseInt(this.JTGarantia.getText()));
+        disp.setEstado(this.estado);
         if(cate.getNombrePadre().equals("Computadora")){
             disp.setProcesador(this.jTProc.getText());
             disp.setMemoria(this.jTMem.getText());
@@ -262,6 +277,12 @@ public class AltaEquipo extends javax.swing.JInternalFrame {
         ae.show();
         this.dispose();
     }//GEN-LAST:event_jBSiguienteActionPerformed
+
+    private void jCBEstadoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCBEstadoItemStateChanged
+        // TODO add your handling code here:
+             if(evt.getStateChange()==ItemEvent.SELECTED)
+            this.estado=(evt.getItem().toString());
+    }//GEN-LAST:event_jCBEstadoItemStateChanged
  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -270,7 +291,8 @@ public class AltaEquipo extends javax.swing.JInternalFrame {
     private javax.swing.JButton jBCancelar;
     private javax.swing.JButton jBSiguiente;
     private javax.swing.JComboBox jCBEstado;
-    private javax.swing.JFormattedTextField jFTFecha;
+    private javax.swing.JComboBox jComboBox1;
+    private com.toedter.calendar.JDateChooser jDCFecha;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLHDD;
     private javax.swing.JLabel jLMem;

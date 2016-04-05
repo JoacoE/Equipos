@@ -103,13 +103,16 @@ public class SelCat extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(jTCategoria);
 
-        jbSiguiente.setText("Siguiente ->");
+        jbSiguiente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/siguiente.png"))); // NOI18N
+        jbSiguiente.setText("Siguiente");
+        jbSiguiente.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         jbSiguiente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbSiguienteActionPerformed(evt);
             }
         });
 
+        jbCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancelar.png"))); // NOI18N
         jbCancelar.setText("Cancelar");
         jbCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -162,7 +165,7 @@ public class SelCat extends javax.swing.JInternalFrame {
                         .addComponent(jRbCrear)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -241,8 +244,9 @@ public class SelCat extends javax.swing.JInternalFrame {
                         JOptionPane.showMessageDialog(rootPane, "La categoria ya existe", "ERROR", JOptionPane.ERROR_MESSAGE);
                     else{
                         if(valido){ 
-                            Categoria ret = new Categoria(1000,this.jTNCategoria.getText(),cat.getNombre());
-                            IC.addCategoria(ret);
+                            Categoria ret = new Categoria(this.jTNCategoria.getText(),cat.getNombre());
+                            int idcat = IC.addCategoria(ret);
+                            ret.setId(idcat);
                             JOptionPane.showMessageDialog(rootPane, "Categoría creada", "EXITO", JOptionPane.INFORMATION_MESSAGE);
                             AltaEquipo ae = new AltaEquipo(ret);
                             Console.EscritorioMenu.add(ae);
@@ -272,7 +276,7 @@ public class SelCat extends javax.swing.JInternalFrame {
     private void jTCategoriaValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_jTCategoriaValueChanged
         // TODO add your handling code here:
         DefaultMutableTreeNode sel = (DefaultMutableTreeNode)this.jTCategoria.getLastSelectedPathComponent();
-        this.cat = new Categoria(1000,(String)sel.getUserObject(),null);
+        this.cat = new Categoria((String)sel.getUserObject(),null);
         if(!sel.isRoot()){
             DefaultMutableTreeNode padre = (DefaultMutableTreeNode) sel.getParent(); 
             this.cat.setNombrePadre((String)padre.getUserObject());
