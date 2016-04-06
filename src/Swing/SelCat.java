@@ -8,6 +8,7 @@ package Swing;
 import Clases.Categoria;
 import Controladores.Fabrica;
 import Controladores.IControlador;
+import static Swing.Console.EscritorioMenu;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.DefaultListModel;
@@ -37,9 +38,8 @@ public class SelCat extends javax.swing.JInternalFrame {
         modelo = new DefaultTreeModel(Raiz);
         JTree tree = new JTree(modelo);       
         cargarArbol();
-        this.jTNCategoria.disable();
         this.jLSelCat.setVisible(false);
-        this.jLnCat.setVisible(false);
+        
         
     }
     DefaultListModel modelCat;
@@ -47,7 +47,7 @@ public class SelCat extends javax.swing.JInternalFrame {
     DefaultTreeModel modelo; //= new DefaultTreeModel(Raiz);
     
     public void cargarArbol(){
-       
+        this.jTCategoria.removeAll();
             ArrayList cats = IC.ListarCat();
             Iterator it = cats.iterator();
             
@@ -84,11 +84,11 @@ public class SelCat extends javax.swing.JInternalFrame {
         jTCategoria = new javax.swing.JTree();
         jbSiguiente = new javax.swing.JButton();
         jbCancelar = new javax.swing.JButton();
-        jRbCrear = new javax.swing.JRadioButton();
-        jTNCategoria = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLSelCat = new javax.swing.JLabel();
-        jLnCat = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jBCategoria = new javax.swing.JButton();
+        jBActualizar = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Seleccionar Categoria");
@@ -120,83 +120,81 @@ public class SelCat extends javax.swing.JInternalFrame {
             }
         });
 
-        jRbCrear.setText("Crear nueva categoria");
-        jRbCrear.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jRbCrearMouseClicked(evt);
-            }
-        });
-        jRbCrear.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRbCrearActionPerformed(evt);
-            }
-        });
-
-        jTNCategoria.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTNCategoriaActionPerformed(evt);
-            }
-        });
-
         jLabel1.setText("Seleccione una categoría:");
 
         jLSelCat.setForeground(new java.awt.Color(255, 0, 0));
-        jLSelCat.setText("Debe seleccionar una categoría padre");
+        jLSelCat.setText("Debe seleccionar una categoría");
 
-        jLnCat.setForeground(new java.awt.Color(255, 0, 0));
-        jLnCat.setText("Ingrese el nombre de la nueva categoria ");
+        jLabel2.setText("Nueva Categoria:");
+
+        jBCategoria.setText("jButton1");
+        jBCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBCategoriaActionPerformed(evt);
+            }
+        });
+
+        jBActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/actualizar.png"))); // NOI18N
+        jBActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBActualizarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(jbCancelar)
-                        .addGap(40, 40, 40)
-                        .addComponent(jbSiguiente))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jRbCrear)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTNCategoria, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLSelCat, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGap(22, 22, 22))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLnCat)
-                        .addContainerGap())))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jbCancelar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jbSiguiente))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addComponent(jLabel1)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLSelCat)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addGap(46, 46, 46)
+                                        .addComponent(jBCategoria))
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jBActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(55, 55, 55)
+                        .addComponent(jBActualizar)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLSelCat)
-                .addGap(18, 18, 18)
-                .addComponent(jRbCrear)
-                .addGap(18, 18, 18)
-                .addComponent(jTNCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLnCat)
-                .addGap(18, 18, 18)
+                .addGap(46, 46, 46)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jBCategoria))
+                .addGap(53, 53, 53)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbSiguiente)
                     .addComponent(jbCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();
@@ -207,70 +205,20 @@ public class SelCat extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jbCancelarActionPerformed
 
-    private void jTNCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTNCategoriaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTNCategoriaActionPerformed
-
-    private void jRbCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRbCrearActionPerformed
-        // TODO add your handling code here:
-        
-        if (this.jRbCrear.isSelected())
-            this.jTNCategoria.enable();
-        else
-            this.jTNCategoria.disable();
-    }//GEN-LAST:event_jRbCrearActionPerformed
-
-    private void jRbCrearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRbCrearMouseClicked
-        // TODO add your handling code here:
-        
-//        if (this.jRbCrear.isSelected())
-//            this.jTNCategoria.setVisible(true);
-//        else
-//            this.jTNCategoria.setVisible(false);
-    }//GEN-LAST:event_jRbCrearMouseClicked
-
     private void jbSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSiguienteActionPerformed
         // TODO add your handling code here:
-        if(this.jRbCrear.isSelected()){
-            if(this.jTNCategoria.getText().isEmpty())
-                JOptionPane.showMessageDialog(rootPane, "Debe ingresar el nombre de una categoría", "ERROR", JOptionPane.ERROR_MESSAGE);
-            else
-                if(this.cat == null){
-                    this.jLSelCat.setText("Debe seleccionar una categoría padre");
-                    this.jLSelCat.setVisible(true);
-                }
-                else{
-                    if(IC.existeCat(jTNCategoria.getText(),cat.getNombre()))
-                        JOptionPane.showMessageDialog(rootPane, "La categoria ya existe", "ERROR", JOptionPane.ERROR_MESSAGE);
-                    else{
-                        if(valido){ 
-                            Categoria ret = new Categoria(this.jTNCategoria.getText(),cat.getNombre());
-                            int idcat = IC.addCategoria(ret);
-                            ret.setId(idcat);
-                            JOptionPane.showMessageDialog(rootPane, "Categoría creada", "EXITO", JOptionPane.INFORMATION_MESSAGE);
-                            AltaEquipo ae = new AltaEquipo(ret);
-                            Console.EscritorioMenu.add(ae);
-                            ae.show();
-                            this.dispose();   
-                        }  
-                    }    
-                }
+        if(this.cat == null || this.cat.getNombre()==null){
+            this.jLSelCat.setText("Debe seleccionar una categoría");
+                this.jLSelCat.setVisible(true);
         }
         else{
-            if(this.cat == null || this.cat.getNombre()==null){
-                this.jLSelCat.setText("Debe seleccionar una categoría");
-                    this.jLSelCat.setVisible(true);
-            }
-            else{
-                AltaEquipo ae = new AltaEquipo(this.cat);
-                Console.EscritorioMenu.add(ae);
-                ae.show();
-                this.dispose();
-            }
-        
-        }
-        
-        
+            int idCat = IC.retornoIdCategoria(cat);
+            cat.setId(idCat);
+            AltaEquipo ae = new AltaEquipo(this.cat);
+            Console.EscritorioMenu.add(ae);
+            ae.show();
+            this.dispose();
+        } 
     }//GEN-LAST:event_jbSiguienteActionPerformed
 
     private void jTCategoriaValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_jTCategoriaValueChanged
@@ -280,30 +228,47 @@ public class SelCat extends javax.swing.JInternalFrame {
         if(!sel.isRoot()){
             DefaultMutableTreeNode padre = (DefaultMutableTreeNode) sel.getParent(); 
             this.cat.setNombrePadre((String)padre.getUserObject());
-            if(this.jRbCrear.isSelected() && !cat.getNombrePadre().equals("Categorias")){
-                this.jLSelCat.setText("Debe seleccionar una categoría padre");
-                this.valido=false;
+            if(padre.getUserObject().equals("Categorias")){
+                this.jLSelCat.setText("Seleccione una categoria del 2do nivel");
                 this.jLSelCat.setVisible(true);
             }
-            else {
+            else
                 this.jLSelCat.setVisible(false);
-                this.valido=true;
-            }
         }
-        
-        //this.jLabel2.setVisible(false);
+        else{
+            this.jLSelCat.setText("Seleccione una categoria del 2do nivel");
+            this.jLSelCat.setVisible(true);
+        }
     }//GEN-LAST:event_jTCategoriaValueChanged
+
+    private void jBCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCategoriaActionPerformed
+        // TODO add your handling code here:
+        NuevaCategoria nc = new NuevaCategoria();
+        EscritorioMenu.add(nc);
+        nc.show();
+        
+    }//GEN-LAST:event_jBCategoriaActionPerformed
+
+    private void jBActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBActualizarActionPerformed
+        // TODO add your handling code here:
+        
+        //this.jTCategoria.removeAll();
+        this.Raiz.removeAllChildren();
+        modelo.reload();
+        cargarArbol();
+        
+    }//GEN-LAST:event_jBActualizarActionPerformed
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton jBActualizar;
+    private javax.swing.JButton jBCategoria;
     private javax.swing.JLabel jLSelCat;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLnCat;
-    private javax.swing.JRadioButton jRbCrear;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTree jTCategoria;
-    private javax.swing.JTextField jTNCategoria;
     private javax.swing.JButton jbCancelar;
     private javax.swing.JButton jbSiguiente;
     // End of variables declaration//GEN-END:variables

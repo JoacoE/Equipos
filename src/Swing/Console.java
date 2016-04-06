@@ -46,6 +46,7 @@ public class Console extends javax.swing.JFrame {
         jmEquipo = new javax.swing.JMenuItem();
         jMSalir = new javax.swing.JMenuItem();
         ver = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -105,6 +106,15 @@ public class Console extends javax.swing.JFrame {
         menu.add(smnuSalir);
 
         ver.setText("Ver");
+
+        jMenuItem4.setText("Equipos");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        ver.add(jMenuItem4);
+
         menu.add(ver);
 
         setJMenuBar(menu);
@@ -165,6 +175,10 @@ public class Console extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jMSalirActionPerformed
 
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -206,6 +220,7 @@ public class Console extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jmAltaLugar;
     private javax.swing.JMenuItem jmAltaSoftware;
     private javax.swing.JMenuItem jmAltaUsuario;

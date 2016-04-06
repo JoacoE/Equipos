@@ -22,7 +22,7 @@ public interface IControlador {
 //    public abstract ArrayList listarTareas();
 //    public abstract void registrar(String nombre, String tarea, int horas);
     public abstract boolean addLugar(String local, String seccion);
-    public abstract Software addSw(int id, String tipo, String descripcion, String key, int idDisp, int licencias);
+    public abstract void addSw(int id, String tipo, String descripcion, String key, int idDisp, int licencias);
     public abstract ArrayList listarEquipos();
     public abstract ArrayList ListarCat();
     public abstract boolean existeCat(String nom, String padre);
@@ -31,5 +31,7 @@ public interface IControlador {
     public abstract ArrayList listarLugares();
     public abstract void addDispositivo(Dispositivo disp);
     public abstract int retornoIdCategoria(Categoria cat);
+    public abstract void setNcat(Categoria Ncat);
+    public abstract Categoria getNcat();
 
 }

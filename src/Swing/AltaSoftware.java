@@ -217,18 +217,10 @@ public class AltaSoftware extends javax.swing.JInternalFrame {
             if(this.jTextKey.getText().isEmpty())
                 JOptionPane.showMessageDialog(null, "Ingrese el CD Key","ERROR",JOptionPane.ERROR_MESSAGE);
             else{
-                if(IC.addSw(Integer.parseInt(this.jtextID.getText()), tipo, this.jTextDesc.getText(), this.jTextKey.getText(), equipo, Integer.parseInt(this.jTextLicencias.getText()))==null){
-                    JOptionPane.showMessageDialog(null, "Ingresado con Exito","EXITO",JOptionPane.INFORMATION_MESSAGE);
-                    this.dispose();
+                IC.addSw(Integer.parseInt(this.jtextID.getText()), tipo, this.jTextDesc.getText(), this.jTextKey.getText(), equipo, Integer.parseInt(this.jTextLicencias.getText()));
+                JOptionPane.showMessageDialog(null, "Ingresado con Exito","EXITO",JOptionPane.INFORMATION_MESSAGE);
+                this.dispose();
                 }
-                else
-                    JOptionPane.showMessageDialog(null, "ERROR","ERROR",JOptionPane.ERROR_MESSAGE);
-            }
-        
-        
-        //this.dispose();
-        
-        // TODO add your handling code here:
     }//GEN-LAST:event_jbAceptarActionPerformed
 
     private void jTextLicenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextLicenciasActionPerformed

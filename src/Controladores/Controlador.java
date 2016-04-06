@@ -31,6 +31,16 @@ public class Controlador implements IControlador {
     
     public Controlador(){}
     
+    private Categoria Ncat;
+
+    public void setNcat(Categoria Ncat) {
+        this.Ncat = Ncat;
+    }
+
+    public Categoria getNcat() {
+        return Ncat;
+    }
+    
     public boolean addUsuario(String nombre, String apellido){
         Fabrica fabrica = Fabrica.getInstance();
         Persistencia p = fabrica.getPers();
@@ -114,16 +124,11 @@ public class Controlador implements IControlador {
 //        return tars;
 //    }
     
-    public Software addSw(int id, String tipo, String descripcion, String key, int idDisp, int licencias){
+    public void addSw(int id, String tipo, String descripcion, String key, int idDisp, int licencias){
         Fabrica fabrica = Fabrica.getInstance();
         Persistencia p = fabrica.getPers();
-        if(p.existeSW(id)==null){
-            Software sw = new Software(id, tipo, descripcion, key, idDisp, licencias);
-            p.persistirSw(sw);
-            return null;
-            }
-        else
-            return p.existeSW(id);     
+        Software sw = new Software(id, tipo, descripcion, key, idDisp, licencias);
+        p.persistirSw(sw);
     }
     
     public ArrayList ListarCat(){
