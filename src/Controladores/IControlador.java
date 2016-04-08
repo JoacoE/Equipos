@@ -33,5 +33,6 @@ public interface IControlador {
     public abstract int retornoIdCategoria(Categoria cat);
     public abstract void setNcat(Categoria Ncat);
     public abstract Categoria getNcat();
-
+    public abstract String validarSW(int id, int licencias, int id_dispo);
+    public abstract Software retKey(int id);
 }

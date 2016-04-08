@@ -173,8 +173,40 @@ public class Persistencia {
     
     }
     
-    //DISPOSITIVOS--------------------------------------------------------------
-    
+    public String validarSoft(int id, int licencias, int id_equipo){
+        try{
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");          
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Software WHERE id_Software='"+id+"'");          
+            int cantidad=0;
+            while(rs.next()){
+                cantidad++;
+                if(rs.getInt(5)==id_equipo)
+                    return "id_Equipo";
+                if(rs.getInt(6)==licencias)
+                    return "licencia";
+            }    
+        }catch(Exception ex){}
+        return "valido";
+    }
+    public Software retKey(int id){
+        try{
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");          
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Software WHERE id_Software='"+id+"'");          
+            if(rs.next()){
+                Software sw = new Software(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getInt(6));
+                return sw;
+            }
+            else
+                return null;
+        }catch(Exception ex){}
+        return null;
+    }
+        //DISPOSITIVOS--------------------------------------------------------------
+
     public ArrayList listarEquipos(){
         ArrayList equipos = new ArrayList();
         try{

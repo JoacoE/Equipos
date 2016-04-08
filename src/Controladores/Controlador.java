@@ -130,6 +130,16 @@ public class Controlador implements IControlador {
         Software sw = new Software(id, tipo, descripcion, key, idDisp, licencias);
         p.persistirSw(sw);
     }
+    public String validarSW(int id, int licencias, int id_dispo){
+        Fabrica fabrica = Fabrica.getInstance();
+        Persistencia p = fabrica.getPers();
+        return p.validarSoft(id, licencias, id_dispo);
+    }
+    public Software retKey(int id){
+        Fabrica fabrica = Fabrica.getInstance();
+        Persistencia p = fabrica.getPers();
+        return p.retKey(id);
+    }
     
     public ArrayList ListarCat(){
         Fabrica fabrica = Fabrica.getInstance();
