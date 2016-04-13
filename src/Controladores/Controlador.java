@@ -124,10 +124,10 @@ public class Controlador implements IControlador {
 //        return tars;
 //    }
     
-    public void addSw(int id, String tipo, String descripcion, String key, int idDisp, int licencias){
+    public void addSw(int id, String tipo, String descripcion, String key, int licencias){
         Fabrica fabrica = Fabrica.getInstance();
         Persistencia p = fabrica.getPers();
-        Software sw = new Software(id, tipo, descripcion, key, idDisp, licencias);
+        Software sw = new Software(id, tipo, descripcion, key, licencias);
         p.persistirSw(sw);
     }
     public String validarSW(int id, int licencias, int id_dispo){
@@ -145,6 +145,12 @@ public class Controlador implements IControlador {
         Fabrica fabrica = Fabrica.getInstance();
         Persistencia p = fabrica.getPers();
         return p.ListarCategorias();
+    }
+    
+    public ArrayList ListarEquipos(){
+        Fabrica fabrica = Fabrica.getInstance();
+        Persistencia p = fabrica.getPers();
+        return p.listarEquipos();
     }
 //        StringTokenizer tokens = new StringTokenizer(nombre);
 //        String nom = tokens.nextToken();
@@ -207,6 +213,12 @@ public int retornoIdCategoria(Categoria cat){
     Fabrica fabrica = Fabrica.getInstance();
     Persistencia p = fabrica.getPers();
     return p.devIdCat(cat);
+}
+
+public Categoria findCategoria(int id){
+    Fabrica fabrica = Fabrica.getInstance();
+    Persistencia p = fabrica.getPers();
+    return p.findCategoria(id);
 }
     
 }

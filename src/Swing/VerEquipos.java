@@ -5,17 +5,39 @@
  */
 package Swing;
 
+import Clases.Categoria;
+import Clases.Dispositivo;
+import Clases.Lugar;
+import Clases.Usuario;
+import java.util.Iterator;
+import java.util.List;
+import Controladores.Fabrica;
+import Controladores.IControlador;
+import java.util.ArrayList;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 /**
  *
  * @author Nelson
  */
 public class VerEquipos extends javax.swing.JInternalFrame {
-
+    private IControlador IC;
+    int fila = 0;
+    DefaultTableModel modelo;
     /**
      * Creates new form NewJInternalFrame
      */
     public VerEquipos() {
         initComponents();
+        modelo = (DefaultTableModel)this.jTableEquipos.getModel();
+        Fabrica fabrica = Fabrica.getInstance();
+        IC = fabrica.getICtrl();
+        TableRowSorter<TableModel> elQueOrdena = new TableRowSorter<TableModel>(modelo);
+        jTableEquipos.setRowSorter(elQueOrdena);
+        LoadTableProductRest();
+        //modelo.setRowFilter(RowFilter.regexFilter("2", 1));
     }
 
     /**
@@ -28,23 +50,27 @@ public class VerEquipos extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableEquipos = new javax.swing.JTable();
 
         setClosable(true);
+        setMaximizable(true);
+        setResizable(true);
         setTitle("Ver Equipos");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableEquipos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Categoría", "Marca", "Modelo", "Procesador", "Memoria", "HDD", "IP", "Estado", "Lugar", "Usuario", "Fecha de Compra", "Proveedor", "Garantia", "Factura"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jTableEquipos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableEquiposMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTableEquipos);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -59,15 +85,61 @@ public class VerEquipos extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 13, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jTableEquiposMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableEquiposMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTableEquiposMouseClicked
+
+    
+    private void LoadTableProductRest(){
+
+        ArrayList equipos = IC.listarEquipos();
+        Iterator it = equipos.iterator();
+        String lista[]=new String[15];
+        //Iterator inds = lstProdInd.iterator();
+        while(it.hasNext()){
+            Dispositivo disp = (Dispositivo)it.next();
+            Categoria cat = disp.getTipo();
+            Lugar lug = disp.getLugar();
+            Usuario usu = disp.getUsuario();
+            lista[0]= Integer.toString(disp.getIdDisp());
+            lista[1]= cat.getNombrePadre()+"-->"+cat.getNombre();
+            lista[2]= disp.getMarca();
+            lista[3]= disp.getModelo();
+            if(cat.getNombrePadre().equals("Computadora")){
+                lista[4]= disp.getProcesador();
+                lista[5]= disp.getMemoria();
+                lista[6]= disp.getHDD();
+                lista[7]= disp.getIp();
+            }
+            else{
+                lista[4]= "";
+                lista[5]= "";
+                lista[6]= "";
+                lista[7]= "";
+            }
+            lista[8]= disp.getEstado();
+            lista[9]= lug.getLocal()+"-->"+lug.getSeccion();            
+            lista[10]= usu.getNombre()+" "+usu.getApellido();
+            lista[11]= disp.getFecha_compra().toString();
+            lista[12]= disp.getProveedor();
+            lista[13]= Integer.toString(disp.getGarantia());
+            lista[14]= Integer.toString(disp.getFactura());
+
+            
+            modelo.insertRow((int)fila, lista);
+            fila++;
+        }
+        
+    } 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableEquipos;
     // End of variables declaration//GEN-END:variables
 }

@@ -118,6 +118,7 @@ public class AltaEquipo extends javax.swing.JInternalFrame {
 
         jLabel12.setText("Factura:");
 
+        jTId.setName(""); // NOI18N
         jTId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTIdActionPerformed(evt);

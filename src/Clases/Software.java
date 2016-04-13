@@ -17,17 +17,17 @@ public class Software {
     private String descripcion;
     private String cdKey;
     private int cantLicencias;
-    private int idDisp;
+    
 
     public Software() {
     }
 
-    public Software(int idSw, String tipo, String descripcion, String cdKey, int idDisp, int licencias) {
+    public Software(int idSw, String tipo, String descripcion, String cdKey, int licencias) {
         this.idSw = idSw;
         this.tipo = tipo;
         this.descripcion = descripcion;
         this.cdKey = cdKey;
-        this.idDisp = idDisp;
+
         this.cantLicencias=licencias;
     }
 
@@ -55,9 +55,7 @@ public class Software {
         this.cdKey = cdKey;
     }
 
-    public void setIdDisp(int idDisp) {
-        this.idDisp = idDisp;
-    }
+    
 
     public int getIdSw() {
         return idSw;
@@ -75,9 +73,7 @@ public class Software {
         return cdKey;
     }
 
-    public int getIdDisp() {
-        return idDisp;
-    }
+    
     
     
 }

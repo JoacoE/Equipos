@@ -42,9 +42,7 @@ public class AltaSoftware extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jcbTipo = new javax.swing.JComboBox();
-        jcbEquipo = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jtextID = new javax.swing.JTextField();
         jbAceptar = new javax.swing.JButton();
@@ -56,7 +54,6 @@ public class AltaSoftware extends javax.swing.JInternalFrame {
         jTextDesc = new javax.swing.JTextPane();
         jLabel6 = new javax.swing.JLabel();
         jTextLicencias = new javax.swing.JTextField();
-        jBkey = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Nuevo Software");
@@ -67,15 +64,7 @@ public class AltaSoftware extends javax.swing.JInternalFrame {
             }
         });
 
-        jcbEquipo.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jcbEquipoItemStateChanged(evt);
-            }
-        });
-
         jLabel1.setText("Tipo de Software");
-
-        jLabel2.setText("Equipo");
 
         jLabel3.setText("ID Software");
 
@@ -111,14 +100,6 @@ public class AltaSoftware extends javax.swing.JInternalFrame {
             }
         });
 
-        jBkey.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cargokey.png"))); // NOI18N
-        jBkey.setPreferredSize(new java.awt.Dimension(51, 51));
-        jBkey.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBkeyActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -131,8 +112,7 @@ public class AltaSoftware extends javax.swing.JInternalFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel1)
                         .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)))
+                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -145,18 +125,14 @@ public class AltaSoftware extends javax.swing.JInternalFrame {
                         .addComponent(jTextLicencias, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jtextID)
-                                .addComponent(jcbTipo, 0, 253, Short.MAX_VALUE)
-                                .addComponent(jScrollPane1))
-                            .addComponent(jcbEquipo, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jtextID)
+                            .addComponent(jcbTipo, 0, 253, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jTextKey, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jBkey, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addContainerGap(43, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,13 +152,8 @@ public class AltaSoftware extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextKey, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5)
-                    .addComponent(jBkey, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2)
-                    .addComponent(jcbEquipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                    .addComponent(jLabel5))
+                .addGap(18, 20, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
@@ -202,13 +173,13 @@ public class AltaSoftware extends javax.swing.JInternalFrame {
         jcbTipo.addItem(str1);
         jcbTipo.addItem(str2);
         
-        ArrayList equipos; 
-        equipos=IC.listarEquipos();
-        Iterator it = equipos.iterator();
-        while(it.hasNext()){
-            int eq = (int) it.next();
-            jcbEquipo.addItem(eq);
-        }
+//        ArrayList equipos; 
+//        equipos=IC.listarEquipos();
+//        Iterator it = equipos.iterator();
+//        while(it.hasNext()){
+//            int eq = (int) it.next();
+//            jcbEquipo.addItem(eq);
+//        }
     }
     private void jtextIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtextIDActionPerformed
         // TODO add your handling code here:
@@ -219,54 +190,27 @@ public class AltaSoftware extends javax.swing.JInternalFrame {
             this.tipo=(evt.getItem().toString());
     }//GEN-LAST:event_jcbTipoItemStateChanged
 
-    private void jcbEquipoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcbEquipoItemStateChanged
-        if(evt.getStateChange()==ItemEvent.SELECTED)
-            this.equipo=(Integer.parseInt(evt.getItem().toString()));
-    }//GEN-LAST:event_jcbEquipoItemStateChanged
-
     private void jbAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAceptarActionPerformed
         if (this.jtextID.getText().isEmpty())
             JOptionPane.showMessageDialog(null, "Ingrese ID de Software","ERROR",JOptionPane.ERROR_MESSAGE);
         else
             if(this.jTextKey.getText().isEmpty())
                 JOptionPane.showMessageDialog(null, "Ingrese el CD Key","ERROR",JOptionPane.ERROR_MESSAGE);
-            else{
-                String validar = IC.validarSW(Integer.parseInt(this.jtextID.getText()),Integer.parseInt(this.jTextLicencias.getText()) , equipo);
-                if(validar.equals("id_Equipo"))
-                    JOptionPane.showMessageDialog(null, "Este software ya está asociado a este equipo","ERROR",JOptionPane.ERROR_MESSAGE);
-                else
-                    if(validar.equals("licencia"))
-                        JOptionPane.showMessageDialog(null, "No quedan licencias disponibles para este software","ERROR",JOptionPane.ERROR_MESSAGE);
                     else{    
-                        IC.addSw(Integer.parseInt(this.jtextID.getText()), tipo, this.jTextDesc.getText(), this.jTextKey.getText(), equipo, Integer.parseInt(this.jTextLicencias.getText()));
+                        IC.addSw(Integer.parseInt(this.jtextID.getText()), tipo, this.jTextDesc.getText(), this.jTextKey.getText(), Integer.parseInt(this.jTextLicencias.getText()));
                         JOptionPane.showMessageDialog(null, "Ingresado con Exito","EXITO",JOptionPane.INFORMATION_MESSAGE);
                         this.dispose();
                     }
-                }
+                
     }//GEN-LAST:event_jbAceptarActionPerformed
 
     private void jTextLicenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextLicenciasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextLicenciasActionPerformed
 
-    private void jBkeyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBkeyActionPerformed
-        // TODO add your handling code here:
-        Software sw = IC.retKey(Integer.parseInt(this.jtextID.getText()));
-        if(sw==null)
-            JOptionPane.showMessageDialog(null, "Ingrese la KEY manualmente","ERROR",JOptionPane.ERROR_MESSAGE);
-        else{
-            this.jTextKey.setText(sw.getCdKey());
-            this.jTextLicencias.setText(Integer.toString(sw.getCantLicencias()));
-
-        }
-            
-    }//GEN-LAST:event_jBkeyActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jBkey;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -277,7 +221,6 @@ public class AltaSoftware extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextLicencias;
     private javax.swing.JButton jbAceptar;
     private javax.swing.JButton jbCancelar;
-    private javax.swing.JComboBox jcbEquipo;
     private javax.swing.JComboBox jcbTipo;
     private javax.swing.JTextField jtextID;
     // End of variables declaration//GEN-END:variables

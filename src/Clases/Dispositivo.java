@@ -19,7 +19,7 @@ public class Dispositivo {
     
     
     private int idDisp;
-    private int idSw;
+
     private Categoria cat;
     private String marca;
     private String modelo;
@@ -40,9 +40,8 @@ public class Dispositivo {
     public Dispositivo() {
     }
 
-    public Dispositivo(int idDisp, int idSw, Categoria cat, String marca, String modelo, String procesador, String memoria, String HDD, Usuario usuario, Lugar lugar, Date fecha_compra, String proveedor, String estado, int garantia, int factura, String ip, String nota, File archivo) {
+    public Dispositivo(int idDisp, String marca, String modelo, String procesador, String memoria, String HDD, Lugar lugar, Usuario usuario, Categoria cat, String ip, Date fecha_compra, String proveedor, String estado, int garantia, int factura, File archivo, String nota) {
         this.idDisp = idDisp;
-        this.idSw = idSw;
         this.cat = cat;
         this.marca = marca;
         this.modelo = modelo;
@@ -75,10 +74,6 @@ public class Dispositivo {
 
     public int getIdDisp() {
         return idDisp;
-    }
-
-    public int getIdSw() {
-        return idSw;
     }
 
     public Categoria getTipo() {
@@ -135,10 +130,6 @@ public class Dispositivo {
 
     public void setIdDisp(int idDisp) {
         this.idDisp = idDisp;
-    }
-
-    public void setIdSw(int idSw) {
-        this.idSw = idSw;
     }
 
     public void setTipo(Categoria cat) {
