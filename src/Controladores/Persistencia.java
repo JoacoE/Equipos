@@ -242,15 +242,21 @@ public class Persistencia {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Dispositivo");
             while(rs.next()){
+                String proc = " ";
+                String memoria = " ";
+                String HDD = " ";
+                Categoria cat = findCategoria(rs.getInt(9));
                 int id = rs.getInt(1);
                 String marca = rs.getString(2);
                 String modelo = rs.getString(3);
-                String proc = rs.getString(4);
-                String memoria = rs.getString(5);
-                String HDD = rs.getString(6);
+                if(cat.getNombrePadre().equals("Computadora")){
+                    proc = rs.getString(4);
+                    memoria = rs.getString(5);
+                    HDD = rs.getString(6);
+                }
                 Lugar lug = findLugar(rs.getInt(7));
                 Usuario usu = findUsuario(rs.getInt(8));
-                Categoria cat = findCategoria(rs.getInt(9));
+                
                 String ip = rs.getString(10);
                 Date fecha = rs.getDate(11);
                 String proveedor = rs.getString(12);
@@ -280,30 +286,44 @@ public class Persistencia {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");
             Statement stmt = con.createStatement();
-            SQLXML info = con.createSQLXML();
-            OutputStream os = info.setBinaryStream ();
-            FileInputStream fis = new FileInputStream(disp.getArchivo().getAbsolutePath());
-            int read;
-            while ((read = fis.read ()) != -1) {
-                os.write (read);
+            if(disp.getTipo().getNombrePadre().equals("Computadora")){
+           
             }
             //termina prueba
             //int id= (int)rs.getInt(1)+1;
-            PreparedStatement preparedStmt = con.prepareStatement("INSERT INTO Dispositivo(id_Dispositivo, Marca,Modelo, id_Lugar, id_Usuario, id_Categoria, IP, Fecha_Compra, Proveedor, Estado, Garantia, Factura, Archivo_XML, Nota)" + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            PreparedStatement preparedStmt = con.prepareStatement("INSERT INTO Dispositivo(id_Dispositivo, Marca,Modelo,Procesador, Memoria, HDD, id_Lugar, id_Usuario, id_Categoria, IP, Fecha_Compra, Proveedor, Estado, Garantia, Factura, Archivo_XML, Nota)" + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            
+            if(disp.getTipo().getNombrePadre().equals("Computadora")){
+                
+                SQLXML info = con.createSQLXML();
+                OutputStream os = info.setBinaryStream ();
+                FileInputStream fis = new FileInputStream(disp.getArchivo().getAbsolutePath());
+                int read;
+                while ((read = fis.read ()) != -1) {
+                    os.write (read);
+                }
+                preparedStmt.setString (4, disp.getProcesador());
+                preparedStmt.setString (5, disp.getMemoria());
+                preparedStmt.setString (6, disp.getHDD());
+                preparedStmt.setSQLXML(16, info);
+            }
             preparedStmt.setInt (1, disp.getIdDisp());
             preparedStmt.setString (2,disp.getMarca());
             preparedStmt.setString (3, disp.getModelo());
-            preparedStmt.setInt (4, disp.getLugar().getId());
-            preparedStmt.setInt (5, disp.getUsuario().getId());
-            preparedStmt.setInt (6, disp.getTipo().getId());
-            preparedStmt.setString (7, disp.getIp());
-            preparedStmt.setDate (8,  new java.sql.Date(disp.getFecha_compra().getYear(),disp.getFecha_compra().getMonth(),disp.getFecha_compra().getDay()));
-            preparedStmt.setString (9, disp.getProveedor());
-            preparedStmt.setString (10, disp.getEstado());
-            preparedStmt.setInt (11, disp.getGarantia());
-            preparedStmt.setInt (12, disp.getFactura());
-            preparedStmt.setSQLXML(13, info);
-            preparedStmt.setString (14, disp.getNota());
+            preparedStmt.setString (4, disp.getProcesador());
+            preparedStmt.setString (5, disp.getMemoria());
+            preparedStmt.setString (6, disp.getHDD());
+            preparedStmt.setInt (7, disp.getLugar().getId());
+            preparedStmt.setInt (8, disp.getUsuario().getId());
+            preparedStmt.setInt (9, disp.getTipo().getId());
+            preparedStmt.setString (10, disp.getIp());
+            preparedStmt.setDate (11,  new java.sql.Date(disp.getFecha_compra().getYear(),disp.getFecha_compra().getMonth(),disp.getFecha_compra().getDay()));
+            preparedStmt.setString (12, disp.getProveedor());
+            preparedStmt.setString (13, disp.getEstado());
+            preparedStmt.setInt (14, disp.getGarantia());
+            preparedStmt.setInt (15, disp.getFactura());
+            preparedStmt.setSQLXML(16, null);
+            preparedStmt.setString (17, disp.getNota());
             
         
             preparedStmt.execute();
@@ -311,7 +331,98 @@ public class Persistencia {
         }catch(Exception ex){}
         
         }
+    
+    public void actualizarEquipo(Dispositivo disp){
+        try{
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");
+            Statement stmt = con.createStatement();
+            if(disp.getTipo().getNombrePadre().equals("Computadora")){
+           
+            }
+            //termina prueba
+            //int id= (int)rs.getInt(1)+1;
+            PreparedStatement preparedStmt = con.prepareStatement("UPDATE Dispositivo SET id_Dispositivo=?, Marca=?,Modelo=?,Procesador=?, Memoria=?, HDD=?, id_Lugar=?, id_Usuario=?, id_Categoria=?, IP=?, Fecha_Compra=?, Proveedor=?, Estado=?, Garantia=?, Factura=?, Archivo_XML=?, Nota=? WHERE id_Dispositivo='"+disp.getIdDisp()+"'");
+            
+            if(disp.getTipo().getNombrePadre().equals("Computadora")){
+                
+                SQLXML info = con.createSQLXML();
+                OutputStream os = info.setBinaryStream ();
+                FileInputStream fis = new FileInputStream(disp.getArchivo().getAbsolutePath());
+                int read;
+                while ((read = fis.read ()) != -1) {
+                    os.write (read);
+                }
+                preparedStmt.setString (4, disp.getProcesador());
+                preparedStmt.setString (5, disp.getMemoria());
+                preparedStmt.setString (6, disp.getHDD());
+                preparedStmt.setSQLXML(16, info);
+            }
+            preparedStmt.setInt (1, disp.getIdDisp());
+            preparedStmt.setString (2,disp.getMarca());
+            preparedStmt.setString (3, disp.getModelo());
+            preparedStmt.setString (4, disp.getProcesador());
+            preparedStmt.setString (5, disp.getMemoria());
+            preparedStmt.setString (6, disp.getHDD());
+            preparedStmt.setInt (7, disp.getLugar().getId());
+            preparedStmt.setInt (8, disp.getUsuario().getId());
+            preparedStmt.setInt (9, disp.getTipo().getId());
+            preparedStmt.setString (10, disp.getIp());
+            preparedStmt.setDate (11,  new java.sql.Date(disp.getFecha_compra().getYear(),disp.getFecha_compra().getMonth(),disp.getFecha_compra().getDay()));
+            preparedStmt.setString (12, disp.getProveedor());
+            preparedStmt.setString (13, disp.getEstado());
+            preparedStmt.setInt (14, disp.getGarantia());
+            preparedStmt.setInt (15, disp.getFactura());
+            preparedStmt.setSQLXML(16, null);
+            preparedStmt.setString (17, disp.getNota());
+            
         
+            preparedStmt.execute();
+            con.close();
+        }catch(Exception ex){}
+        
+    
+    }
+        
+    public Dispositivo findEquipo(int id){ 
+        try{
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT * FROM Dispositivo WHERE id_Dispositivo ='"+id+"'");
+                if(rs.next()){
+                        String proc = " ";
+                        String memoria = " ";
+                        String HDD = " ";
+                    Categoria cat = findCategoria(rs.getInt(9));
+                    
+                    String marca = rs.getString(2);
+                    String modelo = rs.getString(3);
+                    if(cat.getNombrePadre().equals("Computadora")){
+                        proc = rs.getString(4);
+                        memoria = rs.getString(5);
+                        HDD = rs.getString(6);
+                    }
+                    Lugar lug = findLugar(rs.getInt(7));
+                    Usuario usu = findUsuario(rs.getInt(8));
+                    
+                    String ip = rs.getString(10);
+                    Date fecha = rs.getDate(11);
+                    String proveedor = rs.getString(12);
+                    String estado = rs.getString(13);
+                    int garantia = rs.getInt(14);
+                    int factura = rs.getInt(15);
+                    //Categoria cate = findCategoria(idCategoria);
+    //                if(cate.getNombrePadre().equals("Computadora"))
+    //                    
+                    String notas = rs.getString(17);
+                    Dispositivo disp = new Dispositivo(id,marca,modelo,proc,memoria,HDD,lug,usu,cat,ip,fecha,proveedor,estado,garantia,factura,null,notas);
+                    return disp;
+                }
+            }catch(Exception ex){}
+            return null;
+
+    }
         
     
     

@@ -75,11 +75,7 @@ public class Controlador implements IControlador {
             return false;
     }
     
-    public ArrayList listarEquipos(){
-       Fabrica fabrica = Fabrica.getInstance();
-       Persistencia p = fabrica.getPers();
-       return p.listarEquipos();
-    }
+
     
     public ArrayList listarUsuarios(){
        Fabrica fabrica = Fabrica.getInstance();
@@ -152,6 +148,13 @@ public class Controlador implements IControlador {
         Persistencia p = fabrica.getPers();
         return p.listarEquipos();
     }
+    
+    public void actualizarEquipo(Dispositivo disp){
+        Fabrica fabrica = Fabrica.getInstance();
+        Persistencia p = fabrica.getPers();
+        p.actualizarEquipo(disp);
+    
+    }
 //        StringTokenizer tokens = new StringTokenizer(nombre);
 //        String nom = tokens.nextToken();
 //        String ape = tokens.nextToken();
@@ -220,5 +223,21 @@ public Categoria findCategoria(int id){
     Persistencia p = fabrica.getPers();
     return p.findCategoria(id);
 }
-    
+
+public Dispositivo findDispositivo(int id){
+    Fabrica fabrica = Fabrica.getInstance();
+    Persistencia p = fabrica.getPers();
+    return p.findEquipo(id);
+}
+
+public Lugar findLugar(int id){
+    Fabrica fabrica = Fabrica.getInstance();
+    Persistencia p = fabrica.getPers();
+    return p.findLugar(id);
+}
+public Usuario findUsuario(int id){
+    Fabrica fabrica = Fabrica.getInstance();
+    Persistencia p = fabrica.getPers();
+    return p.findUsuario(id);
+}    
 }

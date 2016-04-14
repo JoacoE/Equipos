@@ -13,7 +13,9 @@ import java.util.Iterator;
 import java.util.List;
 import Controladores.Fabrica;
 import Controladores.IControlador;
+import static Swing.Console.EscritorioMenu;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -51,11 +53,15 @@ public class VerEquipos extends javax.swing.JInternalFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableEquipos = new javax.swing.JTable();
+        jBVer = new javax.swing.JButton();
+        jBEditar = new javax.swing.JButton();
+        jBEliminar = new javax.swing.JButton();
 
         setClosable(true);
         setMaximizable(true);
         setResizable(true);
         setTitle("Ver Equipos");
+        setPreferredSize(new java.awt.Dimension(1100, 398));
 
         jTableEquipos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -72,20 +78,58 @@ public class VerEquipos extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(jTableEquipos);
 
+        jBVer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar .png"))); // NOI18N
+        jBVer.setText("Ver");
+        jBVer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBVerActionPerformed(evt);
+            }
+        });
+
+        jBEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/editar.png"))); // NOI18N
+        jBEditar.setText("Editar");
+        jBEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBEditarActionPerformed(evt);
+            }
+        });
+
+        jBEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancelar.png"))); // NOI18N
+        jBEliminar.setText("Eliminar");
+        jBEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBEliminarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jBEliminar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jBEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jBVer, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 13, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBEditar)
+                    .addComponent(jBEliminar)
+                    .addComponent(jBVer))
+                .addGap(0, 14, Short.MAX_VALUE))
         );
 
         pack();
@@ -95,10 +139,34 @@ public class VerEquipos extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTableEquiposMouseClicked
 
+    private void jBVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBVerActionPerformed
+        // TODO add your handling code here:
+        int fila = this.jTableEquipos.getSelectedRow();
+        int id = Integer.parseInt(this.jTableEquipos.getValueAt(fila, 0).toString());
+        VerEditarEquipo ve = new VerEditarEquipo(id,false);
+        EscritorioMenu.add(ve);
+        ve.show();
+        
+    }//GEN-LAST:event_jBVerActionPerformed
+
+    private void jBEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEditarActionPerformed
+        // TODO add your handling code here:
+        int fila = this.jTableEquipos.getSelectedRow();
+        int id = Integer.parseInt(this.jTableEquipos.getValueAt(fila, 0).toString());
+        VerEditarEquipo ve = new VerEditarEquipo(id,true);
+        EscritorioMenu.add(ve);
+        ve.show();
+    }//GEN-LAST:event_jBEditarActionPerformed
+
+    private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null, "El Usuario ya Existe","ERROR",JOptionPane.QUESTION_MESSAGE);
+    }//GEN-LAST:event_jBEliminarActionPerformed
+
     
     private void LoadTableProductRest(){
 
-        ArrayList equipos = IC.listarEquipos();
+        ArrayList equipos = IC.ListarEquipos();
         Iterator it = equipos.iterator();
         String lista[]=new String[15];
         //Iterator inds = lstProdInd.iterator();
@@ -139,6 +207,9 @@ public class VerEquipos extends javax.swing.JInternalFrame {
     } 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBEditar;
+    private javax.swing.JButton jBEliminar;
+    private javax.swing.JButton jBVer;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableEquipos;
     // End of variables declaration//GEN-END:variables

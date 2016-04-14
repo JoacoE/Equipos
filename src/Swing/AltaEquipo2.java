@@ -256,6 +256,8 @@ public class AltaEquipo2 extends javax.swing.JInternalFrame {
         AltaLugar al = new AltaLugar();
         EscritorioMenu.add(al);
         al.show();
+        this.jCBUbicacion.removeAllItems();
+        CargarComboLugar();
 
     }//GEN-LAST:event_jBnuevaUbicActionPerformed
 
