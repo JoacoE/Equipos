@@ -33,6 +33,7 @@ public class VerEquipos extends javax.swing.JInternalFrame {
      */
     public VerEquipos() {
         initComponents();
+        this.jLabelError.setVisible(false);
         modelo = (DefaultTableModel)this.jTableEquipos.getModel();
         Fabrica fabrica = Fabrica.getInstance();
         IC = fabrica.getICtrl();
@@ -56,6 +57,7 @@ public class VerEquipos extends javax.swing.JInternalFrame {
         jBVer = new javax.swing.JButton();
         jBEditar = new javax.swing.JButton();
         jBEliminar = new javax.swing.JButton();
+        jLabelError = new javax.swing.JLabel();
 
         setClosable(true);
         setMaximizable(true);
@@ -102,16 +104,22 @@ public class VerEquipos extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabelError.setForeground(new java.awt.Color(255, 0, 0));
+        jLabelError.setText("Debe seleccionar una fila de la tabla!");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1066, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(59, 59, 59)
+                        .addComponent(jLabelError)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jBEliminar)
                         .addGap(18, 18, 18)
                         .addComponent(jBEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -125,11 +133,13 @@ public class VerEquipos extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBEditar)
-                    .addComponent(jBEliminar)
-                    .addComponent(jBVer))
-                .addGap(0, 14, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jBEditar)
+                        .addComponent(jBEliminar)
+                        .addComponent(jBVer))
+                    .addComponent(jLabelError))
+                .addGap(0, 18, Short.MAX_VALUE))
         );
 
         pack();
@@ -137,6 +147,7 @@ public class VerEquipos extends javax.swing.JInternalFrame {
 
     private void jTableEquiposMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableEquiposMouseClicked
         // TODO add your handling code here:
+        this.jLabelError.setVisible(false);
     }//GEN-LAST:event_jTableEquiposMouseClicked
 
     private void jBVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBVerActionPerformed
@@ -160,7 +171,18 @@ public class VerEquipos extends javax.swing.JInternalFrame {
 
     private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null, "El Usuario ya Existe","ERROR",JOptionPane.QUESTION_MESSAGE);
+        
+        if(this.jTableEquipos.getSelectedRow()==-1){
+            this.jLabelError.setVisible(true);
+        }
+        else{
+            int resp = JOptionPane.showConfirmDialog(null, "Estás Seguro???",null,JOptionPane.OK_CANCEL_OPTION);
+            if(resp==0){
+                int id = Integer.parseInt(this.jTableEquipos.getValueAt(this.jTableEquipos.getSelectedRow(),0).toString());
+                IC.eliminarEquipo(id);
+            }
+        }
+        
     }//GEN-LAST:event_jBEliminarActionPerformed
 
     
@@ -210,6 +232,7 @@ public class VerEquipos extends javax.swing.JInternalFrame {
     private javax.swing.JButton jBEditar;
     private javax.swing.JButton jBEliminar;
     private javax.swing.JButton jBVer;
+    private javax.swing.JLabel jLabelError;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableEquipos;
     // End of variables declaration//GEN-END:variables

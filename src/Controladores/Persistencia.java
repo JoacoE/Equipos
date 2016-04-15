@@ -276,7 +276,17 @@ public class Persistencia {
         }catch(Exception ex){}
         return equipos;
     }
-    
+    public void eliminarEquipo(int id){
+        try{
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");
+            Statement stmt = con.createStatement();
+            PreparedStatement preparedStmt = con.prepareStatement("DELETE FROM Dispositivo WHERE id_Dispositivo ='"+id+"'");
+            preparedStmt.execute();
+            con.close();
+            
+        }catch(Exception ex){}
+    }
     public void persistirEquipo(Dispositivo disp){
                // StringTokenizer tokens = new StringTokenizer(nombre);
 //        String nom = tokens.nextToken();
@@ -337,26 +347,24 @@ public class Persistencia {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");
             Statement stmt = con.createStatement();
-            if(disp.getTipo().getNombrePadre().equals("Computadora")){
-           
-            }
+
             //termina prueba
             //int id= (int)rs.getInt(1)+1;
             PreparedStatement preparedStmt = con.prepareStatement("UPDATE Dispositivo SET id_Dispositivo=?, Marca=?,Modelo=?,Procesador=?, Memoria=?, HDD=?, id_Lugar=?, id_Usuario=?, id_Categoria=?, IP=?, Fecha_Compra=?, Proveedor=?, Estado=?, Garantia=?, Factura=?, Archivo_XML=?, Nota=? WHERE id_Dispositivo='"+disp.getIdDisp()+"'");
             
             if(disp.getTipo().getNombrePadre().equals("Computadora")){
                 
-                SQLXML info = con.createSQLXML();
-                OutputStream os = info.setBinaryStream ();
-                FileInputStream fis = new FileInputStream(disp.getArchivo().getAbsolutePath());
-                int read;
-                while ((read = fis.read ()) != -1) {
-                    os.write (read);
-                }
+//                SQLXML info = con.createSQLXML();
+//                OutputStream os = info.setBinaryStream ();
+//                FileInputStream fis = new FileInputStream(disp.getArchivo().getAbsolutePath());
+//                int read;
+//                while ((read = fis.read ()) != -1) {
+//                    os.write (read);
+//                }
                 preparedStmt.setString (4, disp.getProcesador());
                 preparedStmt.setString (5, disp.getMemoria());
                 preparedStmt.setString (6, disp.getHDD());
-                preparedStmt.setSQLXML(16, info);
+//                preparedStmt.setSQLXML(16, info);
             }
             preparedStmt.setInt (1, disp.getIdDisp());
             preparedStmt.setString (2,disp.getMarca());

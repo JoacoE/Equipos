@@ -149,6 +149,12 @@ public class Controlador implements IControlador {
         return p.listarEquipos();
     }
     
+    public void eliminarEquipo(int id){
+        Fabrica fabrica = Fabrica.getInstance();
+        Persistencia p = fabrica.getPers();
+        p.eliminarEquipo(id);
+    }
+    
     public void actualizarEquipo(Dispositivo disp){
         Fabrica fabrica = Fabrica.getInstance();
         Persistencia p = fabrica.getPers();

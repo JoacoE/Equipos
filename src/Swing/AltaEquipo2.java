@@ -269,9 +269,9 @@ public class AltaEquipo2 extends javax.swing.JInternalFrame {
         StringTokenizer tokens1 = new StringTokenizer(lug);
         Lugar l = new Lugar(Integer.parseInt(tokens1.nextToken()),tokens1.nextToken(),tokens1.nextToken());
         this.dis.setLugar(l);
-        if(this.dis.getTipo().getNombrePadre().equals("Computadora")){
-            this.dis.setArchivo(f);
-        }
+//        if(this.dis.getTipo().getNombrePadre().equals("Computadora")){
+//            this.dis.setArchivo(f);
+//        }
         this.dis.setIp(this.jTIP.getText());
         this.dis.setNota(this.jTObserva.getText());
         IC.addDispositivo(dis);

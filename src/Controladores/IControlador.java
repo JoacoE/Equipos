@@ -43,4 +43,5 @@ public interface IControlador {
     public abstract Lugar findLugar(int id);
     public abstract void actualizarEquipo(Dispositivo disp);
     public abstract Usuario findUsuario(int id);
+    public abstract void eliminarEquipo(int id);
 }

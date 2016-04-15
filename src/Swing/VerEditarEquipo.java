@@ -133,10 +133,12 @@ public class VerEditarEquipo extends javax.swing.JInternalFrame {
         Iterator it = cats.iterator();
         while(it.hasNext()){
             Categoria c = (Categoria) it.next();
-            this.jCBCategoria.addItem(c.getId()+" - "+c.getNombrePadre()+"-->"+c.getNombre());
-            if(c.getId()==disp.getLugar().getId()){
-                this.jCBCategoria.setSelectedItem(c.getId()+" - "+c.getNombrePadre()+"-->"+c.getNombre());
-            }
+            if(!c.getNombrePadre().equals("Categorias")){
+                this.jCBCategoria.addItem(c.getId()+" - "+c.getNombrePadre()+" --> "+c.getNombre());
+                if(c.getId()==disp.getTipo().getId()){
+                    this.jCBCategoria.setSelectedItem(c.getId()+" - "+c.getNombrePadre()+" --> "+c.getNombre());
+                }
+            }   
         }
     }
     public void cargarCboxEstado(){
@@ -228,6 +230,17 @@ public class VerEditarEquipo extends javax.swing.JInternalFrame {
         jLabel9.setText("F. Compra");
 
         jLabel10.setText("Factura");
+
+        jCBCategoria.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCBCategoriaItemStateChanged(evt);
+            }
+        });
+        jCBCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCBCategoriaActionPerformed(evt);
+            }
+        });
 
         jLabel11.setText("Garantia");
 
@@ -415,17 +428,19 @@ public class VerEditarEquipo extends javax.swing.JInternalFrame {
                     .addComponent(jLabel12)
                     .addComponent(jTextIp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel13)
-                    .addComponent(jTextProcesador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextMarca, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(jLabel13)
+                        .addComponent(jTextProcesador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel15)
-                    .addComponent(jTextMemoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextModelo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addComponent(jLabel15)
+                        .addComponent(jTextMemoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -562,6 +577,31 @@ public class VerEditarEquipo extends javax.swing.JInternalFrame {
         else
             dispose();
     }//GEN-LAST:event_jBAceptarActionPerformed
+
+    private void jCBCategoriaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCBCategoriaItemStateChanged
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_jCBCategoriaItemStateChanged
+
+    private void jCBCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBCategoriaActionPerformed
+        // TODO add your handling code here:
+        StringTokenizer tokens = new StringTokenizer(this.jCBCategoria.getSelectedItem().toString());
+        Categoria cat = IC.findCategoria(Integer.parseInt(tokens.nextToken()));
+        
+        if(cat.getNombrePadre().equals("Computadora")){
+            this.jTextIp.setEnabled(true);
+            this.jTextProcesador.setEnabled(true);
+            this.jTextMemoria.setEnabled(true);
+            this.jTextHDD.setEnabled(true);
+        }
+        else{
+            this.jTextIp.setEnabled(false);
+            this.jTextProcesador.setEnabled(false);
+            this.jTextMemoria.setEnabled(false);
+            this.jTextHDD.setEnabled(false);
+        
+        }
+    }//GEN-LAST:event_jCBCategoriaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
