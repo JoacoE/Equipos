@@ -37,7 +37,13 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
                       <Component id="jLabelError" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
+                      <Component id="jCBCampo" min="-2" pref="118" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jTextBuscar" max="32767" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jBFiltrar" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
                       <Component id="jBEliminar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                       <Component id="jBEditar" min="-2" pref="97" max="-2" attributes="0"/>
@@ -60,6 +66,9 @@
                       <Component id="jBEditar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jBEliminar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jBVer" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jBFiltrar" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jTextBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jCBCampo" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jLabelError" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
@@ -226,6 +235,26 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Debe seleccionar una fila de la tabla!"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jBFiltrar">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Imagenes/filtro.png"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Filtrar"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBFiltrarActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="jCBCampo">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jTextBuscar">
     </Component>
   </SubComponents>
 </Form>

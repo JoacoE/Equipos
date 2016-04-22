@@ -8,6 +8,7 @@ package Swing;
 import Clases.Software;
 import Controladores.Fabrica;
 import Controladores.IControlador;
+import static Swing.Console.EscritorioMenu;
 import java.awt.event.ItemEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -54,6 +55,9 @@ public class AltaSoftware extends javax.swing.JInternalFrame {
         jTextDesc = new javax.swing.JTextPane();
         jLabel6 = new javax.swing.JLabel();
         jTextLicencias = new javax.swing.JTextField();
+        jBVerEquipo = new javax.swing.JButton();
+        jTextIDEquipo = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
 
         setClosable(true);
         setTitle("Nuevo Software");
@@ -64,9 +68,9 @@ public class AltaSoftware extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel1.setText("Tipo de Software");
+        jLabel1.setText("Tipo de Software:");
 
-        jLabel3.setText("ID Software");
+        jLabel3.setText("ID Software:");
 
         jtextID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -86,13 +90,13 @@ public class AltaSoftware extends javax.swing.JInternalFrame {
         jbCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancelar.png"))); // NOI18N
         jbCancelar.setText("Cancelar");
 
-        jLabel4.setText("Descripcion");
+        jLabel4.setText("Descripcion:");
 
-        jLabel5.setText("CD Key");
+        jLabel5.setText("CD Key:");
 
         jScrollPane1.setViewportView(jTextDesc);
 
-        jLabel6.setText("Cantidad de licencias");
+        jLabel6.setText("Cantidad de licencias:");
 
         jTextLicencias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,19 +104,34 @@ public class AltaSoftware extends javax.swing.JInternalFrame {
             }
         });
 
+        jBVerEquipo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ver.jpg"))); // NOI18N
+        jBVerEquipo.setText("Ver");
+        jBVerEquipo.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jBVerEquipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBVerEquipoActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("ID Equipo:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel5)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel1)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel2)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -122,17 +141,19 @@ public class AltaSoftware extends javax.swing.JInternalFrame {
                         .addComponent(jbAceptar)
                         .addGap(41, 41, 41))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextLicencias, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jtextID)
-                            .addComponent(jcbTipo, 0, 253, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jcbTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1)
+                            .addComponent(jTextKey, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jTextIDEquipo, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jBVerEquipo)))
+                        .addContainerGap(18, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextKey, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(43, Short.MAX_VALUE))))
+                        .addComponent(jTextLicencias, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -153,10 +174,15 @@ public class AltaSoftware extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextKey, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
-                .addGap(18, 20, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBVerEquipo)
+                    .addComponent(jTextIDEquipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbAceptar)
@@ -197,10 +223,16 @@ public class AltaSoftware extends javax.swing.JInternalFrame {
             if(this.jTextKey.getText().isEmpty())
                 JOptionPane.showMessageDialog(null, "Ingrese el CD Key","ERROR",JOptionPane.ERROR_MESSAGE);
                     else{    
-                        IC.addSw(Integer.parseInt(this.jtextID.getText()), tipo, this.jTextDesc.getText(), this.jTextKey.getText(), Integer.parseInt(this.jTextLicencias.getText()));
-                        JOptionPane.showMessageDialog(null, "Ingresado con Exito","EXITO",JOptionPane.INFORMATION_MESSAGE);
-                        this.dispose();
-                    }
+                        if(!IC.validarEquipo(Integer.parseInt(this.jTextIDEquipo.getText()))){
+                            JOptionPane.showMessageDialog(null, "El equipo no existe o no es una computadora","ERROR",JOptionPane.ERROR_MESSAGE);
+                        }
+                        else{
+                            IC.addSw(Integer.parseInt(this.jtextID.getText()), tipo, this.jTextDesc.getText(), this.jTextKey.getText(), Integer.parseInt(this.jTextLicencias.getText()));
+                            IC.asociarEquipoSw(Integer.parseInt(this.jTextIDEquipo.getText()), Integer.parseInt(this.jtextID.getText()));
+                            JOptionPane.showMessageDialog(null, "Ingresado con Exito","EXITO",JOptionPane.INFORMATION_MESSAGE);
+                            this.dispose();
+                        }
+                    }    
                 
     }//GEN-LAST:event_jbAceptarActionPerformed
 
@@ -208,15 +240,30 @@ public class AltaSoftware extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextLicenciasActionPerformed
 
+    private void jBVerEquipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBVerEquipoActionPerformed
+        // TODO add your handling code here:
+        if(IC.findDispositivo(Integer.parseInt(this.jTextIDEquipo.getText()))==null){
+            JOptionPane.showMessageDialog(null, "El equipo no existe","ERROR",JOptionPane.ERROR_MESSAGE);
+        }
+        else{
+            VerEditarEquipo vee = new VerEditarEquipo(Integer.parseInt(this.jTextIDEquipo.getText()),false);
+            EscritorioMenu.add(vee);
+            vee.show();
+        }
+    }//GEN-LAST:event_jBVerEquipoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBVerEquipo;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextPane jTextDesc;
+    private javax.swing.JTextField jTextIDEquipo;
     private javax.swing.JTextField jTextKey;
     private javax.swing.JTextField jTextLicencias;
     private javax.swing.JButton jbAceptar;

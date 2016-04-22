@@ -44,4 +44,10 @@ public interface IControlador {
     public abstract void actualizarEquipo(Dispositivo disp);
     public abstract Usuario findUsuario(int id);
     public abstract void eliminarEquipo(int id);
+    public abstract ArrayList listarSWporEquipo(int id);
+    public abstract void asociarEquipoSw(int idDispo, int idSw);
+    public abstract boolean validarEquipo(int id);
+    public abstract void eliminarUsuario(int id);
+    public abstract ArrayList findEquipoPorSW(int id);
+    public abstract ArrayList listarSoftware();
 }

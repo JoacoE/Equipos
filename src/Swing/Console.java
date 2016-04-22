@@ -47,6 +47,8 @@ public class Console extends javax.swing.JFrame {
         jMSalir = new javax.swing.JMenuItem();
         ver = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuVerUsuarios = new javax.swing.JMenuItem();
+        jMenuVerSoftware = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -114,6 +116,22 @@ public class Console extends javax.swing.JFrame {
             }
         });
         ver.add(jMenuItem4);
+
+        jMenuVerUsuarios.setText("Usuarios");
+        jMenuVerUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuVerUsuariosActionPerformed(evt);
+            }
+        });
+        ver.add(jMenuVerUsuarios);
+
+        jMenuVerSoftware.setText("Software");
+        jMenuVerSoftware.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuVerSoftwareActionPerformed(evt);
+            }
+        });
+        ver.add(jMenuVerSoftware);
 
         menu.add(ver);
 
@@ -183,6 +201,20 @@ public class Console extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
+    private void jMenuVerUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuVerUsuariosActionPerformed
+        // TODO add your handling code here:
+        VerUsuarios vu = new VerUsuarios();
+        EscritorioMenu.add(vu);
+        vu.show();
+    }//GEN-LAST:event_jMenuVerUsuariosActionPerformed
+
+    private void jMenuVerSoftwareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuVerSoftwareActionPerformed
+        // TODO add your handling code here:
+        ListarSoftware ls = new ListarSoftware(-1);
+        EscritorioMenu.add(ls);
+        ls.show();
+    }//GEN-LAST:event_jMenuVerSoftwareActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -225,6 +257,8 @@ public class Console extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuVerSoftware;
+    private javax.swing.JMenuItem jMenuVerUsuarios;
     private javax.swing.JMenuItem jmAltaLugar;
     private javax.swing.JMenuItem jmAltaSoftware;
     private javax.swing.JMenuItem jmAltaUsuario;

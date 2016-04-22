@@ -107,7 +107,7 @@ public class VerEditarEquipo extends javax.swing.JInternalFrame {
         Iterator it = usuarios.iterator();
         while(it.hasNext()){
             Usuario u = (Usuario) it.next();
-            this.jCBUsuario.addItem(u.getId()+" "+u.getNombre()+" "+u.getApellido());
+            this.jCBUsuario.addItem(u.getId()+" - "+u.getNombre()+" "+u.getApellido());
             if(u.getId()==disp.getUsuario().getId()){
                 this.jCBUsuario.setSelectedItem(u.getId()+" "+u.getNombre()+" "+u.getApellido());
             } 
@@ -147,7 +147,7 @@ public class VerEditarEquipo extends javax.swing.JInternalFrame {
         this.jCBEstado.addItem("ACTIVO");
         this.jCBEstado.addItem("INACTVO");
         this.jCBEstado.addItem("DESUSO");
-        this.jCBCategoria.setSelectedItem(disp.getEstado());
+        this.jCBEstado.setSelectedItem(disp.getEstado());
     }
     
     /**
@@ -203,6 +203,10 @@ public class VerEditarEquipo extends javax.swing.JInternalFrame {
         jBActualizarUsu = new javax.swing.JButton();
         jBAceptar = new javax.swing.JButton();
         jBCancelar = new javax.swing.JButton();
+        jButtonVerSw = new javax.swing.JButton();
+        jLabel18 = new javax.swing.JLabel();
+
+        setClosable(true);
 
         jTextMarca.setPreferredSize(new java.awt.Dimension(274, 22));
         jTextMarca.addActionListener(new java.awt.event.ActionListener() {
@@ -211,25 +215,25 @@ public class VerEditarEquipo extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel1.setText("ID");
+        jLabel1.setText("ID:");
 
-        jLabel2.setText("Marca");
+        jLabel2.setText("Marca:");
 
-        jLabel3.setText("Modelo");
+        jLabel3.setText("Modelo:");
 
-        jLabel4.setText("Categoria");
+        jLabel4.setText("Categoria:");
 
-        jLabel5.setText("Lugar");
+        jLabel5.setText("Lugar:");
 
-        jLabel6.setText("Usuario");
+        jLabel6.setText("Usuario:");
 
-        jLabel7.setText("Estado");
+        jLabel7.setText("Estado:");
 
-        jLabel8.setText("Proveedor");
+        jLabel8.setText("Proveedor:");
 
-        jLabel9.setText("F. Compra");
+        jLabel9.setText("F. Compra:");
 
-        jLabel10.setText("Factura");
+        jLabel10.setText("Factura:");
 
         jCBCategoria.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -242,19 +246,25 @@ public class VerEditarEquipo extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel11.setText("Garantia");
+        jLabel11.setText("Garantia:");
 
-        jLabel12.setText("IP");
+        jCBEstado.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCBEstadoItemStateChanged(evt);
+            }
+        });
 
-        jLabel13.setText("Procesador");
+        jLabel12.setText("IP:");
 
-        jLabel14.setText("HDD");
+        jLabel13.setText("Procesador:");
 
-        jLabel15.setText("Memoria");
+        jLabel14.setText("HDD:");
 
-        jLabel16.setText("Archivo");
+        jLabel15.setText("Memoria:");
 
-        jLabel17.setText("Comentario");
+        jLabel16.setText("Archivo:");
+
+        jLabel17.setText("Comentario:");
 
         jScrollPane1.setViewportView(jTextComentario);
 
@@ -307,6 +317,7 @@ public class VerEditarEquipo extends javax.swing.JInternalFrame {
             }
         });
 
+        jBAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/finalizar.png"))); // NOI18N
         jBAceptar.setText("Aceptar");
         jBAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -314,12 +325,23 @@ public class VerEditarEquipo extends javax.swing.JInternalFrame {
             }
         });
 
+        jBCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancelar.png"))); // NOI18N
         jBCancelar.setText("Cancelar");
         jBCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBCancelarActionPerformed(evt);
             }
         });
+
+        jButtonVerSw.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ver.jpg"))); // NOI18N
+        jButtonVerSw.setText("Ver");
+        jButtonVerSw.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVerSwActionPerformed(evt);
+            }
+        });
+
+        jLabel18.setText("Software:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -359,7 +381,7 @@ public class VerEditarEquipo extends javax.swing.JInternalFrame {
                     .addComponent(jCBLugar, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jCBCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jTextModelo)
-                    .addComponent(jTextMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jTextMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
                     .addComponent(jTextFactura)
                     .addComponent(jCBEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jTextId))
@@ -384,10 +406,6 @@ public class VerEditarEquipo extends javax.swing.JInternalFrame {
                                         .addComponent(jBActualizarLug, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(18, 18, 18)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel17)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jScrollPane1))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel14)
@@ -395,7 +413,7 @@ public class VerEditarEquipo extends javax.swing.JInternalFrame {
                                 .addGap(37, 37, 37)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jBVer, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+                                        .addComponent(jBVer, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jBExaminar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jTextHDD)))
@@ -410,7 +428,17 @@ public class VerEditarEquipo extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel12)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jTextIp, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jTextIp, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel17)
+                                    .addComponent(jLabel18))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane1)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jButtonVerSw, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jBCancelar)
@@ -428,15 +456,14 @@ public class VerEditarEquipo extends javax.swing.JInternalFrame {
                     .addComponent(jLabel12)
                     .addComponent(jTextIp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel13)
+                    .addComponent(jTextProcesador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(7, 7, 7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextMarca, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(jLabel13)
-                        .addComponent(jTextProcesador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextModelo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextModelo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
                         .addComponent(jLabel15)
@@ -465,40 +492,41 @@ public class VerEditarEquipo extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonVerSw)
+                            .addComponent(jLabel18))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jBAceptar)
                             .addComponent(jBCancelar)))
+                    .addComponent(jBActualizarUsu)
                     .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(jCBUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel17)
+                            .addComponent(jBAddUsuario))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(jCBEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jCBUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel17)
-                                    .addComponent(jBAddUsuario))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jCBEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jTextProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel8))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jDFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel10)
-                                    .addComponent(jTextFactura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jTextGarantia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel11)))
-                            .addComponent(jBActualizarUsu))
-                        .addGap(0, 13, Short.MAX_VALUE)))
+                            .addComponent(jLabel9)
+                            .addComponent(jDFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel10)
+                            .addComponent(jTextFactura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel11)
+                            .addComponent(jTextGarantia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
 
@@ -557,6 +585,11 @@ public class VerEditarEquipo extends javax.swing.JInternalFrame {
 
     private void jBCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCancelarActionPerformed
         // TODO add your handling code here:
+        if(editar){
+            VerEquipos ve = new VerEquipos();
+            EscritorioMenu.add(ve);
+            ve.show();
+        }
         dispose();
     }//GEN-LAST:event_jBCancelarActionPerformed
 
@@ -572,6 +605,9 @@ public class VerEditarEquipo extends javax.swing.JInternalFrame {
             
             Dispositivo disp = new Dispositivo(Integer.parseInt(this.jTextId.getText()),this.jTextMarca.getText(),this.jTextModelo.getText(),this.jTextProcesador.getText(), this.jTextMemoria.getText(), this.jTextHDD.getText(), lug ,usu ,cat , this.jTextIp.getText(), this.jDFecha.getDate(), this.jTextProveedor.getText(), this.jCBEstado.getSelectedItem().toString(), Integer.parseInt(this.jTextGarantia.getText()), Integer.parseInt(this.jTextFactura.getText()), null, this.jTextComentario.getText());
             IC.actualizarEquipo(disp);
+            VerEquipos ve = new VerEquipos();
+            EscritorioMenu.add(ve);
+            ve.show();
             dispose();
         }
         else
@@ -603,6 +639,20 @@ public class VerEditarEquipo extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jCBCategoriaActionPerformed
 
+    private void jButtonVerSwActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerSwActionPerformed
+    ListarSoftware ls = new ListarSoftware(id);
+    EscritorioMenu.add(ls);
+    ls.show();
+    }//GEN-LAST:event_jButtonVerSwActionPerformed
+
+    private void jCBEstadoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCBEstadoItemStateChanged
+        // TODO add your handling code here:
+        if(this.jCBEstado.getSelectedItem().toString().equals("DESUSO")){
+            Lugar l = IC.findLugar(1);
+            this.jCBLugar.setSelectedItem("1 - Central Informatica");
+        }
+    }//GEN-LAST:event_jCBEstadoItemStateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBAceptar;
@@ -615,6 +665,7 @@ public class VerEditarEquipo extends javax.swing.JInternalFrame {
     private javax.swing.JButton jBCancelar;
     private javax.swing.JButton jBExaminar;
     private javax.swing.JButton jBVer;
+    private javax.swing.JButton jButtonVerSw;
     private javax.swing.JComboBox jCBCategoria;
     private javax.swing.JComboBox jCBEstado;
     private javax.swing.JComboBox jCBLugar;
@@ -629,6 +680,7 @@ public class VerEditarEquipo extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

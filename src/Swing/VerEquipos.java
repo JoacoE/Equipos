@@ -15,6 +15,7 @@ import Controladores.Fabrica;
 import Controladores.IControlador;
 import static Swing.Console.EscritorioMenu;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -26,8 +27,9 @@ import javax.swing.table.TableRowSorter;
  */
 public class VerEquipos extends javax.swing.JInternalFrame {
     private IControlador IC;
-    int fila = 0;
-    DefaultTableModel modelo;
+    private int fila = 0;
+    private DefaultTableModel modelo;
+
     /**
      * Creates new form NewJInternalFrame
      */
@@ -39,7 +41,15 @@ public class VerEquipos extends javax.swing.JInternalFrame {
         IC = fabrica.getICtrl();
         TableRowSorter<TableModel> elQueOrdena = new TableRowSorter<TableModel>(modelo);
         jTableEquipos.setRowSorter(elQueOrdena);
-        LoadTableProductRest();
+        cargarTabla();
+        cargarCboxCampo();
+        
+        
+        //modelo.fireTableDataChanged();
+        
+        //this.jTableEquipos.setModel(modelo);
+        //this.jTableEquipos.repaint();
+
         //modelo.setRowFilter(RowFilter.regexFilter("2", 1));
     }
 
@@ -58,6 +68,9 @@ public class VerEquipos extends javax.swing.JInternalFrame {
         jBEditar = new javax.swing.JButton();
         jBEliminar = new javax.swing.JButton();
         jLabelError = new javax.swing.JLabel();
+        jBFiltrar = new javax.swing.JButton();
+        jCBCampo = new javax.swing.JComboBox();
+        jTextBuscar = new javax.swing.JTextField();
 
         setClosable(true);
         setMaximizable(true);
@@ -107,6 +120,14 @@ public class VerEquipos extends javax.swing.JInternalFrame {
         jLabelError.setForeground(new java.awt.Color(255, 0, 0));
         jLabelError.setText("Debe seleccionar una fila de la tabla!");
 
+        jBFiltrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/filtro.png"))); // NOI18N
+        jBFiltrar.setText("Filtrar");
+        jBFiltrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBFiltrarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -119,7 +140,13 @@ public class VerEquipos extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(59, 59, 59)
                         .addComponent(jLabelError)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(73, 73, 73)
+                        .addComponent(jCBCampo, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextBuscar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jBFiltrar)
+                        .addGap(57, 57, 57)
                         .addComponent(jBEliminar)
                         .addGap(18, 18, 18)
                         .addComponent(jBEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -137,7 +164,10 @@ public class VerEquipos extends javax.swing.JInternalFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jBEditar)
                         .addComponent(jBEliminar)
-                        .addComponent(jBVer))
+                        .addComponent(jBVer)
+                        .addComponent(jBFiltrar)
+                        .addComponent(jTextBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jCBCampo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabelError))
                 .addGap(0, 18, Short.MAX_VALUE))
         );
@@ -148,6 +178,10 @@ public class VerEquipos extends javax.swing.JInternalFrame {
     private void jTableEquiposMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableEquiposMouseClicked
         // TODO add your handling code here:
         this.jLabelError.setVisible(false);
+        String s = modelo.getValueAt(this.jTableEquipos.getSelectedRow(), this.jTableEquipos.getSelectedColumn()).toString();
+        int i = this.jTableEquipos.getSelectedColumn();
+        this.jCBCampo.setSelectedItem(i+" - "+this.jTableEquipos.getColumnName(i));
+        this.jTextBuscar.setText(s);
     }//GEN-LAST:event_jTableEquiposMouseClicked
 
     private void jBVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBVerActionPerformed
@@ -167,6 +201,8 @@ public class VerEquipos extends javax.swing.JInternalFrame {
         VerEditarEquipo ve = new VerEditarEquipo(id,true);
         EscritorioMenu.add(ve);
         ve.show();
+        dispose();
+        
     }//GEN-LAST:event_jBEditarActionPerformed
 
     private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
@@ -176,18 +212,75 @@ public class VerEquipos extends javax.swing.JInternalFrame {
             this.jLabelError.setVisible(true);
         }
         else{
-            int resp = JOptionPane.showConfirmDialog(null, "Estás Seguro???",null,JOptionPane.OK_CANCEL_OPTION);
-            if(resp==0){
-                int id = Integer.parseInt(this.jTableEquipos.getValueAt(this.jTableEquipos.getSelectedRow(),0).toString());
-                IC.eliminarEquipo(id);
+            if(!this.jTableEquipos.getValueAt(this.jTableEquipos.getSelectedRow(),8).toString().equals("DESUSO")){
+                JOptionPane.showMessageDialog(null, "El equipo no esta en DESUSO","ERROR",JOptionPane.ERROR_MESSAGE);
+            }
+            else{
+                int resp = JOptionPane.showConfirmDialog(null, "Estás Seguro???",null,JOptionPane.OK_CANCEL_OPTION);
+                if(resp==0){
+                    int id = Integer.parseInt(this.jTableEquipos.getValueAt(this.jTableEquipos.getSelectedRow(),0).toString());
+                    IC.eliminarEquipo(id);
+                    limpiarTabla();
+                    cargarTabla();
+                }
             }
         }
-        
+
     }//GEN-LAST:event_jBEliminarActionPerformed
 
+    private void jBFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBFiltrarActionPerformed
+        
+        StringTokenizer tokens = new StringTokenizer(this.jCBCampo.getSelectedItem().toString());
+        int col = Integer.parseInt(tokens.nextToken());       
+        filtrar(col,this.jTextBuscar.getText());
+    }//GEN-LAST:event_jBFiltrarActionPerformed
     
-    private void LoadTableProductRest(){
-
+    private void filtrar(int col, String busqueda){
+        limpiarTabla();
+        int fila = 0;
+        ArrayList equipos = IC.ListarEquipos();
+        Iterator it = equipos.iterator();
+        String lista[]=new String[15];
+        //Iterator inds = lstProdInd.iterator();
+        while(it.hasNext()){
+            Dispositivo disp = (Dispositivo)it.next();
+            Categoria cat = disp.getTipo();
+            Lugar lug = disp.getLugar();
+            Usuario usu = disp.getUsuario();
+            lista[0]= Integer.toString(disp.getIdDisp());
+            lista[1]= cat.getNombrePadre()+"-->"+cat.getNombre();
+            lista[2]= disp.getMarca();
+            lista[3]= disp.getModelo();
+            if(cat.getNombrePadre().equals("Computadora")){
+                lista[4]= disp.getProcesador();
+                lista[5]= disp.getMemoria();
+                lista[6]= disp.getHDD();
+                lista[7]= disp.getIp();
+            }
+            else{
+                lista[4]= "";
+                lista[5]= "";
+                lista[6]= "";
+                lista[7]= "";
+            }
+            lista[8]= disp.getEstado();
+            lista[9]= lug.getLocal()+"-->"+lug.getSeccion();            
+            lista[10]= usu.getNombre()+" "+usu.getApellido();
+            lista[11]= disp.getFecha_compra().toString();
+            lista[12]= disp.getProveedor();
+            lista[13]= Integer.toString(disp.getGarantia());
+            lista[14]= Integer.toString(disp.getFactura());
+            if(lista[col].contains(busqueda)){         
+                modelo.insertRow((int)fila, lista);
+                fila++;
+            }
+        }
+    
+    
+    }
+    
+    private void cargarTabla(){
+        int fila = 0;
         ArrayList equipos = IC.ListarEquipos();
         Iterator it = equipos.iterator();
         String lista[]=new String[15];
@@ -227,13 +320,36 @@ public class VerEquipos extends javax.swing.JInternalFrame {
         }
         
     } 
+    public void limpiarTabla(){
+        try {
+
+            int filas=this.jTableEquipos.getRowCount();
+            for (int i = 0;filas>i; i++) {
+                modelo.removeRow(0);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al limpiar la tabla.");
+        }
+    }
+    
+    public void cargarCboxCampo(){   
+        int i=0;
+        while(i<this.jTableEquipos.getColumnCount()){
+            String campo = this.jTableEquipos.getColumnName(i).toString();            
+            this.jCBCampo.addItem(Integer.toString(i)+" - "+campo);
+            i++;
+        }        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBEditar;
     private javax.swing.JButton jBEliminar;
+    private javax.swing.JButton jBFiltrar;
     private javax.swing.JButton jBVer;
+    private javax.swing.JComboBox jCBCampo;
     private javax.swing.JLabel jLabelError;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableEquipos;
+    private javax.swing.JTextField jTextBuscar;
     // End of variables declaration//GEN-END:variables
 }

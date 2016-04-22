@@ -87,6 +87,24 @@ public class Controlador implements IControlador {
        Persistencia p = fabrica.getPers();
        return p.listarLugar();
     }
+    
+    public void asociarEquipoSw(int idDispo, int idSw){
+        Fabrica fabrica = Fabrica.getInstance();
+        Persistencia p = fabrica.getPers();
+        p.asociarEquipo(idDispo, idSw);
+    }
+    public boolean validarEquipo(int id){
+        Fabrica fabrica = Fabrica.getInstance();
+        Persistencia p = fabrica.getPers();
+        Dispositivo dispo = p.findEquipo(id);
+        if(dispo==null)
+            return false;
+        else
+            if (dispo.getTipo().getNombrePadre().equals("Computadora"))
+                return true;
+            else
+                return false;
+    }
 
 //    public ArrayList listarTecnicos(){
 //        ArrayList tecs = new ArrayList();
@@ -141,6 +159,11 @@ public class Controlador implements IControlador {
         Fabrica fabrica = Fabrica.getInstance();
         Persistencia p = fabrica.getPers();
         return p.ListarCategorias();
+    }
+    public ArrayList listarSWporEquipo(int id){
+        Fabrica fabrica = Fabrica.getInstance();
+        Persistencia p = fabrica.getPers();
+        return p.listarSWporEquipo(id);
     }
     
     public ArrayList ListarEquipos(){
@@ -246,4 +269,21 @@ public Usuario findUsuario(int id){
     Persistencia p = fabrica.getPers();
     return p.findUsuario(id);
 }    
+
+public void eliminarUsuario(int id){
+    Fabrica fabrica = Fabrica.getInstance();
+    Persistencia p = fabrica.getPers();
+    p.eliminarUsuario(id);
+}
+public ArrayList findEquipoPorSW(int id){
+    Fabrica fabrica = Fabrica.getInstance();
+    Persistencia p = fabrica.getPers();
+    return p.findEquipoPorSW(id);
+}
+
+public ArrayList listarSoftware(){
+    Fabrica fabrica = Fabrica.getInstance();
+    Persistencia p = fabrica.getPers();
+    return p.listarSoftware();
+}
 }
