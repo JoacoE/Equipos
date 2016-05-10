@@ -11,6 +11,7 @@ import Clases.Lugar;
 import Clases.Software;
 import Clases.Usuario;
 import java.util.ArrayList;
+import javax.swing.JInternalFrame;
 
 
 /**
@@ -18,7 +19,8 @@ import java.util.ArrayList;
  * @author Joaquin
  */
 public interface IControlador {
-    
+    public abstract void setVentana(JInternalFrame ventana);
+    public abstract JInternalFrame getVentana(); 
     public abstract boolean addUsuario(String nombre, String apellido);
 //    public abstract ArrayList listarTecnicos();
 //    public abstract ArrayList listarTareas();
@@ -35,7 +37,7 @@ public interface IControlador {
     public abstract int retornoIdCategoria(Categoria cat);
     public abstract void setNcat(Categoria Ncat);
     public abstract Categoria getNcat();
-    public abstract String validarSW(int id, int licencias, int id_dispo);
+    public abstract boolean validarSW(int id);
     public abstract Software retKey(int id);
     public abstract Categoria findCategoria(int id);
     public abstract ArrayList ListarEquipos();
@@ -50,4 +52,9 @@ public interface IControlador {
     public abstract void eliminarUsuario(int id);
     public abstract ArrayList findEquipoPorSW(int id);
     public abstract ArrayList listarSoftware();
+    public abstract boolean puedoEliminar(int id);
+    public abstract void eliminarSw(int id);
+    public abstract boolean puedoEliminarSw(int id);
+    public abstract void desasociarSw(int id);
+    public abstract Software findSw(int id);
 }

@@ -11,6 +11,8 @@ import Enumerados.Estado;
 import static Swing.Console.EscritorioMenu;
 import java.awt.Dimension;
 import java.awt.event.ItemEvent;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -34,6 +36,8 @@ public class AltaEquipo extends javax.swing.JInternalFrame {
     }
     private Categoria cate;
     private String estado;
+
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -263,16 +267,21 @@ public class AltaEquipo extends javax.swing.JInternalFrame {
         disp.setMarca(this.jTMarca.getText());
         disp.setModelo(this.jTModelo.getText());
         disp.setProveedor(this.jTProveedor.getText());
-        disp.setFecha_compra(this.jDCFecha.getDate());
-        disp.setFactura(Integer.parseInt(this.jTFactura.getText()));
-        disp.setGarantia(Integer.parseInt(this.JTGarantia.getText()));
+        if(this.jDCFecha.getDate()!=null)                   
+            disp.setFecha_compra(this.jDCFecha.getDate());
+        else
+            disp.setFecha_compra(null);
+        if(!this.jTFactura.getText().isEmpty())
+            disp.setFactura(Integer.parseInt(this.jTFactura.getText()));
+        if(!this.JTGarantia.getText().isEmpty())
+            disp.setGarantia(Integer.parseInt(this.JTGarantia.getText()));
         disp.setEstado(this.estado);
         if(cate.getNombrePadre().equals("Computadora")){
             disp.setProcesador(this.jTProc.getText());
             disp.setMemoria(this.jTMem.getText());
             disp.setHDD(this.jTHDD.getText());
         }
-         
+
         AltaEquipo2 ae = new AltaEquipo2(disp);
         EscritorioMenu.add(ae);
         ae.show();

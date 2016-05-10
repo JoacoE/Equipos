@@ -20,6 +20,7 @@ import java.sql.ResultSet;
 import java.sql.SQLXML;
 import java.sql.Statement;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -171,6 +172,17 @@ public class Persistencia {
 
     }
     //SOFTWARE------------------------------------------------------------------
+        
+    public void desasociarSw(int id){
+        try{
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");
+            Statement stmt = con.createStatement();
+            stmt.executeQuery("DELETE FROM Disp_Sw WHERE id_Software ='"+id+"'");
+            con.close();
+        }catch(Exception ex){}
+    }    
+        
     public void asociarEquipo(int idDispo, int idSw){
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -180,11 +192,32 @@ public class Persistencia {
             preparedStmt.setInt (2, idSw);
             preparedStmt.execute();
             con.close();
-        }catch(Exception ex){} 
-        
-    
-    
+        }catch(Exception ex){}              
     }
+    
+    public void eliminarSw(int id){
+        try{
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");
+            Statement stmt = con.createStatement();
+            stmt.executeQuery("DELETE FROM Software WHERE id_Software ='"+id+"'");                       
+            con.close();          
+        }catch(Exception ex){}
+    }
+    public boolean puedoEliminarSW(int id){
+    try{
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Disp_Sw WHERE id_Software ='"+id+"'");   
+            if(rs.next()){
+                return false;
+            }
+            con.close();                 
+        }catch(Exception ex){}
+    return true;
+    } 
+    
     public boolean existeSW(int id){
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -193,8 +226,7 @@ public class Persistencia {
             ResultSet rs = stmt.executeQuery("SELECT * FROM Software WHERE id_Software='"+id+"'");
             if(rs.next()){
                  con.close();
-                return true;
-                
+                return true;                
             }
             else{ 
                  con.close();
@@ -203,6 +235,25 @@ public class Persistencia {
            
         }catch(Exception ex){}      
     return true;
+    }
+    
+    public Software findSw(int id){
+        try{
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");          
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Software WHERE id_Software='"+id+"'");
+            if(rs.next()){                
+                Software s = new Software(rs.getInt(1),rs.getString(2), rs.getString(3),rs.getString(4),rs.getInt(5));
+                con.close();
+                return s;                
+            }
+            else{ 
+                con.close();
+                return null;
+            }           
+        }catch(Exception ex){}      
+    return null;
     }
     public boolean persistirSw(Software sw){              
         try{
@@ -237,27 +288,19 @@ public class Persistencia {
     
     }
     
-    public String validarSoft(int id, int licencias, int id_equipo){
+    public boolean validarSoft(int id){
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");          
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Software WHERE id_Software='"+id+"'");          
-            int cantidad=0;
-            while(rs.next()){
-                cantidad++;
-                if(rs.getInt(5)==id_equipo){
-                     con.close();
-                    return "id_Equipo";
-                }
-                if(rs.getInt(6)==licencias){
-                    con.close();
-                    return "licencia";}
+            if(rs.next()){
+                con.close();
+                return false;
             }
             con.close();
         }catch(Exception ex){}
-
-        return "valido";
+        return true;
     }
     public Software retKey(int id){
         try{
@@ -331,6 +374,7 @@ public class Persistencia {
                 String proc = " ";
                 String memoria = " ";
                 String HDD = " ";
+                Date Mantenimiento = null;
                 Categoria cat = findCategoria(rs.getInt(9));
                 int id = rs.getInt(1);
                 String marca = rs.getString(2);
@@ -339,6 +383,7 @@ public class Persistencia {
                     proc = rs.getString(4);
                     memoria = rs.getString(5);
                     HDD = rs.getString(6);
+                    Mantenimiento = rs.getDate(18);
                 }
                 Lugar lug = findLugar(rs.getInt(7));
                 Usuario usu = findUsuario(rs.getInt(8));
@@ -351,8 +396,8 @@ public class Persistencia {
                 int factura = rs.getInt(15);
                 //Categoria cate = findCategoria(idCategoria);
 //                if(cate.getNombrePadre().equals("Computadora"))      
-                String notas = rs.getString(17);
-                Dispositivo disp = new Dispositivo(id,marca,modelo,proc,memoria,HDD,lug,usu,cat,ip,fecha,proveedor,estado,garantia,factura,null,notas);
+                String notas = rs.getString(17);                
+                Dispositivo disp = new Dispositivo(id,marca,modelo,proc,memoria,HDD,lug,usu,cat,ip,fecha,proveedor,estado,garantia,factura,null,notas,Mantenimiento);
                 equipos.add(disp);
             }
         con.close();    
@@ -365,9 +410,10 @@ public class Persistencia {
             Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");
             Statement stmt = con.createStatement();
             PreparedStatement preparedStmt = con.prepareStatement("DELETE FROM Dispositivo WHERE id_Dispositivo ='"+id+"'");
+            PreparedStatement preparedStmt1 = con.prepareStatement("DELETE FROM Disp_Sw WHERE id_Dispositivo ='"+id+"'");
             preparedStmt.execute();
-            con.close();
-            
+            preparedStmt1.execute();
+            con.close();          
         }catch(Exception ex){}
     }
     public void persistirEquipo(Dispositivo disp){
@@ -378,19 +424,14 @@ public class Persistencia {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");
             Statement stmt = con.createStatement();
-            PreparedStatement preparedStmt = con.prepareStatement("INSERT INTO Dispositivo(id_Dispositivo, Marca,Modelo,Procesador, Memoria, HDD, id_Lugar, id_Usuario, id_Categoria, IP, Fecha_Compra, Proveedor, Estado, Garantia, Factura, Archivo_XML, Nota)" + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");            
-            if(disp.getTipo().getNombrePadre().equals("Computadora")){               
-                SQLXML info = con.createSQLXML();
-                OutputStream os = info.setBinaryStream ();
-                FileInputStream fis = new FileInputStream(disp.getArchivo().getAbsolutePath());
-                int read;
-                while ((read = fis.read ()) != -1) {
-                    os.write (read);
-                }
+            PreparedStatement preparedStmt = con.prepareStatement("INSERT INTO Dispositivo(id_Dispositivo, Marca,Modelo,Procesador, Memoria, HDD, id_Lugar, id_Usuario, id_Categoria, IP, Fecha_Compra, Proveedor, Estado, Garantia, Factura, Ruta, Nota)" + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");            
+            if(disp.getTipo().getNombrePadre().equals("Computadora")){                               
+                
                 preparedStmt.setString (4, disp.getProcesador());
                 preparedStmt.setString (5, disp.getMemoria());
                 preparedStmt.setString (6, disp.getHDD());
-                preparedStmt.setSQLXML(16, info);
+                preparedStmt.setString(16, disp.getRuta());
+                //preparedStmt.setDate(18, new java.sql.Date(disp.getMantenimiento().getYear(),disp.getMantenimiento().getMonth(),disp.getMantenimiento().getDay()));
             }
             preparedStmt.setInt (1, disp.getIdDisp());
             preparedStmt.setString (2,disp.getMarca());
@@ -402,12 +443,15 @@ public class Persistencia {
             preparedStmt.setInt (8, disp.getUsuario().getId());
             preparedStmt.setInt (9, disp.getTipo().getId());
             preparedStmt.setString (10, disp.getIp());
-            preparedStmt.setDate (11,  new java.sql.Date(disp.getFecha_compra().getYear(),disp.getFecha_compra().getMonth(),disp.getFecha_compra().getDay()));
+            if(disp.getFecha_compra()!=null)
+                preparedStmt.setDate (11,  new java.sql.Date(disp.getFecha_compra().getYear(),disp.getFecha_compra().getMonth(),disp.getFecha_compra().getDay()));
+            else
+                preparedStmt.setDate (11,null);
             preparedStmt.setString (12, disp.getProveedor());
             preparedStmt.setString (13, disp.getEstado());
             preparedStmt.setInt (14, disp.getGarantia());
             preparedStmt.setInt (15, disp.getFactura());
-            preparedStmt.setSQLXML(16, null);
+            //preparedStmt.setString(16, disp.getRuta());
             preparedStmt.setString (17, disp.getNota());                 
             preparedStmt.execute();
             con.close();
@@ -419,7 +463,7 @@ public class Persistencia {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");
             Statement stmt = con.createStatement();
-            PreparedStatement preparedStmt = con.prepareStatement("UPDATE Dispositivo SET id_Dispositivo=?, Marca=?,Modelo=?,Procesador=?, Memoria=?, HDD=?, id_Lugar=?, id_Usuario=?, id_Categoria=?, IP=?, Fecha_Compra=?, Proveedor=?, Estado=?, Garantia=?, Factura=?, Archivo_XML=?, Nota=? WHERE id_Dispositivo='"+disp.getIdDisp()+"'");          
+            PreparedStatement preparedStmt = con.prepareStatement("UPDATE Dispositivo SET id_Dispositivo=?, Marca=?,Modelo=?,Procesador=?, Memoria=?, HDD=?, id_Lugar=?, id_Usuario=?, id_Categoria=?, IP=?, Fecha_Compra=?, Proveedor=?, Estado=?, Garantia=?, Factura=?, Ruta=?, Nota=?, Mantenimiento=? WHERE id_Dispositivo='"+disp.getIdDisp()+"'");          
             if(disp.getTipo().getNombrePadre().equals("Computadora")){
                 
 //                SQLXML info = con.createSQLXML();
@@ -432,7 +476,7 @@ public class Persistencia {
                 preparedStmt.setString (4, disp.getProcesador());
                 preparedStmt.setString (5, disp.getMemoria());
                 preparedStmt.setString (6, disp.getHDD());
-//                preparedStmt.setSQLXML(16, info);
+                preparedStmt.setString(16, disp.getRuta());
             }
             preparedStmt.setInt (1, disp.getIdDisp());
             preparedStmt.setString (2,disp.getMarca());
@@ -449,8 +493,9 @@ public class Persistencia {
             preparedStmt.setString (13, disp.getEstado());
             preparedStmt.setInt (14, disp.getGarantia());
             preparedStmt.setInt (15, disp.getFactura());
-            preparedStmt.setSQLXML(16, null);
+            preparedStmt.setString(16, disp.getRuta());
             preparedStmt.setString (17, disp.getNota());     
+            preparedStmt.setDate (18, new java.sql.Date(disp.getMantenimiento().getYear(),disp.getMantenimiento().getMonth(),disp.getMantenimiento().getDay()));
             preparedStmt.execute();
             con.close();
         }catch(Exception ex){}
@@ -468,6 +513,8 @@ public class Persistencia {
                     String proc = " ";
                     String memoria = " ";
                     String HDD = " ";
+                    String ruta = " ";
+                    Date Mantenimiento = null;
                     Categoria cat = findCategoria(rs.getInt(9));
                     String marca = rs.getString(2);
                     String modelo = rs.getString(3);
@@ -475,6 +522,8 @@ public class Persistencia {
                         proc = rs.getString(4);
                         memoria = rs.getString(5);
                         HDD = rs.getString(6);
+                        ruta= rs.getString(16);
+                        Mantenimiento = rs.getDate(18);
                     }
                     Lugar lug = findLugar(rs.getInt(7));
                     Usuario usu = findUsuario(rs.getInt(8));                    
@@ -488,7 +537,7 @@ public class Persistencia {
     //                if(cate.getNombrePadre().equals("Computadora"))
     //                    
                     String notas = rs.getString(17);
-                    Dispositivo disp = new Dispositivo(id,marca,modelo,proc,memoria,HDD,lug,usu,cat,ip,fecha,proveedor,estado,garantia,factura,null,notas);
+                    Dispositivo disp = new Dispositivo(id,marca,modelo,proc,memoria,HDD,lug,usu,cat,ip,fecha,proveedor,estado,garantia,factura,ruta,notas,Mantenimiento);
                     return disp;
                 }
                 con.close();

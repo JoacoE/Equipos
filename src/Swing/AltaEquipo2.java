@@ -13,11 +13,21 @@ import Controladores.Fabrica;
 import Controladores.IControlador;
 import static Swing.Console.EscritorioMenu;
 import java.awt.event.ItemEvent;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.CopyOption;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.StringTokenizer;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -26,10 +36,11 @@ import javax.swing.JFileChooser;
 public class AltaEquipo2 extends javax.swing.JInternalFrame {
     private Categoria cate;
     private IControlador IC; 
-    private File f;
+    private String ruta;
     private Dispositivo dis;
     private String us;
     private String lug;
+    private String RutaFinal;
     
     /**
      * Creates new form AltaEquipo2
@@ -64,7 +75,7 @@ public class AltaEquipo2 extends javax.swing.JInternalFrame {
         jLUsuario = new javax.swing.JLabel();
         jTIP = new javax.swing.JTextField();
         jLIP = new javax.swing.JLabel();
-        jLXML = new javax.swing.JLabel();
+        jLArchivo = new javax.swing.JLabel();
         jBExaminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTObserva = new javax.swing.JTextPane();
@@ -73,6 +84,7 @@ public class AltaEquipo2 extends javax.swing.JInternalFrame {
         jBCancelar = new javax.swing.JButton();
         jBActualizarUsu = new javax.swing.JButton();
         jBActualizarUbi = new javax.swing.JButton();
+        jTArchivo = new javax.swing.JTextField();
 
         setClosable(true);
 
@@ -108,10 +120,9 @@ public class AltaEquipo2 extends javax.swing.JInternalFrame {
 
         jLIP.setText("IP:");
 
-        jLXML.setText("Adjuntar XML");
+        jLArchivo.setText("Archivo:");
 
         jBExaminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar .png"))); // NOI18N
-        jBExaminar.setText("Examinar");
         jBExaminar.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         jBExaminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,7 +132,7 @@ public class AltaEquipo2 extends javax.swing.JInternalFrame {
 
         jScrollPane1.setViewportView(jTObserva);
 
-        jLabel1.setText(" Observación:");
+        jLabel1.setText("Comentario:");
 
         jBFinalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/finalizar.png"))); // NOI18N
         jBFinalizar.setText("Finalizar");
@@ -167,37 +178,40 @@ public class AltaEquipo2 extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(17, 17, 17)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLArchivo)
                             .addComponent(jLUsuario)
                             .addComponent(jLabel6)
                             .addComponent(jLIP))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jTIP)
-                                .addGap(33, 33, 33))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(jCBUbicacion, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jBActualizarUbi, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(jCBUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jBActualizarUsu, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jBnuevoUsu)
-                            .addComponent(jBnuevaUbic)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(jTIP)
+                                        .addGap(33, 33, 33))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                            .addComponent(jCBUbicacion, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jBActualizarUbi, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                            .addComponent(jCBUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jBActualizarUsu, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jBnuevoUsu)
+                                    .addComponent(jBnuevaUbic)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jTArchivo)
+                                .addGap(34, 34, 34)
+                                .addComponent(jBExaminar))))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLXML)
-                        .addGap(18, 18, 18)
-                        .addComponent(jBExaminar)))
+                        .addGap(7, 7, 7)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -222,17 +236,16 @@ public class AltaEquipo2 extends javax.swing.JInternalFrame {
                     .addComponent(jLIP)
                     .addComponent(jTIP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLXML)
-                    .addComponent(jBExaminar))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLArchivo)
+                        .addComponent(jBExaminar))
+                    .addComponent(jTArchivo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jBFinalizar)
                     .addComponent(jBCancelar))
@@ -274,8 +287,11 @@ public class AltaEquipo2 extends javax.swing.JInternalFrame {
 //        }
         this.dis.setIp(this.jTIP.getText());
         this.dis.setNota(this.jTObserva.getText());
-        IC.addDispositivo(dis);
+        this.dis.setRuta(this.RutaFinal);
         
+        
+        IC.addDispositivo(dis);
+        RutaFinal="";
         
     }//GEN-LAST:event_jBFinalizarActionPerformed
 
@@ -297,9 +313,21 @@ public class AltaEquipo2 extends javax.swing.JInternalFrame {
 
     private void jBExaminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExaminarActionPerformed
         // TODO add your handling code here:
+        crearCarpeta();
         JFileChooser fc = new JFileChooser();
         fc.showOpenDialog(null);
-        this.f = fc.getSelectedFile();
+        this.ruta = fc.getSelectedFile().getAbsolutePath();
+        StringTokenizer tokens = new StringTokenizer(ruta);
+        tokens.nextToken(".");
+        String extension= (tokens.nextToken("."));
+        try{
+            this.RutaFinal = "\\\\192.168.1.107\\equipos\\"+Integer.toString(dis.getIdDisp())+"\\"+Integer.toString(dis.getIdDisp())+"."+extension;
+            copy(ruta,this.RutaFinal);
+            
+        }
+        catch(Exception ex){           
+        }
+        //String ruta = fc.getSelectedFile().getAbsolutePath();
         //Examinar ex= new Examinar();
     }//GEN-LAST:event_jBExaminarActionPerformed
 
@@ -326,12 +354,13 @@ public class AltaEquipo2 extends javax.swing.JInternalFrame {
     private javax.swing.JButton jBnuevoUsu;
     private javax.swing.JComboBox jCBUbicacion;
     private javax.swing.JComboBox jCBUsuario;
+    private javax.swing.JLabel jLArchivo;
     private javax.swing.JLabel jLIP;
     private javax.swing.JLabel jLUsuario;
-    private javax.swing.JLabel jLXML;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTArchivo;
     private javax.swing.JTextField jTIP;
     private javax.swing.JTextPane jTObserva;
     // End of variables declaration//GEN-END:variables
@@ -341,7 +370,7 @@ public void controlOcultos(){
         this.jBExaminar.setEnabled(false);
         this.jTIP.setEnabled(false);
         this.jLIP.setEnabled(false);
-        this.jLXML.setEnabled(false);
+        this.jLArchivo.setEnabled(false);
     }
     if(!cate.getNombrePadre().equals("Computadora") && !cate.getNombrePadre().equals("Impresora") && !cate.getNombrePadre().equals("Scanner")){
         this.jCBUsuario.setEnabled(false);
@@ -368,6 +397,51 @@ public void CargarComboLugar(){
     }
 
 
+}
+public void escribir(String nombreArchivo){
+
+    File f;
+    f = new File("nombreArchivo");
+    try{
+        FileWriter w = new FileWriter(f);
+        BufferedWriter bw = new BufferedWriter(w);
+        PrintWriter wr = new PrintWriter(bw);  
+        wr.write("Esta es una linea de codigo");//escribimos en el archivo
+        wr.append(" - y aqui continua"); //concatenamos en el archivo sin borrar lo existente
+                //ahora cerramos los flujos de canales de datos, al cerrarlos el archivo quedará guardado con información escrita
+                //de no hacerlo no se escribirá nada en el archivo
+        wr.close();
+        bw.close();
+    }catch(IOException e){};
+}
+
+public static void copy(String origen, String destino) throws IOException {
+        Path FROM = Paths.get(origen);
+        Path TO = Paths.get(destino);
+        //sobreescribir el fichero de destino, si existe, y copiar
+        // los atributos, incluyendo los permisos rwx
+        CopyOption[] options = new CopyOption[]{
+          StandardCopyOption.REPLACE_EXISTING,
+          StandardCopyOption.COPY_ATTRIBUTES
+        }; 
+        Files.copy(FROM, TO, options);
+    }
+public void testbat() {
+	
+	Runtime aplicacion = Runtime.getRuntime(); 
+        try{
+            
+//            aplicacion.getRuntime().exec(new String[]{"cmd.exe","/c","start"});
+//            aplicacion.getRuntime().exec("md \\192.168.1.107\\equipos\\"+Integer.toString(dis.getIdDisp()));
+        }
+            //aplicacion.exec("cmd.exe /K C:\fichero.bat"); }
+        catch(Exception e){ 
+            System.out.println(e);}
+
+	}
+public void crearCarpeta(){
+    File folder = new File("\\\\192.168.1.107\\equipos\\"+Integer.toString(dis.getIdDisp()));
+    folder.mkdir();
 }
 
 

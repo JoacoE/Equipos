@@ -97,6 +97,11 @@ public class NuevaCategoria extends javax.swing.JInternalFrame {
         });
 
         jBCancelar.setText("Cancelar");
+        jBCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBCancelarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Seleccione la categoría padre:");
 
@@ -230,6 +235,7 @@ public class NuevaCategoria extends javax.swing.JInternalFrame {
                 Categoria cate = new Categoria(this.jTcategoria.getText(),(String)sel.getUserObject());
                 IC.addCategoria(cate);  
                 JOptionPane.showMessageDialog(null, "!Categoría  "+cate.getNombrePadre()+" -> "+cate.getNombre()+"  creada!","EXITO",JOptionPane.INFORMATION_MESSAGE);
+                dispose();
             }
         }
         
@@ -263,6 +269,11 @@ public class NuevaCategoria extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         this.jLErrorPadre.setVisible(false);
     }//GEN-LAST:event_jTCategoriaPadreMouseClicked
+
+    private void jBCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCancelarActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_jBCancelarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

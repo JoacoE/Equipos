@@ -138,6 +138,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="jtextID">
       <Events>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtextIDFocusLost"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtextIDActionPerformed"/>
       </Events>
     </Component>

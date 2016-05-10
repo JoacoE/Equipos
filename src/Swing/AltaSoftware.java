@@ -19,10 +19,12 @@ import javax.swing.JOptionPane;
  *
  * @author Joaquin
  */
-public class AltaSoftware extends javax.swing.JInternalFrame {
+public class AltaSoftware extends javax.swing.JInternalFrame{
     private IControlador IC;
     private String tipo;
     private int equipo;
+    private int id;
+
     /**
      * Creates new form Registrar
      */
@@ -30,9 +32,19 @@ public class AltaSoftware extends javax.swing.JInternalFrame {
         initComponents();
         Fabrica fabrica = Fabrica.getInstance();
         IC = fabrica.getICtrl();
+
         cargarCBbox();
     }
-
+public AltaSoftware(int id) {
+        initComponents();
+        Fabrica fabrica = Fabrica.getInstance();
+        IC = fabrica.getICtrl();
+        cargarCBbox();
+        this.jTextIDEquipo.setText(Integer.toString(id));
+        this.jTextIDEquipo.setEnabled(false);
+        this.id=id;
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -72,6 +84,11 @@ public class AltaSoftware extends javax.swing.JInternalFrame {
 
         jLabel3.setText("ID Software:");
 
+        jtextID.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtextIDFocusLost(evt);
+            }
+        });
         jtextID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtextIDActionPerformed(evt);
@@ -223,17 +240,20 @@ public class AltaSoftware extends javax.swing.JInternalFrame {
             if(this.jTextKey.getText().isEmpty())
                 JOptionPane.showMessageDialog(null, "Ingrese el CD Key","ERROR",JOptionPane.ERROR_MESSAGE);
                     else{    
-                        if(!IC.validarEquipo(Integer.parseInt(this.jTextIDEquipo.getText()))){
+                        if(this.jTextIDEquipo.getText().isEmpty() || !IC.validarEquipo(Integer.parseInt(this.jTextIDEquipo.getText()))){
                             JOptionPane.showMessageDialog(null, "El equipo no existe o no es una computadora","ERROR",JOptionPane.ERROR_MESSAGE);
                         }
                         else{
-                            IC.addSw(Integer.parseInt(this.jtextID.getText()), tipo, this.jTextDesc.getText(), this.jTextKey.getText(), Integer.parseInt(this.jTextLicencias.getText()));
-                            IC.asociarEquipoSw(Integer.parseInt(this.jTextIDEquipo.getText()), Integer.parseInt(this.jtextID.getText()));
-                            JOptionPane.showMessageDialog(null, "Ingresado con Exito","EXITO",JOptionPane.INFORMATION_MESSAGE);
-                            this.dispose();
+                            if(IC.validarSW(Integer.parseInt(this.jtextID.getText()))){
+                                IC.addSw(Integer.parseInt(this.jtextID.getText()), tipo, this.jTextDesc.getText(), this.jTextKey.getText(), Integer.parseInt(this.jTextLicencias.getText()));
+                                IC.asociarEquipoSw(Integer.parseInt(this.jTextIDEquipo.getText()), Integer.parseInt(this.jtextID.getText()));
+                                JOptionPane.showMessageDialog(null, "Ingresado con Exito","EXITO",JOptionPane.INFORMATION_MESSAGE);
+                                dispose();
+                            }
+                            else
+                                JOptionPane.showMessageDialog(null, "El id de Software ya existe","ERROR",JOptionPane.ERROR_MESSAGE);                                                   
                         }
-                    }    
-                
+                    }                    
     }//GEN-LAST:event_jbAceptarActionPerformed
 
     private void jTextLicenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextLicenciasActionPerformed
@@ -251,6 +271,19 @@ public class AltaSoftware extends javax.swing.JInternalFrame {
             vee.show();
         }
     }//GEN-LAST:event_jBVerEquipoActionPerformed
+
+    private void jtextIDFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtextIDFocusLost
+        if(!this.jtextID.getText().isEmpty()){
+            Software s = IC.findSw(Integer.parseInt(this.jtextID.getText()));
+            if(!(s==null)){
+                this.jcbTipo.setSelectedItem(s.getTipo());
+                this.jTextLicencias.setText(Integer.toString(s.getCantLicencias()));
+                this.jTextKey.setText(s.getCdKey());
+                this.jTextDesc.setText(s.getDescripcion());
+            }
+        } 
+        
+    }//GEN-LAST:event_jtextIDFocusLost
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

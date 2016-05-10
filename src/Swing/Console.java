@@ -108,7 +108,13 @@ public class Console extends javax.swing.JFrame {
         menu.add(smnuSalir);
 
         ver.setText("Ver");
+        ver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verActionPerformed(evt);
+            }
+        });
 
+        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/pc.png"))); // NOI18N
         jMenuItem4.setText("Equipos");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -117,6 +123,7 @@ public class Console extends javax.swing.JFrame {
         });
         ver.add(jMenuItem4);
 
+        jMenuVerUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/user.png"))); // NOI18N
         jMenuVerUsuarios.setText("Usuarios");
         jMenuVerUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -125,6 +132,7 @@ public class Console extends javax.swing.JFrame {
         });
         ver.add(jMenuVerUsuarios);
 
+        jMenuVerSoftware.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/software.png"))); // NOI18N
         jMenuVerSoftware.setText("Software");
         jMenuVerSoftware.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -210,10 +218,14 @@ public class Console extends javax.swing.JFrame {
 
     private void jMenuVerSoftwareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuVerSoftwareActionPerformed
         // TODO add your handling code here:
-        ListarSoftware ls = new ListarSoftware(-1);
+        ListarSoftware ls = new ListarSoftware();
         EscritorioMenu.add(ls);
         ls.show();
     }//GEN-LAST:event_jMenuVerSoftwareActionPerformed
+
+    private void verActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_verActionPerformed
 
     /**
      * @param args the command line arguments

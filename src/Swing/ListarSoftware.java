@@ -12,8 +12,12 @@ import Clases.Software;
 import Clases.Usuario;
 import Controladores.Fabrica;
 import Controladores.IControlador;
+import static Swing.Console.EscritorioMenu;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -22,7 +26,7 @@ import javax.swing.table.TableRowSorter;
  *
  * @author Nelson
  */
-public class ListarSoftware extends javax.swing.JInternalFrame {
+public class ListarSoftware extends javax.swing.JInternalFrame{
 
     private IControlador IC;
 
@@ -41,13 +45,23 @@ public class ListarSoftware extends javax.swing.JInternalFrame {
         jTableSw.setRowSorter(elQueOrdena);
         cargarTabla();
     }
-    
-    private void cargarTabla(){
+        public ListarSoftware() {
+        initComponents();
+        
+        modelo = (DefaultTableModel)this.jTableSw.getModel();
+        Fabrica fabrica = Fabrica.getInstance();
+        IC = fabrica.getICtrl();
+        TableRowSorter<TableModel> elQueOrdena = new TableRowSorter<TableModel>(modelo);
+        jTableSw.setRowSorter(elQueOrdena);
+        cargarTabla();
+    }
+        
+    public void cargarTabla(){
         ArrayList sw = new ArrayList();
-        if(id==-1){
-            sw = IC.listarSoftware();}
+        if(id>0){
+            sw = IC.listarSWporEquipo(id);}
         else{
-            sw = IC.listarSWporEquipo(id);
+            sw = IC.listarSoftware();
         }
         Iterator it = sw.iterator();
         String lista[]=new String[6];
@@ -57,16 +71,22 @@ public class ListarSoftware extends javax.swing.JInternalFrame {
             Software sw1 = (Software)it.next();
             ArrayList equipos = IC.findEquipoPorSW(sw1.getIdSw());
             Iterator ite = equipos.iterator();
-            String ides = Integer.toString((int)ite.next());
-            while(ite.hasNext()){
-                ides=ides+", "+Integer.toString((int)ite.next());
+            if(ite.hasNext()){
+                String ides = Integer.toString((int)ite.next());
+                while(ite.hasNext()){
+                    ides=ides+", "+Integer.toString((int)ite.next());
+                }
+                lista[5]= ides;
             }
+            else
+                lista[5]= "";
+            
             lista[0]= Integer.toString(sw1.getIdSw());
             lista[1]= sw1.getTipo();
             lista[2]= sw1.getDescripcion();
             lista[3]= sw1.getCdKey();
             lista[4]= Integer.toString(sw1.getCantLicencias());
-            lista[5]= ides;
+            //lista[5]= ides;
             modelo.insertRow((int)fila, lista);
             fila++;
         }
@@ -86,6 +106,12 @@ public class ListarSoftware extends javax.swing.JInternalFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableSw = new javax.swing.JTable();
+        jButtonEliminar = new javax.swing.JButton();
+        jLabelError = new javax.swing.JLabel();
+        jBLiberar = new javax.swing.JButton();
+        jButtonNuevo = new javax.swing.JButton();
+        jButtonActualizar = new javax.swing.JButton();
+        jButtonAsociar = new javax.swing.JButton();
 
         setClosable(true);
         setResizable(true);
@@ -100,28 +126,188 @@ public class ListarSoftware extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jTableSw);
 
+        jButtonEliminar.setText("Eliminar");
+        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarActionPerformed(evt);
+            }
+        });
+
+        jLabelError.setForeground(new java.awt.Color(255, 0, 0));
+        jLabelError.setText("Debe seleccionar alguna fila");
+
+        jBLiberar.setText("Liberar");
+        jBLiberar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBLiberarActionPerformed(evt);
+            }
+        });
+
+        jButtonNuevo.setText("Nuevo");
+        jButtonNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNuevoActionPerformed(evt);
+            }
+        });
+
+        jButtonActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/actualizar.png"))); // NOI18N
+        jButtonActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonActualizarActionPerformed(evt);
+            }
+        });
+
+        jButtonAsociar.setText("Asociar");
+        jButtonAsociar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAsociarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 584, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabelError)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jButtonEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jBLiberar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButtonNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jButtonActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonAsociar))
+                        .addGap(18, 18, 18))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(jButtonActualizar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonAsociar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonNuevo)
+                        .addGap(38, 38, 38)
+                        .addComponent(jBLiberar)
+                        .addGap(41, 41, 41)
+                        .addComponent(jButtonEliminar)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelError)
+                .addGap(0, 26, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
+    if(this.jTableSw.getSelectedRows().length==0){
+            this.jLabelError.setVisible(true);
+    }
+    else{
+        int resp = JOptionPane.showConfirmDialog(null, "Estás Seguro???",null,JOptionPane.OK_CANCEL_OPTION);
+        if(resp==0){ 
+            int i = 0;
+            int largo = this.jTableSw.getSelectedRows().length;
+            int lista[] = this.jTableSw.getSelectedRows();
+            while(i<largo){
+                if(!IC.puedoEliminarSw(Integer.parseInt(this.jTableSw.getValueAt(lista[i],0).toString())))
+                        JOptionPane.showMessageDialog(null, "Este software está asociado a un equipo.\nDebe desasociarlos primero ","ERROR",JOptionPane.ERROR_MESSAGE);
+                else{
+                    int id = Integer.parseInt(this.jTableSw.getValueAt(lista[i],0).toString());
+                    IC.eliminarSw(id);
+                    i++;
+                }
+            }
+            limpiarTabla();
+            cargarTabla();
+        }
+    }
+
+    }//GEN-LAST:event_jButtonEliminarActionPerformed
+
+    private void jBLiberarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLiberarActionPerformed
+        
+        if(this.jTableSw.getSelectedRows().length==0){
+            this.jLabelError.setVisible(true);  
+        }
+        else{
+            int resp = JOptionPane.showConfirmDialog(null, "Estás Seguro???",null,JOptionPane.OK_CANCEL_OPTION);
+            if(resp==0){
+                int i = 0;
+                int largo = this.jTableSw.getSelectedRows().length;
+                int lista[] = this.jTableSw.getSelectedRows();
+                while(i<largo){
+                    int id = Integer.parseInt(this.jTableSw.getValueAt(lista[i],0).toString());
+                    IC.desasociarSw(id);
+                    i++;
+                }            
+                limpiarTabla();
+                cargarTabla();
+            }
+        }    
+        
+    }//GEN-LAST:event_jBLiberarActionPerformed
+
+    private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
+        if(id==0){
+            AltaSoftware as = new AltaSoftware();
+            EscritorioMenu.add(as);
+            as.show();
+        }
+        else{
+            AltaSoftware as = new AltaSoftware(id);
+            EscritorioMenu.add(as);
+            as.show();
+        }
+
+        IC.setVentana(this);             
+    }//GEN-LAST:event_jButtonNuevoActionPerformed
+
+    private void jButtonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarActionPerformed
+        limpiarTabla();
+        cargarTabla();
+    }//GEN-LAST:event_jButtonActualizarActionPerformed
+
+    private void jButtonAsociarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAsociarActionPerformed
+        int ide = Integer.parseInt(this.jTableSw.getValueAt(this.jTableSw.getSelectedRow(),0).toString());
+        AsociarSwEquipo ae = new AsociarSwEquipo(ide, true);
+        EscritorioMenu.add(ae);
+        ae.show();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonAsociarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBLiberar;
+    private javax.swing.JButton jButtonActualizar;
+    private javax.swing.JButton jButtonAsociar;
+    private javax.swing.JButton jButtonEliminar;
+    private javax.swing.JButton jButtonNuevo;
+    private javax.swing.JLabel jLabelError;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableSw;
     // End of variables declaration//GEN-END:variables
+
+public void limpiarTabla(){
+        try {
+            int filas=this.jTableSw.getRowCount();
+            for (int i = 0;filas>i; i++) {
+                modelo.removeRow(0);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al limpiar la tabla.");
+        }
+    }
+
 }

@@ -35,12 +35,13 @@ public class Dispositivo {
     private int factura;
     private String ip;
     private String nota;
-    private File archivo;
+    private String ruta;
+    private Date mantenimiento;
     
     public Dispositivo() {
     }
 
-    public Dispositivo(int idDisp, String marca, String modelo, String procesador, String memoria, String HDD, Lugar lugar, Usuario usuario, Categoria cat, String ip, Date fecha_compra, String proveedor, String estado, int garantia, int factura, File archivo, String nota) {
+    public Dispositivo(int idDisp, String marca, String modelo, String procesador, String memoria, String HDD, Lugar lugar, Usuario usuario, Categoria cat, String ip, Date fecha_compra, String proveedor, String estado, int garantia, int factura, String ruta, String nota, Date mantenimiento) {
         this.idDisp = idDisp;
         this.cat = cat;
         this.marca = marca;
@@ -57,11 +58,16 @@ public class Dispositivo {
         this.factura = factura;
         this.ip = ip;
         this.nota = nota;
-        this.archivo = archivo;
+        this.ruta = ruta;
+        this.mantenimiento = mantenimiento;
     }
 
     public String getProcesador() {
         return procesador;
+    }
+
+    public Date getMantenimiento() {
+        return mantenimiento;
     }
 
     public String getMemoria() {
@@ -124,8 +130,8 @@ public class Dispositivo {
         return nota;
     }
 
-    public File getArchivo() {
-        return archivo;
+    public String getRuta() {
+        return ruta;
     }
 
     public void setIdDisp(int idDisp) {
@@ -134,6 +140,10 @@ public class Dispositivo {
 
     public void setTipo(Categoria cat) {
         this.cat = cat;
+    }
+
+    public void setMantenimiento(Date mantenimiento) {
+        this.mantenimiento = mantenimiento;
     }
 
     public void setProcesador(String procesador) {
@@ -192,8 +202,8 @@ public class Dispositivo {
         this.nota = nota;
     }
 
-    public void setArchivo(File archivo) {
-        this.archivo = archivo;
+    public void setRuta(String ruta) {
+        this.ruta = ruta;
     }
     
     

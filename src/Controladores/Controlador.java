@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
+import javax.swing.JInternalFrame;
 
 /**
  *
@@ -29,10 +30,19 @@ import java.util.StringTokenizer;
  */
 public class Controlador implements IControlador {
     
-    public Controlador(){}
-    
+    private javax.swing.JInternalFrame ventana;
     private Categoria Ncat;
+    
+    public Controlador(){}
 
+    public void setVentana(JInternalFrame ventana) {
+        this.ventana = ventana;
+    }
+
+    public JInternalFrame getVentana() {
+        return ventana;
+    }    
+    
     public void setNcat(Categoria Ncat) {
         this.Ncat = Ncat;
     }
@@ -144,10 +154,10 @@ public class Controlador implements IControlador {
         Software sw = new Software(id, tipo, descripcion, key, licencias);
         p.persistirSw(sw);
     }
-    public String validarSW(int id, int licencias, int id_dispo){
+    public boolean validarSW(int id){
         Fabrica fabrica = Fabrica.getInstance();
         Persistencia p = fabrica.getPers();
-        return p.validarSoft(id, licencias, id_dispo);
+        return p.validarSoft(id);
     }
     public Software retKey(int id){
         Fabrica fabrica = Fabrica.getInstance();
@@ -176,6 +186,15 @@ public class Controlador implements IControlador {
         Fabrica fabrica = Fabrica.getInstance();
         Persistencia p = fabrica.getPers();
         p.eliminarEquipo(id);
+    }
+    public boolean puedoEliminar(int id){
+        Fabrica fabrica = Fabrica.getInstance();
+        Persistencia p = fabrica.getPers();
+        Dispositivo disp = p.findEquipo(id);
+        if(disp.getEstado().equals("DESUSO")&& disp.getLugar().getLocal().equals("Central")&& disp.getLugar().getSeccion().equals("Deposito"))
+            return true;
+        else
+            return false;
     }
     
     public void actualizarEquipo(Dispositivo disp){
@@ -286,4 +305,29 @@ public ArrayList listarSoftware(){
     Persistencia p = fabrica.getPers();
     return p.listarSoftware();
 }
+
+public void eliminarSw(int id){
+    Fabrica fabrica = Fabrica.getInstance();
+    Persistencia p = fabrica.getPers();
+    p.eliminarSw(id);
 }
+
+public boolean puedoEliminarSw(int id){
+    Fabrica fabrica = Fabrica.getInstance();
+    Persistencia p = fabrica.getPers();
+    return p.puedoEliminarSW(id);      
+}
+public void desasociarSw(int id){
+    Fabrica fabrica = Fabrica.getInstance();
+    Persistencia p = fabrica.getPers();
+    p.desasociarSw(id);
+}
+
+public Software findSw(int id){
+    Fabrica fabrica = Fabrica.getInstance();
+    Persistencia p = fabrica.getPers();
+    return p.findSw(id);
+}
+
+}
+

@@ -71,6 +71,8 @@ public class VerEquipos extends javax.swing.JInternalFrame {
         jBFiltrar = new javax.swing.JButton();
         jCBCampo = new javax.swing.JComboBox();
         jTextBuscar = new javax.swing.JTextField();
+        jBNuevo = new javax.swing.JButton();
+        jButtonActualizar = new javax.swing.JButton();
 
         setClosable(true);
         setMaximizable(true);
@@ -83,7 +85,7 @@ public class VerEquipos extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "ID", "Categoría", "Marca", "Modelo", "Procesador", "Memoria", "HDD", "IP", "Estado", "Lugar", "Usuario", "Fecha de Compra", "Proveedor", "Garantia", "Factura"
+                "ID", "Categoría", "Marca", "Modelo", "Procesador", "Memoria", "HDD", "IP", "Estado", "Lugar", "Usuario", "Fecha de Compra", "Proveedor", "Garantia", "Factura", "Mantenimiento"
             }
         ));
         jTableEquipos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -128,31 +130,47 @@ public class VerEquipos extends javax.swing.JInternalFrame {
             }
         });
 
+        jBNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/agregar1.png"))); // NOI18N
+        jBNuevo.setText("Nuevo");
+        jBNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBNuevoActionPerformed(evt);
+            }
+        });
+
+        jButtonActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/actualizar.png"))); // NOI18N
+        jButtonActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonActualizarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1064, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1066, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(59, 59, 59)
                         .addComponent(jLabelError)
-                        .addGap(73, 73, 73)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jCBCampo, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextBuscar)
-                        .addGap(18, 18, 18)
+                        .addComponent(jTextBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jBFiltrar)
-                        .addGap(57, 57, 57)
-                        .addComponent(jBEliminar)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jBNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jBEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jBEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jBVer, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jBVer, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -161,15 +179,17 @@ public class VerEquipos extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonActualizar)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jBEditar)
                         .addComponent(jBEliminar)
                         .addComponent(jBVer)
                         .addComponent(jBFiltrar)
                         .addComponent(jTextBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jCBCampo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabelError))
-                .addGap(0, 18, Short.MAX_VALUE))
+                        .addComponent(jCBCampo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabelError)
+                        .addComponent(jBNuevo)))
+                .addGap(0, 28, Short.MAX_VALUE))
         );
 
         pack();
@@ -212,8 +232,8 @@ public class VerEquipos extends javax.swing.JInternalFrame {
             this.jLabelError.setVisible(true);
         }
         else{
-            if(!this.jTableEquipos.getValueAt(this.jTableEquipos.getSelectedRow(),8).toString().equals("DESUSO")){
-                JOptionPane.showMessageDialog(null, "El equipo no esta en DESUSO","ERROR",JOptionPane.ERROR_MESSAGE);
+            if(!IC.puedoEliminar(Integer.parseInt(this.jTableEquipos.getValueAt(this.jTableEquipos.getSelectedRow(),0).toString()))){
+                JOptionPane.showMessageDialog(null, "El equipo debe estar en DESUSO y en Deposito","ERROR",JOptionPane.ERROR_MESSAGE);
             }
             else{
                 int resp = JOptionPane.showConfirmDialog(null, "Estás Seguro???",null,JOptionPane.OK_CANCEL_OPTION);
@@ -234,13 +254,25 @@ public class VerEquipos extends javax.swing.JInternalFrame {
         int col = Integer.parseInt(tokens.nextToken());       
         filtrar(col,this.jTextBuscar.getText());
     }//GEN-LAST:event_jBFiltrarActionPerformed
+
+    private void jBNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNuevoActionPerformed
+        SelCat sc = new SelCat();
+        EscritorioMenu.add(sc);
+        sc.show();
+        
+    }//GEN-LAST:event_jBNuevoActionPerformed
+
+    private void jButtonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarActionPerformed
+        limpiarTabla();
+        cargarTabla();
+    }//GEN-LAST:event_jButtonActualizarActionPerformed
     
     private void filtrar(int col, String busqueda){
         limpiarTabla();
         int fila = 0;
         ArrayList equipos = IC.ListarEquipos();
         Iterator it = equipos.iterator();
-        String lista[]=new String[15];
+        String lista[]=new String[16];
         //Iterator inds = lstProdInd.iterator();
         while(it.hasNext()){
             Dispositivo disp = (Dispositivo)it.next();
@@ -256,12 +288,14 @@ public class VerEquipos extends javax.swing.JInternalFrame {
                 lista[5]= disp.getMemoria();
                 lista[6]= disp.getHDD();
                 lista[7]= disp.getIp();
+                lista[15]= disp.getRuta();
             }
             else{
                 lista[4]= "";
                 lista[5]= "";
                 lista[6]= "";
                 lista[7]= "";
+                lista[15]= "";
             }
             lista[8]= disp.getEstado();
             lista[9]= lug.getLocal()+"-->"+lug.getSeccion();            
@@ -270,6 +304,7 @@ public class VerEquipos extends javax.swing.JInternalFrame {
             lista[12]= disp.getProveedor();
             lista[13]= Integer.toString(disp.getGarantia());
             lista[14]= Integer.toString(disp.getFactura());
+            
             if(lista[col].contains(busqueda)){         
                 modelo.insertRow((int)fila, lista);
                 fila++;
@@ -283,7 +318,7 @@ public class VerEquipos extends javax.swing.JInternalFrame {
         int fila = 0;
         ArrayList equipos = IC.ListarEquipos();
         Iterator it = equipos.iterator();
-        String lista[]=new String[15];
+        String lista[]=new String[16];
         //Iterator inds = lstProdInd.iterator();
         while(it.hasNext()){
             Dispositivo disp = (Dispositivo)it.next();
@@ -299,20 +334,29 @@ public class VerEquipos extends javax.swing.JInternalFrame {
                 lista[5]= disp.getMemoria();
                 lista[6]= disp.getHDD();
                 lista[7]= disp.getIp();
+                if(!(disp.getMantenimiento()==null))
+                    lista[15]= disp.getMantenimiento().toString();
+                else
+                    lista[15]="";
             }
             else{
                 lista[4]= "";
                 lista[5]= "";
                 lista[6]= "";
                 lista[7]= "";
+                lista[15]="";
             }
             lista[8]= disp.getEstado();
             lista[9]= lug.getLocal()+"-->"+lug.getSeccion();            
             lista[10]= usu.getNombre()+" "+usu.getApellido();
-            lista[11]= disp.getFecha_compra().toString();
+            if(disp.getFecha_compra()!=null)
+                lista[11]= disp.getFecha_compra().toString();
+            else
+                lista[11]="";
             lista[12]= disp.getProveedor();
             lista[13]= Integer.toString(disp.getGarantia());
             lista[14]= Integer.toString(disp.getFactura());
+            
 
             
             modelo.insertRow((int)fila, lista);
@@ -345,7 +389,9 @@ public class VerEquipos extends javax.swing.JInternalFrame {
     private javax.swing.JButton jBEditar;
     private javax.swing.JButton jBEliminar;
     private javax.swing.JButton jBFiltrar;
+    private javax.swing.JButton jBNuevo;
     private javax.swing.JButton jBVer;
+    private javax.swing.JButton jButtonActualizar;
     private javax.swing.JComboBox jCBCampo;
     private javax.swing.JLabel jLabelError;
     private javax.swing.JScrollPane jScrollPane1;
