@@ -96,7 +96,7 @@ public class VerEditarEquipo extends javax.swing.JInternalFrame {
         this.jTextFactura.setText(Integer.toString(disp.getFactura()));
         this.jTextGarantia.setText(Integer.toString(disp.getGarantia()));
         this.jTextComentario.setText(disp.getNota());
-        if(disp.getTipo().getNombrePadre().equals("Computadora")){
+        if(disp.getTipo().getNombrePadre().equals("Computadora") || disp.getTipo().getNombrePadre().equals("computadora")){
             this.jTextIp.setText(disp.getIp());
             this.jTextProcesador.setText(disp.getProcesador());
             this.jTextMemoria.setText(disp.getMemoria());
@@ -385,7 +385,8 @@ public class VerEditarEquipo extends javax.swing.JInternalFrame {
 
         jLabel20.setText("Mantenimiento:");
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Abrir");
+        jButton1.setEnabled(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -704,7 +705,7 @@ public class VerEditarEquipo extends javax.swing.JInternalFrame {
         StringTokenizer tokens = new StringTokenizer(this.jCBCategoria.getSelectedItem().toString());
         Categoria cat = IC.findCategoria(Integer.parseInt(tokens.nextToken()));
         
-        if(cat.getNombrePadre().equals("Computadora")){
+        if(cat.getNombrePadre().equals("Computadora") || cat.getNombrePadre().equals("computadora")){
             this.jTextIp.setEnabled(true);
             this.jTextProcesador.setEnabled(true);
             this.jTextMemoria.setEnabled(true);

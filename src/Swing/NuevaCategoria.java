@@ -40,7 +40,7 @@ public class NuevaCategoria extends javax.swing.JInternalFrame {
         cargarArbol();
         this.jLtree.setVisible(false);
         this.jLtext.setVisible(false);
-        this.jLErrorPadre.setVisible(false);
+        //this.jLErrorPadre.setVisible(false);
     }
     
     DefaultListModel modelCat;
@@ -64,9 +64,6 @@ public class NuevaCategoria extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jLtree = new javax.swing.JLabel();
         jLtext = new javax.swing.JLabel();
-        jLCatPadre = new javax.swing.JLabel();
-        jTCategoriaPadre = new javax.swing.JTextField();
-        jLErrorPadre = new javax.swing.JLabel();
 
         setClosable(true);
         setResizable(true);
@@ -111,17 +108,6 @@ public class NuevaCategoria extends javax.swing.JInternalFrame {
         jLtext.setForeground(new java.awt.Color(255, 0, 0));
         jLtext.setText("Falta el nombre de la categoría");
 
-        jLCatPadre.setText("Cat. Padre:");
-
-        jTCategoriaPadre.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTCategoriaPadreMouseClicked(evt);
-            }
-        });
-
-        jLErrorPadre.setForeground(new java.awt.Color(255, 0, 0));
-        jLErrorPadre.setText("Falta el nombre de la categoría padre");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -139,16 +125,12 @@ public class NuevaCategoria extends javax.swing.JInternalFrame {
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLtree)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLCatPadre)
-                                        .addComponent(jLabel1))
+                                    .addGap(15, 15, 15)
+                                    .addComponent(jLabel1)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLErrorPadre)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jLtext)
-                                            .addComponent(jTcategoria, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
-                                            .addComponent(jTCategoriaPadre)))))))
+                                        .addComponent(jLtext)
+                                        .addComponent(jTcategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(31, 31, 31)
                         .addComponent(jLabel2)))
@@ -167,15 +149,9 @@ public class NuevaCategoria extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jTcategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addComponent(jLtext)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLCatPadre)
-                    .addComponent(jTCategoriaPadre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLErrorPadre)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBAceptar)
                     .addComponent(jBCancelar))
@@ -190,12 +166,12 @@ public class NuevaCategoria extends javax.swing.JInternalFrame {
         DefaultMutableTreeNode sel = (DefaultMutableTreeNode)this.jTreeCategoria.getLastSelectedPathComponent();
         this.cat = new Categoria(null,(String)sel.getUserObject());
         if(sel==Raiz){
-            this.jTCategoriaPadre.setVisible(true);
-            this.jLCatPadre.setVisible(true);     
+            //this.jTCategoriaPadre.setVisible(true);
+            //this.jLCatPadre.setVisible(true);     
         }
         else{
-            this.jTCategoriaPadre.setVisible(false);
-            this.jLCatPadre.setVisible(false);     
+            //this.jTCategoriaPadre.setVisible(false);
+            //this.jLCatPadre.setVisible(false);     
         
         }
     }//GEN-LAST:event_jTreeCategoriaValueChanged
@@ -204,24 +180,24 @@ public class NuevaCategoria extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         DefaultMutableTreeNode sel = (DefaultMutableTreeNode)this.jTreeCategoria.getLastSelectedPathComponent();
         if(sel==Raiz){
-            if(!this.jTCategoriaPadre.getText().isEmpty() && !this.jTcategoria.getText().isEmpty()){
-                Categoria catPadre = new Categoria(this.jTCategoriaPadre.getText(),"Categorias");
-                Categoria catHija = new Categoria(this.jTcategoria.getText(),this.jTCategoriaPadre.getText());
+            if(!this.jTcategoria.getText().isEmpty()){
+                Categoria catPadre = new Categoria(null,"Categorias");
+                Categoria catHija = new Categoria(this.jTcategoria.getText(),this.jTreeCategoria.getLastSelectedPathComponent().toString());
                 if(!IC.existeCat(catPadre.getNombre(), catPadre.getNombrePadre())){
                     IC.addCategoria(catPadre);                                        
                 }
                 if(!IC.existeCat(catHija.getNombre(), catHija.getNombrePadre())){
                     IC.addCategoria(catHija); 
                     JOptionPane.showMessageDialog(null, "!Categoría  "+catHija.getNombrePadre()+" -> "+catHija.getNombre()+"  creada!","EXITO",JOptionPane.INFORMATION_MESSAGE);
+                    dispose();
                 }
                 else{
                     JOptionPane.showMessageDialog(null, "!La categoría  "+catHija.getNombrePadre()+" -> "+catHija.getNombre()+"  ya existe!","ERROR",JOptionPane.ERROR_MESSAGE);
                 }
             }
+            
             else{
-                if(this.jTCategoriaPadre.getText().isEmpty()){
-                    this.jLErrorPadre.setVisible(true);
-                }
+                
                 if(this.jTcategoria.getText().isEmpty()){
                     this.jLtext.setVisible(true);
                 }               
@@ -233,42 +209,22 @@ public class NuevaCategoria extends javax.swing.JInternalFrame {
             }
             else{
                 Categoria cate = new Categoria(this.jTcategoria.getText(),(String)sel.getUserObject());
-                IC.addCategoria(cate);  
-                JOptionPane.showMessageDialog(null, "!Categoría  "+cate.getNombrePadre()+" -> "+cate.getNombre()+"  creada!","EXITO",JOptionPane.INFORMATION_MESSAGE);
-                dispose();
-            }
-        }
-        
-//        if(cat.getNombrePadre()==null)
-//            this.jLtree.setVisible(true);
-//        else
-//            if(this.jTcategoria.getText().isEmpty())
-//                this.jLtext.setVisible(true);
-//            else{
-//                cat.setNombre(this.jTcategoria.getText()); 
-//                if(!IC.existeCat(cat.getNombre(), cat.getNombrePadre())){
-//                    IC.addCategoria(cat);
-//                    dispose();
-//                    JOptionPane.showMessageDialog(null, "!Categoría  "+cat.getNombrePadre()+" -> "+cat.getNombre()+"  creada!","EXITO",JOptionPane.INFORMATION_MESSAGE);
-//                }
-//                else{
-//                    JOptionPane.showMessageDialog(null, "!La categoría  "+cat.getNombrePadre()+" -> "+cat.getNombre()+"  ya existe!","ERROR",JOptionPane.ERROR_MESSAGE);
-//                }
-//                    
-//            }
-        
+                if(!IC.existeCat(cate.getNombre(), cate.getNombrePadre())){
+                    IC.addCategoria(cate);  
+                    JOptionPane.showMessageDialog(null, "!Categoría  "+cate.getNombrePadre()+" -> "+cate.getNombre()+"  creada!","EXITO",JOptionPane.INFORMATION_MESSAGE);
+                    dispose();
+                }
+                 else{
+                    JOptionPane.showMessageDialog(null, "!La categoría  "+cate.getNombrePadre()+" -> "+cate.getNombre()+"  ya existe!","ERROR",JOptionPane.ERROR_MESSAGE);
+                }
+            }       
         
     }//GEN-LAST:event_jBAceptarActionPerformed
-
+    }
     private void jTcategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTcategoriaMouseClicked
         // TODO add your handling code here:
         this.jLtext.setVisible(false);
     }//GEN-LAST:event_jTcategoriaMouseClicked
-
-    private void jTCategoriaPadreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTCategoriaPadreMouseClicked
-        // TODO add your handling code here:
-        this.jLErrorPadre.setVisible(false);
-    }//GEN-LAST:event_jTCategoriaPadreMouseClicked
 
     private void jBCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCancelarActionPerformed
         // TODO add your handling code here:
@@ -279,14 +235,11 @@ public class NuevaCategoria extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBAceptar;
     private javax.swing.JButton jBCancelar;
-    private javax.swing.JLabel jLCatPadre;
-    private javax.swing.JLabel jLErrorPadre;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLtext;
     private javax.swing.JLabel jLtree;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTCategoriaPadre;
     private javax.swing.JTextField jTcategoria;
     private javax.swing.JTree jTreeCategoria;
     // End of variables declaration//GEN-END:variables

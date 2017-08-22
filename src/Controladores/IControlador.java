@@ -57,4 +57,5 @@ public interface IControlador {
     public abstract boolean puedoEliminarSw(int id);
     public abstract void desasociarSw(int id);
     public abstract Software findSw(int id);
+    public abstract boolean ValidarConexion(String User, String Pass, String conection);
 }

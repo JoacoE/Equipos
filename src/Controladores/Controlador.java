@@ -110,7 +110,7 @@ public class Controlador implements IControlador {
         if(dispo==null)
             return false;
         else
-            if (dispo.getTipo().getNombrePadre().equals("Computadora"))
+            if (dispo.getTipo().getNombrePadre().equals("Computadora") || dispo.getTipo().getNombrePadre().equals("computadora"))
                 return true;
             else
                 return false;
@@ -329,5 +329,10 @@ public Software findSw(int id){
     return p.findSw(id);
 }
 
+public boolean ValidarConexion(String User, String Pass, String conection){
+    Fabrica fabrica = Fabrica.getInstance();
+    Persistencia p = fabrica.getPers();
+    return p.ValidarConexion(User, Pass, conection);
+}
 }
 

@@ -21,6 +21,7 @@ import java.sql.SQLXML;
 import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import conexion.Conexion;
 
 /**
  *
@@ -28,15 +29,34 @@ import javax.swing.JOptionPane;
  */
 public class Persistencia {
 
+    private String connectionString = "jdbc:sqlserver://192.168.1.38\\JOAQUIN;databaseName=Equipos";
+    //private String connectionString = "jdbc:sqlserver://192.168.1.107\\SERVERDTV;databaseName=Equipos";
+    private String user;// = "joaquin";
+    private String pass;// = "prueba";
+    private String conn="jdbc:sqlserver://localhost\\JOAQUIN;databaseName=Equipos";
     public Persistencia() {
     }
+    public boolean ValidarConexion(String User, String Pass, String conection){
     
+        try{
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection con = DriverManager.getConnection(conection,User,Pass);
+            con.close();
+            this.user = User; 
+            this.pass = Pass;
+            this.conn = conection;
+            return true;
+        }
+        catch(Exception ex){}
+        return false;
+    }
     //USUARIOS------------------------------------------------------------------
     public void PersistirUsuario(Usuario usr){
               
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");
+     
+            Connection con = DriverManager.getConnection(connectionString,user,pass);
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT max(id_Usr) FROM Usuario");
             rs.next();
@@ -53,7 +73,9 @@ public class Persistencia {
     public boolean existeUsuario(String nombre, String apellido){
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");          
+            Connection con = DriverManager.getConnection(connectionString,user,pass);                                                                                                                       
+            
+            
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT id_Usr FROM Usuario WHERE Nombre='"+nombre+"'and Apellido ='"+apellido+"'");
             if(rs.next()) 
@@ -65,17 +87,20 @@ public class Persistencia {
     
     public ArrayList listarUsuarios(){
     ArrayList Ausu = new ArrayList();
-    try{
+    try{        
+        
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");          
-        Statement stmt = con.createStatement();
+        Connection conn = DriverManager.getConnection(connectionString,user,pass);                                                                                                                       
+        
+        
+        Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM Usuario");
         while(rs.next()){
             Usuario u = new Usuario(rs.getInt(1),rs.getString(2),rs.getString(3));
             Ausu.add(u);
             //rs.next();
         }
-        con.close();
+        conn.close();
     }catch(Exception ex){}   
     return Ausu;
     }
@@ -83,7 +108,9 @@ public class Persistencia {
     public Usuario findUsuario(int id){
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");
+            Connection con = DriverManager.getConnection(connectionString,user,pass);
+            
+            
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Usuario WHERE id_Usr ='"+id+"'");
             if(rs.next()){
@@ -98,7 +125,9 @@ public class Persistencia {
     public void eliminarUsuario(int id){
     try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");
+            Connection con = DriverManager.getConnection(connectionString,user,pass);
+            
+            
             Statement stmt = con.createStatement();
             PreparedStatement preparedStmt = con.prepareStatement("DELETE FROM Usuario WHERE id_Usr ='"+id+"'");
             preparedStmt.execute();
@@ -113,7 +142,9 @@ public class Persistencia {
     public boolean existeLugar(String local, String seccion){
     try{
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");          
+        Connection con = DriverManager.getConnection(connectionString,user,pass);                                                                                                                       
+        
+        
         Statement stmt = con.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT id_Lugar FROM Lugar WHERE Local='"+local+"'and Seccion ='"+seccion+"'");
         if(rs.next()) 
@@ -126,7 +157,9 @@ public class Persistencia {
     public void persistirLugar(Lugar lug){              
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");
+            Connection con = DriverManager.getConnection(connectionString,user,pass);
+            
+            
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT max(id_Lugar) FROM Lugar");
             rs.next();
@@ -144,7 +177,9 @@ public class Persistencia {
         ArrayList ALug = new ArrayList();
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");          
+            Connection con = DriverManager.getConnection(connectionString,user,pass);                                                                                                                       
+            
+            
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Lugar");
             while(rs.next()){
@@ -159,7 +194,9 @@ public class Persistencia {
         public Lugar findLugar(int id){
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");
+            Connection con = DriverManager.getConnection(connectionString,user,pass);
+            
+            
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Lugar WHERE id_Lugar ='"+id+"'");
             if(rs.next()){
@@ -176,7 +213,9 @@ public class Persistencia {
     public void desasociarSw(int id){
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");
+            Connection con = DriverManager.getConnection(connectionString,user,pass);
+            
+            
             Statement stmt = con.createStatement();
             stmt.executeQuery("DELETE FROM Disp_Sw WHERE id_Software ='"+id+"'");
             con.close();
@@ -186,7 +225,9 @@ public class Persistencia {
     public void asociarEquipo(int idDispo, int idSw){
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");
+            Connection con = DriverManager.getConnection(connectionString,user,pass);
+            
+            
             PreparedStatement preparedStmt = con.prepareStatement("INSERT INTO Disp_Sw(id_Dispositivo, id_Software)" + " VALUES (?,?)");
             preparedStmt.setInt (1, idDispo);
             preparedStmt.setInt (2, idSw);
@@ -198,7 +239,9 @@ public class Persistencia {
     public void eliminarSw(int id){
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");
+            Connection con = DriverManager.getConnection(connectionString,user,pass);
+            
+            
             Statement stmt = con.createStatement();
             stmt.executeQuery("DELETE FROM Software WHERE id_Software ='"+id+"'");                       
             con.close();          
@@ -207,7 +250,9 @@ public class Persistencia {
     public boolean puedoEliminarSW(int id){
     try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");
+            Connection con = DriverManager.getConnection(connectionString,user,pass);
+            
+            
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Disp_Sw WHERE id_Software ='"+id+"'");   
             if(rs.next()){
@@ -221,7 +266,9 @@ public class Persistencia {
     public boolean existeSW(int id){
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");          
+            Connection con = DriverManager.getConnection(connectionString,user,pass);
+            
+            
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Software WHERE id_Software='"+id+"'");
             if(rs.next()){
@@ -240,7 +287,9 @@ public class Persistencia {
     public Software findSw(int id){
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");          
+            Connection con = DriverManager.getConnection(connectionString,user,pass);
+            
+            
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Software WHERE id_Software='"+id+"'");
             if(rs.next()){                
@@ -258,7 +307,7 @@ public class Persistencia {
     public boolean persistirSw(Software sw){              
         try{
 //            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-//            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");
+//            Connection con = DriverManager.getConnection("jdbc:sqlserver://localhost\\Joaquin;databaseName=Equipos","joaquin","joaquin");
 //            Statement stmt = con.createStatement();
 //            ResultSet rs = stmt.executeQuery("SELECT * FROM Dispositivo WHERE id_Dispositivo='"+sw.getIdDisp()+"'");
 //            if(rs.next()){
@@ -271,7 +320,9 @@ public class Persistencia {
 //                String str2 = rs1.getString(3);
 //                if(str1.equals("Computadora") || str2.equals("Computadora")){ 
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");
+            Connection con = DriverManager.getConnection(connectionString,user,pass);
+            
+            
             PreparedStatement preparedStmt = con.prepareStatement("INSERT INTO Software(id_Software, Tipo, Descripcion, Cd_Key, Cant_Licencias)" + " VALUES (?,?,?,?,?)");
             preparedStmt.setInt (1, sw.getIdSw());
             preparedStmt.setString (2, sw.getTipo());
@@ -291,7 +342,9 @@ public class Persistencia {
     public boolean validarSoft(int id){
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");          
+            Connection con = DriverManager.getConnection(connectionString,user,pass);
+            
+            
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Software WHERE id_Software='"+id+"'");          
             if(rs.next()){
@@ -305,7 +358,9 @@ public class Persistencia {
     public Software retKey(int id){
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");          
+            Connection con = DriverManager.getConnection(connectionString,user,pass);
+            
+            
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Software WHERE id_Software='"+id+"'");          
             if(rs.next()){
@@ -325,7 +380,9 @@ public class Persistencia {
         ArrayList listaSw = new ArrayList();
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");          
+            Connection con = DriverManager.getConnection(connectionString,user,pass);
+            
+            
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Disp_Sw WHERE id_Dispositivo='"+id+"'");  
             while(rs.next()){    
@@ -347,7 +404,9 @@ public class Persistencia {
         ArrayList listaSw = new ArrayList();
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");          
+            Connection con = DriverManager.getConnection(connectionString,user,pass);
+            
+            
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Software");  
             while(rs.next()){
@@ -367,7 +426,9 @@ public class Persistencia {
         ArrayList equipos = new ArrayList();
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");          
+            Connection con = DriverManager.getConnection(connectionString,user,pass);
+            
+            
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Dispositivo");
             while(rs.next()){
@@ -379,7 +440,7 @@ public class Persistencia {
                 int id = rs.getInt(1);
                 String marca = rs.getString(2);
                 String modelo = rs.getString(3);
-                if(cat.getNombrePadre().equals("Computadora")){
+                if(cat.getNombrePadre().equals("Computadora") || cat.getNombrePadre().equals("computadora")){
                     proc = rs.getString(4);
                     memoria = rs.getString(5);
                     HDD = rs.getString(6);
@@ -407,7 +468,9 @@ public class Persistencia {
     public void eliminarEquipo(int id){
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");
+            Connection con = DriverManager.getConnection(connectionString,user,pass);
+            
+            
             Statement stmt = con.createStatement();
             PreparedStatement preparedStmt = con.prepareStatement("DELETE FROM Dispositivo WHERE id_Dispositivo ='"+id+"'");
             PreparedStatement preparedStmt1 = con.prepareStatement("DELETE FROM Disp_Sw WHERE id_Dispositivo ='"+id+"'");
@@ -422,10 +485,12 @@ public class Persistencia {
 //        String ape = tokens.nextToken();       
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");
+            Connection con = DriverManager.getConnection(connectionString,user,pass);
+            
+            
             Statement stmt = con.createStatement();
             PreparedStatement preparedStmt = con.prepareStatement("INSERT INTO Dispositivo(id_Dispositivo, Marca,Modelo,Procesador, Memoria, HDD, id_Lugar, id_Usuario, id_Categoria, IP, Fecha_Compra, Proveedor, Estado, Garantia, Factura, Ruta, Nota)" + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");            
-            if(disp.getTipo().getNombrePadre().equals("Computadora")){                               
+            if(disp.getTipo().getNombrePadre().equals("Computadora") || disp.getTipo().getNombrePadre().equals("computadora")){                               
                 
                 preparedStmt.setString (4, disp.getProcesador());
                 preparedStmt.setString (5, disp.getMemoria());
@@ -461,10 +526,12 @@ public class Persistencia {
     public void actualizarEquipo(Dispositivo disp){
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");
+            Connection con = DriverManager.getConnection(connectionString,user,pass);
+            
+            
             Statement stmt = con.createStatement();
             PreparedStatement preparedStmt = con.prepareStatement("UPDATE Dispositivo SET id_Dispositivo=?, Marca=?,Modelo=?,Procesador=?, Memoria=?, HDD=?, id_Lugar=?, id_Usuario=?, id_Categoria=?, IP=?, Fecha_Compra=?, Proveedor=?, Estado=?, Garantia=?, Factura=?, Ruta=?, Nota=?, Mantenimiento=? WHERE id_Dispositivo='"+disp.getIdDisp()+"'");          
-            if(disp.getTipo().getNombrePadre().equals("Computadora")){
+            if(disp.getTipo().getNombrePadre().equals("Computadora") || disp.getTipo().getNombrePadre().equals("computadora")){
                 
 //                SQLXML info = con.createSQLXML();
 //                OutputStream os = info.setBinaryStream ();
@@ -506,7 +573,9 @@ public class Persistencia {
     public Dispositivo findEquipo(int id){ 
         try{
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");
+                Connection con = DriverManager.getConnection(connectionString,user,pass);
+                
+                
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery("SELECT * FROM Dispositivo WHERE id_Dispositivo ='"+id+"'");
                 if(rs.next()){
@@ -518,7 +587,7 @@ public class Persistencia {
                     Categoria cat = findCategoria(rs.getInt(9));
                     String marca = rs.getString(2);
                     String modelo = rs.getString(3);
-                    if(cat.getNombrePadre().equals("Computadora")){
+                    if(cat.getNombrePadre().equals("Computadora") || cat.getNombrePadre().equals("computadora")){
                         proc = rs.getString(4);
                         memoria = rs.getString(5);
                         HDD = rs.getString(6);
@@ -549,7 +618,9 @@ public class Persistencia {
         try{
             ArrayList equipos = new ArrayList();
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");
+            Connection con = DriverManager.getConnection(connectionString,user,pass);
+            
+            
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT id_Dispositivo FROM Disp_Sw WHERE id_Software ='"+id+"'");
             while(rs.next()){
@@ -569,7 +640,9 @@ public class Persistencia {
         ArrayList Acat = new ArrayList();
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");          
+            Connection con = DriverManager.getConnection(connectionString,user,pass);
+            
+            
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Categoria");
             while(rs.next()){
@@ -584,7 +657,9 @@ public class Persistencia {
     public boolean ExisteCategoria(String nombre, String padre){
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");          
+            Connection con = DriverManager.getConnection(connectionString,user,pass);
+            
+            
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Categoria WHERE Categoria='"+nombre+"' and Categoria_Padre='"+padre+"'");
             if(rs.next()){
@@ -599,7 +674,9 @@ public class Persistencia {
     public int persistirCategoria(Categoria cat){              
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");
+            Connection con = DriverManager.getConnection(connectionString,user,pass);
+            
+            
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT max(id_Categoria) FROM Categoria");
             rs.next();
@@ -617,7 +694,9 @@ public class Persistencia {
     public int devIdCat(Categoria cat){
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");
+            Connection con = DriverManager.getConnection(connectionString,user,pass);
+            
+            
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT id_Categoria FROM Categoria WHERE Categoria ='"+cat.getNombre()+"'and Categoria_Padre='"+cat.getNombrePadre()+"'");
             rs.next();
@@ -632,7 +711,9 @@ public class Persistencia {
     public Categoria findCategoria(int id){
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Equipos","tecnico","tecnico");
+            Connection con = DriverManager.getConnection(connectionString,user,pass);
+            
+            
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Categoria WHERE id_Categoria ='"+id+"'");
             if(rs.next()){

@@ -329,7 +329,7 @@ public class VerEquipos extends javax.swing.JInternalFrame {
             lista[1]= cat.getNombrePadre()+"-->"+cat.getNombre();
             lista[2]= disp.getMarca();
             lista[3]= disp.getModelo();
-            if(cat.getNombrePadre().equals("Computadora")){
+            if(cat.getNombrePadre().equals("Computadora") || cat.getNombrePadre().equals("computadora")){
                 lista[4]= disp.getProcesador();
                 lista[5]= disp.getMemoria();
                 lista[6]= disp.getHDD();

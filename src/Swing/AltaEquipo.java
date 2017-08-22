@@ -276,7 +276,7 @@ public class AltaEquipo extends javax.swing.JInternalFrame {
         if(!this.JTGarantia.getText().isEmpty())
             disp.setGarantia(Integer.parseInt(this.JTGarantia.getText()));
         disp.setEstado(this.estado);
-        if(cate.getNombrePadre().equals("Computadora")){
+        if(cate.getNombrePadre().equals("Computadora") || cate.getNombrePadre().equals("computadora")){
             disp.setProcesador(this.jTProc.getText());
             disp.setMemoria(this.jTMem.getText());
             disp.setHDD(this.jTHDD.getText());
@@ -330,7 +330,7 @@ public class AltaEquipo extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
 public void controlOcultos(){
-    if(!cate.getNombrePadre().equals("Computadora")){
+    if(!cate.getNombrePadre().toString().equals("Computadora") && !cate.getNombrePadre().toString().equals("computadora")){
         this.jTHDD.setEnabled(false);
         this.jLHDD.setEnabled(false);
         this.jLMem.setEnabled(false);

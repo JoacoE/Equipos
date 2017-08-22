@@ -8,15 +8,21 @@ package conexion;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+
 public class Conexion {
     
-    Conexion(){
+    public Connection con;
+    
+    public Conexion(){
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con = DriverManager.getConnection("jdbc:sqlserver://serverdtv:1433;databaseName=Tecnicos","tecnico","tecnico");
+            this.con = DriverManager.getConnection("jdbc:sqlserver://Joaquin:1433;databaseName=Equipos","joaquin","joaquin");
+            
+           
         }catch(Exception ex){}
     
     }
   
     
 }
+

@@ -292,6 +292,7 @@ public class AltaEquipo2 extends javax.swing.JInternalFrame {
         
         IC.addDispositivo(dis);
         RutaFinal="";
+        JOptionPane.showMessageDialog(null, "!El equipo  "+dis.getIdDisp()+" fue agregado!","EXITO",JOptionPane.INFORMATION_MESSAGE);
         
     }//GEN-LAST:event_jBFinalizarActionPerformed
 
@@ -366,13 +367,13 @@ public class AltaEquipo2 extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
 public void controlOcultos(){
-    if(!cate.getNombrePadre().equals("Computadora")){
+    if(!cate.getNombrePadre().equals("Computadora") && !cate.getNombrePadre().equals("computadora")){
         this.jBExaminar.setEnabled(false);
         this.jTIP.setEnabled(false);
         this.jLIP.setEnabled(false);
         this.jLArchivo.setEnabled(false);
     }
-    if(!cate.getNombrePadre().equals("Computadora") && !cate.getNombrePadre().equals("Impresora") && !cate.getNombrePadre().equals("Scanner")){
+    if(!cate.getNombrePadre().equals("Computadora") && !cate.getNombrePadre().equals("computadora") && !cate.getNombrePadre().equals("Impresora") && !cate.getNombrePadre().equals("Scanner")){
         this.jCBUsuario.setEnabled(false);
         this.jBnuevoUsu.setEnabled(false);
         this.jLUsuario.setEnabled(false);

@@ -21,6 +21,9 @@ public class Console extends javax.swing.JFrame {
      */
     public Console() {
         initComponents();
+        login log = new login();
+        EscritorioMenu.add(log);
+        log.show();
 
        
     }
